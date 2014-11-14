@@ -15,7 +15,25 @@ public class RegisteredUserImpl extends Persistent implements RegisteredUser {
 	private boolean canText;
 	private boolean isAdmin;
 
-
+	public RegisteredUserImpl( String name,
+							   String firstName,
+							   String lastName,
+							   String password,
+							   String email,
+							   String phone,
+					 		   boolean canText,
+							   boolean isAdmin)
+	{
+		super( -1 );
+		this.name = name;
+		this.password = password;
+		this.email = email;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phone = phone;
+		this.canText = canText;
+		this.isAdmin = isAdmin;
+	}
 	@Override
 	public String getName() {
 		return name;
