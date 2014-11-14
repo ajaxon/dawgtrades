@@ -6,61 +6,65 @@ import edu.uga.dawgtrades.model.Auction;
 import edu.uga.dawgtrades.model.Item;
 
 public class AuctionImpl extends Persistent implements Auction {
+	
+	private long itemId;
+	private float minPrice;
+	private Date expiration;
 
 	public AuctionImpl(Item item, float minPrice, Date expiration) {
-		// TODO Auto-generated constructor stub
+		itemId = item.getId();
+		this.minPrice = minPrice;
+		this.expiration = expiration;
 	}
 	
 	public AuctionImpl(long itemId, float minPrice, Date expiration ){
-		
-		
+		this.itemId = itemId;
+		this.minPrice = minPrice;
+		this.expiration = expiration;
 	}
 
 	@Override
 	public float getMinPrice() {
-		// TODO Auto-generated method stub
-		return 0;
+		return minPrice;
 	}
 
 	@Override
 	public void setMinPrice(float minPrice) {
-		// TODO Auto-generated method stub
-		
+		this.minPrice = minPrice;
 	}
 
 	@Override
 	public Date getExpiration() {
-		// TODO Auto-generated method stub
-		return null;
+		return expiration;
 	}
 
 	@Override
 	public void setExpiration(Date expiration) {
-		// TODO Auto-generated method stub
-		
+		this.expiration = expiration;
 	}
 
 	@Override
 	public boolean getIsClosed() {
-		// TODO Auto-generated method stub
-		return false;
+		//get SysDate
+		//if SysDate > expiration, return true
+		//else false
 	}
 
 	@Override
 	public float getSellingPrice() {
-		// TODO Auto-generated method stub
-		return 0;
+		if(getIsClosed())
+			return minPrice;
+		else
+			return -1;
 	}
 
 	@Override
 	public long getItemId() {
-		// TODO Auto-generated method stub
-		return 0;
+		return itemId;
 	}
 
 	@Override
 	public void setItemId(long itemId) {
-		// TODO Auto-generated method stub
-		
+		this.itemId = itemId;
 	}
 }
