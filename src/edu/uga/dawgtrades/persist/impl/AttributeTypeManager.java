@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import edu.uga.dawgtrades.model.Attribute;
 import edu.uga.dawgtrades.model.AttributeType;
+import edu.uga.dawgtrades.model.Category;
 import edu.uga.dawgtrades.model.DTException;
 import edu.uga.dawgtrades.model.ObjectModel;
 
@@ -39,6 +40,16 @@ public class AttributeTypeManager {
 	public void delete(AttributeType attributeType) throws DTException{
 		
 		
+	}
+
+
+
+
+
+
+	public Category restoreCategoryBy(AttributeType attributeType) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

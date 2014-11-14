@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import edu.uga.dawgtrades.model.Attribute;
 import edu.uga.dawgtrades.model.DTException;
+import edu.uga.dawgtrades.model.Item;
 import edu.uga.dawgtrades.model.ObjectModel;
 import edu.uga.dawgtrades.model.RegisteredUser;
 
@@ -36,6 +37,12 @@ public class RegisteredUserManager {
 	public void delete(RegisteredUser registeredUser) throws DTException{
 		
 		
+	}
+
+
+	public Iterator<Item> restoreItemBy(RegisteredUser registeredUser) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

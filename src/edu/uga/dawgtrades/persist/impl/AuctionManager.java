@@ -6,6 +6,7 @@ import java.util.Iterator;
 import edu.uga.dawgtrades.model.AttributeType;
 import edu.uga.dawgtrades.model.Auction;
 import edu.uga.dawgtrades.model.DTException;
+import edu.uga.dawgtrades.model.Item;
 import edu.uga.dawgtrades.model.ObjectModel;
 
 public class AuctionManager {
@@ -40,5 +41,15 @@ public class AuctionManager {
 	public void delete(Auction auction) throws DTException{
 		
 		
+	}
+
+
+
+
+
+
+	public Item restoreItemBy(Auction auction) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -234,99 +234,100 @@ public class PersistenceImpl implements Persistence {
 
 	@Override
 	public Membership restoreMembership() throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+
+		return membershipManager.restore();
 	}
 
 
 	@Override
-	public Category restoreParentCategoryBy(Category category) {
-		// TODO Auto-generated method stub
-		return null;
+	public Category restoreParentCategoryBy(Category category) throws DTException {
+
+		return categoryManager.restoreParentBy(category);
 	}
 
 
 	@Override
-	public Iterator<Category> restoreChildCategoryBy(Category category) {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<Category> restoreChildCategoryBy(Category category) throws DTException{
+	
+		
+		return categoryManager.restoreChildBy(category);
 	}
 
 
 	@Override
-	public Category restoreCategoryBy(AttributeType attributeType) {
-		// TODO Auto-generated method stub
-		return null;
+	public Category restoreCategoryBy(AttributeType attributeType) throws DTException{
+
+		return attributeTypeManager.restoreCategoryBy(attributeType);
 	}
 
 
 	@Override
-	public Iterator<AttributeType> restoreAttributeTypeBy(Category category) {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<AttributeType> restoreAttributeTypeBy(Category category) throws DTException{
+	
+		return categoryManager.restoreAttributeTypeBy(category);
 	}
 
 
 	@Override
-	public Category restoreCategoryBy(Item item) {
-		// TODO Auto-generated method stub
-		return null;
+	public Category restoreCategoryBy(Item item) throws DTException{
+
+		return itemManager.restoreCategoryBy(item);
 	}
 
 
 	@Override
-	public Iterator<Item> restoreItemBy(Category category) {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<Item> restoreItemBy(Category category) throws DTException {
+
+		return categoryManager.restoreItemBy(category);
 	}
 
 
 	@Override
-	public Item restoreItemBy(Attribute attribute) {
-		// TODO Auto-generated method stub
-		return null;
+	public Item restoreItemBy(Attribute attribute) throws DTException{
+
+		return attributeManager.restoreItemBy(attribute);
 	}
 
 
 	@Override
-	public Iterator<Attribute> restoreAttributeBy(Item item) {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<Attribute> restoreAttributeBy(Item item) throws DTException {
+		
+		return itemManager.restoreAttributeBy(item);
 	}
 
 
 	@Override
-	public RegisteredUser restoreRegisteredUserBy(Item item) {
-		// TODO Auto-generated method stub
-		return null;
+	public RegisteredUser restoreRegisteredUserBy(Item item) throws DTException{
+	
+		return itemManager.restoreRegisteredUserBy(item);
 	}
 
 
 	@Override
-	public Iterator<Item> restoreItemBy(RegisteredUser registeredUser) {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<Item> restoreItemBy(RegisteredUser registeredUser) throws DTException {
+
+		return registeredUserManager.restoreItemBy(registeredUser);
 	}
 
 
 	@Override
-	public Item restoreItemBy(Auction auction) {
-		// TODO Auto-generated method stub
-		return null;
+	public Item restoreItemBy(Auction auction) throws DTException {
+
+		return auctionManager.restoreItemBy(auction);
 	}
 
 
 	@Override
-	public Auction restoreAuctionBy(Item item) {
-		// TODO Auto-generated method stub
-		return null;
+	public Auction restoreAuctionBy(Item item)throws DTException {
+
+		return itemManager.restoreAuctionBy(item);
 	}
 
 
 	@Override
-	public AttributeType restoreAttributeTypeBy(Attribute attribute) {
-		// TODO Auto-generated method stub
-		return null;
+	public AttributeType restoreAttributeTypeBy(Attribute attribute) throws DTException{
+
+		return attributeManager.restoreAttributeTypeBy(attribute);
 	}
 
 }
