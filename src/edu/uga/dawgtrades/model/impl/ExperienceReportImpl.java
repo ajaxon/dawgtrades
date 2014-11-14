@@ -9,6 +9,17 @@ import edu.uga.dawgtrades.model.RegisteredUser;
 public class ExperienceReportImpl extends Persistent implements
 		ExperienceReport {
 
+	public ExperienceReportImpl(RegisteredUser reviewer,
+			RegisteredUser reviewed, int rating, String report,
+			Date date) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public ExperienceReportImpl(long reviewerId, long reviewedId, int rating, String report,
+			Date date) {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public int getRating() {
 		// TODO Auto-generated method stub

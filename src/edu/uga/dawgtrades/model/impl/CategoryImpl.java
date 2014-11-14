@@ -4,6 +4,10 @@ import edu.uga.dawgtrades.model.Category;
 
 public class CategoryImpl extends Persistent implements Category {
 
+	public CategoryImpl(Category parent, String name) {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub

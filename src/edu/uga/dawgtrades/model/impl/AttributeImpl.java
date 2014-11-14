@@ -1,8 +1,18 @@
 package edu.uga.dawgtrades.model.impl;
 
 import edu.uga.dawgtrades.model.Attribute;
+import edu.uga.dawgtrades.model.AttributeType;
+import edu.uga.dawgtrades.model.Item;
 
 public class AttributeImpl extends Persistent implements Attribute {
+
+	public AttributeImpl(AttributeType attributeType, Item item, String value) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public AttributeImpl(long attributeTypeId, long itemId, String value) {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public long getId() {

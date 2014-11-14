@@ -49,13 +49,28 @@ public interface Persistence {
 	  public void		        			 	deleteItem(Item item ) throws DTException;
 	  
 	  public void                    			saveMembership( Membership membership ) throws DTException;
-	  public Iterator<Membership>          	restoreMembership( Membership membership ) throws DTException;
+	  public Membership							restoreMembership() throws DTException;
 	  public void		        			 	deleteMembership(Membership membership ) throws DTException;
 	  
 	  public void                    			saveRegisteredUser( RegisteredUser registeredUser ) throws DTException;
 	  public Iterator<RegisteredUser>          	restoreRegisteredUser( RegisteredUser registeredUser ) throws DTException;
 	  public void		        			 	deleteRegisteredUser(RegisteredUser registeredUser ) throws DTException;
+	  public Category							restoreParentCategoryBy(Category category);
+	  public Iterator<Category>					restoreChildCategoryBy(Category category);
+	  public Category							restoreCategoryBy(AttributeType attributeType);
+	  public Iterator<AttributeType>            restoreAttributeTypeBy(Category category);
+	  public Category							restoreCategoryBy(Item item);
+	  public Iterator<Item>						restoreItemBy(Category category);
+	  public Item								restoreItemBy(Attribute attribute);
+	  public Iterator<Attribute>				restoreAttributeBy(Item item);
+	  public RegisteredUser						restoreRegisteredUserBy(Item item);
+	  public Iterator<Item>						restoreItemBy(RegisteredUser registeredUser);
+	  public Item								restoreItemBy(Auction auction);
+	  public Auction							restoreAuctionBy(Item item);
+	  public AttributeType						restoreAttributeTypeBy(Attribute attribute);
 	  
-	
-	
+	  
+
 }
+
+

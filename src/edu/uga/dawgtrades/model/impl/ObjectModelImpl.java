@@ -3,6 +3,7 @@ package edu.uga.dawgtrades.model.impl;
 import java.util.Date;
 import java.util.Iterator;
 
+import edu.uga.dawgtrades.persist.Persistence;
 import edu.uga.dawgtrades.model.Attribute;
 import edu.uga.dawgtrades.model.AttributeType;
 import edu.uga.dawgtrades.model.Auction;
@@ -16,63 +17,86 @@ import edu.uga.dawgtrades.model.ObjectModel;
 import edu.uga.dawgtrades.model.RegisteredUser;
 
 public class ObjectModelImpl implements ObjectModel {
+	
+	 Persistence persistence = null;
+	    
+	    public ObjectModelImpl()
+	    {
+	        this.persistence = null;
+	    }
+	    
+	    public ObjectModelImpl( Persistence persistence )
+	    {
+	        this.persistence = persistence;
+	    }
 
+	
+	
 	@Override
 	public Category createCategory(Category parent, String name)
 			throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+		Category category = new CategoryImpl(parent,name);
+		
+		return category;
 	}
 
 	@Override
 	public Category createCategory() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Category category = new CategoryImpl(null,null);
+		category.setId(-1);
+		return category;
 	}
 
 	@Override
 	public Iterator<Category> findCategory(Category modelCategory)
 			throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+
+		return persistence.restoreCategory(modelCategory);
 	}
 
 	@Override
 	public void storeCategory(Category category) throws DTException {
-		// TODO Auto-generated method stub
+		
+		persistence.saveCategory(category);
 
 	}
 
 	@Override
 	public void deleteCategory(Category category) throws DTException {
-		// TODO Auto-generated method stub
 
+		persistence.deleteCategory(category);
 	}
 
 	@Override
 	public AttributeType createAttributeType(Category category, String name)
 			throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+			
+			AttributeType attributeType = new AttributeTypeImpl(category,name);
+			return attributeType;
 	}
 
 	@Override
 	public AttributeType createAttributeType() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		AttributeType attributeType = new AttributeTypeImpl(-1,null);
+		attributeType.setId(-1);
+		return attributeType;
 	}
 
 	@Override
 	public void storeAttributeType(AttributeType attributeType)
 			throws DTException {
-		// TODO Auto-generated method stub
 
+			persistence.saveAttributeType(attributeType);
+			
 	}
 
 	@Override
 	public void deleteAttributeType(AttributeType attributeType)
 			throws DTException {
-		// TODO Auto-generated method stub
+		
+		persistence.deleteAttribute(attributeType);
 
 	}
 
@@ -80,296 +104,316 @@ public class ObjectModelImpl implements ObjectModel {
 	public Item createItem(Category category, RegisteredUser user,
 			String identifier, String name, String description)
 			throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+		Item item = new ItemImpl(category,user,identifier,name,description);
+		return item;
 	}
 
 	@Override
 	public Item createItem() {
-		// TODO Auto-generated method stub
-		return null;
+		Item item = new ItemImpl(null,-1,null,null,null);
+		item.setId(-1);
+		
+		return item;
 	}
 
 	@Override
 	public Iterator<Item> findItem(Item modelItem) throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+	
+		return persistence.restoreItem(modelItem);
 	}
 
 	@Override
 	public void storeItem(Item item) throws DTException {
-		// TODO Auto-generated method stub
+		
+		persistence.saveItem(item);
 
 	}
 
 	@Override
 	public void deleteItem(Item item) throws DTException {
-		// TODO Auto-generated method stub
+		
+		persistence.deleteItem(item);
 
 	}
 
 	@Override
 	public Attribute createAttribute(AttributeType attributeType, Item item,
 			String value) throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Attribute attribute = new AttributeImpl(attributeType,item,value);
+		return attribute;
 	}
 
 	@Override
 	public Attribute createAttribute() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Attribute attribute = new AttributeImpl(-1,-1,null);
+		attribute.setId(-1);
+		return attribute;
 	}
 
 	@Override
 	public void storeAttribute(Attribute attribute) throws DTException {
-		// TODO Auto-generated method stub
 
+		persistence.saveAttribute(attribute);
 	}
 
 	@Override
 	public void deleteAttribute(Attribute attribute) throws DTException {
-		// TODO Auto-generated method stub
+		
+		persistence.deleteAttribute(attribute);
 
 	}
 
 	@Override
 	public Auction createAuction(Item item, float minPrice, Date expiration)
 			throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+		Auction auction = new AuctionImpl(item,minPrice,expiration);
+		
+		return auction;
 	}
 
 	@Override
 	public Auction createAuction() {
-		// TODO Auto-generated method stub
-		return null;
+	
+		Auction auction = new AuctionImpl(-1,0,null);
+		auction.setId(-1);
+		return auction;
 	}
 
 	@Override
 	public Iterator<Auction> findAuction(Auction modelAuction)
-			throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+		throws DTException {
+		
+		return persistence.restoreAuction(modelAuction);
 	}
 
 	@Override
 	public void storeAuction(Auction auction) throws DTException {
-		// TODO Auto-generated method stub
+	
+		persistence.saveAuction(auction);
 
 	}
 
 	@Override
 	public void deleteAuction(Auction auction) throws DTException {
-		// TODO Auto-generated method stub
 
+		persistence.deleteAuction(auction);
 	}
 
 	@Override
 	public RegisteredUser createRegisteredUser(String name, String firstName,
 			String lastName, String password, boolean isAdmin, String email,
 			String phone, boolean canText) throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		RegisteredUser user = new RegisteredUserImpl(name,firstName,lastName,password,phone,email,isAdmin,canText);
+		return user;
 	}
 
 	@Override
 	public RegisteredUser createRegisteredUser() {
-		// TODO Auto-generated method stub
-		return null;
+		RegisteredUser user = new RegisteredUserImpl(null,null,null,null,null,null,false,false);
+		user.setId(-1);
+		return user;
 	}
 
 	@Override
 	public Iterator<RegisteredUser> findRegisteredUser(
 			RegisteredUser modelRegisteredUser) throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+
+		return persistence.restoreRegisteredUser(modelRegisteredUser);
 	}
 
 	@Override
 	public void storeRegisteredUser(RegisteredUser registeredUser)
 			throws DTException {
-		// TODO Auto-generated method stub
-
+		
+			persistence.saveRegisteredUser(registeredUser);
+	
 	}
 
 	@Override
 	public void deleteRegisteredUser(RegisteredUser registeredUser)
 			throws DTException {
-		// TODO Auto-generated method stub
 
+			persistence.deleteRegisteredUser(registeredUser);
 	}
 
 	@Override
 	public Bid createBid(Auction auction, RegisteredUser user, float price)
 			throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+		Bid bid = new BidImpl(auction,user,price);
+		return bid;
 	}
 
 	@Override
 	public Bid createBid() {
-		// TODO Auto-generated method stub
-		return null;
+		Bid bid = new BidImpl(-1,-1,0);
+		bid.setId(-1);
+		return bid;
 	}
 
 	@Override
 	public Iterator<Bid> findBid(Bid modelBid) throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+
+		return persistence.restoreBid(modelBid);
 	}
 
 	@Override
 	public void storeBid(Bid bid) throws DTException {
-		// TODO Auto-generated method stub
 
+		persistence.saveBid(bid);
 	}
 
 	@Override
 	public void deleteBid(Bid bid) throws DTException {
-		// TODO Auto-generated method stub
 
+		persistence.deleteBid(bid);
 	}
 
 	@Override
 	public ExperienceReport createExperienceReport(RegisteredUser reviewer,
 			RegisteredUser reviewed, int rating, String report, Date date)
 			throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+		ExperienceReport experienceReport = new ExperienceReportImpl(reviewer,reviewed,rating,report,date);
+		return experienceReport;
 	}
 
 	@Override
 	public ExperienceReport createExperienceReport() {
-		// TODO Auto-generated method stub
-		return null;
+		ExperienceReport experienceReport = new ExperienceReportImpl(-1,-1,-1,null,null);
+		experienceReport.setId(-1);
+		return experienceReport;
 	}
 
 	@Override
 	public Iterator<ExperienceReport> findExperienceReport(
 			ExperienceReport modelExperienceReport) throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+
+		return persistence.restoreExperienceReport(modelExperienceReport);
 	}
 
 	@Override
 	public void storeExperienceReport(ExperienceReport experienceReport)
 			throws DTException {
-		// TODO Auto-generated method stub
 
+		persistence.saveExperienceReport(experienceReport);
 	}
 
 	@Override
 	public void deleteExperienceReport(ExperienceReport experienceReport)
 			throws DTException {
-		// TODO Auto-generated method stub
 
+		persistence.deleteExperienceReport(experienceReport);
 	}
 
 	@Override
 	public Membership createMembership(float price, Date date)
 			throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Membership membership = new MembershipImpl(price,date);
+		return membership;
 	}
 
 	@Override
 	public Membership createMembership() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Membership membership = new MembershipImpl(0,null);
+		
+		return membership;
 	}
 
 	@Override
 	public Membership findMembership() throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+	
+		return persistence.restoreMembership();
 	}
 
 	@Override
 	public void storeMembership(Membership membership) throws DTException {
-		// TODO Auto-generated method stub
 
+		 persistence.saveMembership(membership);
 	}
 
 	@Override
 	public Category getParent(Category category) throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+
+		return persistence.restoreParentCategoryBy(category);
 	}
 
 	@Override
 	public Iterator<Category> getChild(Category category) throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+
+		return persistence.restoreChildCategoryBy(category);
 	}
 
 	@Override
 	public Category getCategory(AttributeType attributeType) throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return persistence.restoreCategoryBy(attributeType);
 	}
 
 	@Override
 	public Iterator<AttributeType> getAttributeType(Category category)
 			throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+
+		return persistence.restoreAttributeTypeBy(category);
 	}
 
 	@Override
 	public Category getCategory(Item item) throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+
+		return persistence.restoreCategoryBy(item);
 	}
 
 	@Override
 	public Iterator<Item> getItem(Category category) throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+
+		return persistence.restoreItemBy(category);
 	}
 
 	@Override
 	public Item getItem(Attribute attribute) throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+
+		return persistence.restoreItemBy(attribute);
 	}
 
 	@Override
 	public Iterator<Attribute> getAttribute(Item item) throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+
+		return persistence.restoreAttributeBy(item);
 	}
 
 	@Override
 	public RegisteredUser getRegisteredUser(Item item) throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+
+		return persistence.restoreRegisteredUserBy(item);
 	}
 
 	@Override
 	public Iterator<Item> getItem(RegisteredUser registeredUser)
 			throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+
+		return persistence.restoreItemBy(registeredUser);
 	}
 
 	@Override
 	public Item getItem(Auction auction) throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+
+		return persistence.restoreItemBy(auction);
 	}
 
 	@Override
 	public Auction getAuction(Item item) throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+
+		return persistence.restoreAuctionBy(item);
 	}
 
 	@Override
 	public AttributeType getAttributeType(Attribute attribute)
 			throws DTException {
-		// TODO Auto-generated method stub
-		return null;
+
+		return persistence.restoreAttributeTypeBy(attribute);
 	}
 
 }

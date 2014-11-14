@@ -3,8 +3,18 @@ package edu.uga.dawgtrades.model.impl;
 import java.util.Date;
 
 import edu.uga.dawgtrades.model.Auction;
+import edu.uga.dawgtrades.model.Item;
 
 public class AuctionImpl extends Persistent implements Auction {
+
+	public AuctionImpl(Item item, float minPrice, Date expiration) {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public AuctionImpl(long itemId, float minPrice, Date expiration ){
+		
+		
+	}
 
 	@Override
 	public float getMinPrice() {

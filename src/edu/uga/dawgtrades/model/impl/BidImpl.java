@@ -8,6 +8,14 @@ import edu.uga.dawgtrades.model.RegisteredUser;
 
 public class BidImpl extends Persistent implements Bid {
 
+	public BidImpl(Auction auction, RegisteredUser user, float price) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public BidImpl(long auctionId, long registeredUserId, float price) {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public float getAmount() {
 		// TODO Auto-generated method stub

@@ -1,8 +1,24 @@
 package edu.uga.dawgtrades.model.impl;
 
+import edu.uga.dawgtrades.model.Category;
 import edu.uga.dawgtrades.model.Item;
+import edu.uga.dawgtrades.model.RegisteredUser;
 
 public class ItemImpl extends Persistent implements Item {
+
+	public ItemImpl(Category category, RegisteredUser user, String identifier,
+			String name, String description) {
+
+	
+	}
+	
+	public ItemImpl(Category category, long userID, String identifier,
+			String name, String description) {
+
+	
+	}
+	
+	
 
 	@Override
 	public String getIdentifier() {

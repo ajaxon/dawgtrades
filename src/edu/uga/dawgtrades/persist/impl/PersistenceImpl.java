@@ -200,12 +200,6 @@ public class PersistenceImpl implements Persistence {
 
 	}
 
-	@Override
-	public Iterator<Membership> restoreMembership(Membership membership)
-			throws DTException {
-	
-		return membershipManager.restore(membership);
-	}
 
 	@Override
 	public void deleteMembership(Membership membership) throws DTException {
@@ -235,6 +229,104 @@ public class PersistenceImpl implements Persistence {
 		
 		registeredUserManager.restore(registeredUser);
 
+	}
+
+
+	@Override
+	public Membership restoreMembership() throws DTException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Category restoreParentCategoryBy(Category category) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Iterator<Category> restoreChildCategoryBy(Category category) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Category restoreCategoryBy(AttributeType attributeType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Iterator<AttributeType> restoreAttributeTypeBy(Category category) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Category restoreCategoryBy(Item item) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Iterator<Item> restoreItemBy(Category category) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Item restoreItemBy(Attribute attribute) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Iterator<Attribute> restoreAttributeBy(Item item) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public RegisteredUser restoreRegisteredUserBy(Item item) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Iterator<Item> restoreItemBy(RegisteredUser registeredUser) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Item restoreItemBy(Auction auction) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Auction restoreAuctionBy(Item item) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public AttributeType restoreAttributeTypeBy(Attribute attribute) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

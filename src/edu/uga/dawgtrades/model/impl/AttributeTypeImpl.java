@@ -1,8 +1,17 @@
 package edu.uga.dawgtrades.model.impl;
 
 import edu.uga.dawgtrades.model.AttributeType;
+import edu.uga.dawgtrades.model.Category;
 
 public class AttributeTypeImpl extends Persistent implements AttributeType {
+
+	public AttributeTypeImpl(Category category, String name) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public AttributeTypeImpl(long categoryId, String name) {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public String getName() {

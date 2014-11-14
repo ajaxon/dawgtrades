@@ -3,9 +3,7 @@ package edu.uga.dawgtrades.model.impl;
 import edu.uga.dawgtrades.model.RegisteredUser;
 
 public class RegisteredUserImpl extends Persistent implements RegisteredUser {
-
-
-
+	
 	private String name;
 	private String firstName;
 	private String lastName;
@@ -14,112 +12,122 @@ public class RegisteredUserImpl extends Persistent implements RegisteredUser {
 	private String phone;
 	private boolean canText;
 	private boolean isAdmin;
-
+	
 	public RegisteredUserImpl( String name,
-							   String firstName,
-							   String lastName,
-							   String password,
-							   String email,
-							   String phone,
-					 		   boolean canText,
-							   boolean isAdmin)
-	{
-		super( -1 );
-		this.name = name;
-		this.password = password;
-		this.email = email;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.phone = phone;
-		this.canText = canText;
-		this.isAdmin = isAdmin;
-	}
+			   String firstName,
+			   String lastName,
+			   String password,
+			   String email,
+			   String phone,
+	 		   boolean canText,
+			   boolean isAdmin)
+		{
+				super( -1 );
+				this.name = name;
+				this.password = password;
+				this.email = email;
+				this.firstName = firstName;
+				this.lastName = lastName;
+				this.phone = phone;
+				this.canText = canText;
+				this.isAdmin = isAdmin;
+}
+	
+	
 	@Override
 	public String getName() {
-		return name;
+
+		return this.name;
 	}
 
 	@Override
 	public void setName(String name) {
-		this.name = name;
 
+		name=this.name;
 	}
 
 	@Override
 	public String getFirstName() {
-		return firstName;
+
+		return this.firstName;
 	}
 
 	@Override
 	public void setFirstName(String firstName) {
-		this.firstName = firstName;
 
+		this.firstName=firstName;
 	}
 
 	@Override
 	public String getLastName() {
-		return lastName;
+
+		return this.lastName;
 	}
 
 	@Override
 	public void setLastName(String lastName) {
-		this.lastName = lastName;
 
+		this.lastName=lastName;
 	}
 
 	@Override
 	public String getPassword() {
-		return password;
+
+		return this.password;
 	}
 
 	@Override
 	public void setPassword(String password) {
-		this.password = password;
 
+		this.password=password;
 	}
 
 	@Override
 	public boolean getIsAdmin() {
-		return isAdmin;
+
+		return this.isAdmin;
 	}
 
 	@Override
 	public void setIsAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
 
+		this.isAdmin=isAdmin;
 	}
 
 	@Override
 	public String getEmail() {
-		return email;
+
+		return this.email;
 	}
 
 	@Override
 	public void setEmail(String email) {
-		this.email = email;
 
+		this.email=email;
 	}
 
 	@Override
 	public String getPhone() {
+
 		return this.phone;
 	}
 
 	@Override
 	public void setPhone(String phone) {
-		this.phone = phone;
 
+		this.phone=phone;
 	}
 
 	@Override
 	public boolean getCanText() {
+
 		return this.canText;
 	}
 
 	@Override
 	public void setCanText(boolean canText) {
-		this.canText = canText;
 
+		this.canText=canText;
 	}
 
 }
