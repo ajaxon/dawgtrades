@@ -9,75 +9,127 @@ import edu.uga.dawgtrades.model.RegisteredUser;
 public class ExperienceReportImpl extends Persistent implements
 		ExperienceReport {
 
+		private long reviewerId;
+		private long reviewedId;
+		private RegisteredUser reviewer;
+		private RegisteredUser reviewed;
+		private int rating;
+		private String report;
+		private Date date;
+		
+	
 	public ExperienceReportImpl(RegisteredUser reviewer,
 			RegisteredUser reviewed, int rating, String report,
-			Date date) {
-		// TODO Auto-generated constructor stub
+			Date date) throws DTException {
+		super(-1);
+		if(reviewer==null){
+			throw new DTException("The reviewer is null");
+		}
+		if(!reviewer.isPersistent()){
+			throw new DTException("The reviwer is not persistent");
+			
+		}
+		if(reviewed==null){
+			throw new DTException("The reviewed is null");
+		}
+		if(!reviewed.isPersistent()){
+			throw new DTException("The reviwed is not persistent");
+			
+		}
+		this.reviewer=reviewer;
+		this.setReviewerId(this.reviewer.getId());
+		this.reviewed=reviewed;
+		this.setReviewedId(this.reviewed.getId());
+		this.rating=rating;
+		this.report=report;
+		this.date=date;
 	}
 
 	public ExperienceReportImpl(long reviewerId, long reviewedId, int rating, String report,
 			Date date) {
-		// TODO Auto-generated constructor stub
+		
+			this.setReviewedId(reviewedId);
+			this.setReviewerId(reviewerId);
+			this.rating=rating;
+			this.report=report;
+			this.date=date;
+
 	}
 
 	@Override
 	public int getRating() {
-		// TODO Auto-generated method stub
-		return 0;
+
+		return this.rating;
 	}
 
 	@Override
 	public void setRating(int rating) throws DTException {
-		// TODO Auto-generated method stub
 
+		this.rating=rating;
 	}
 
 	@Override
 	public String getReport() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return this.report;
 	}
 
 	@Override
 	public void setReport(String report) {
-		// TODO Auto-generated method stub
 
+		this.report=report;
 	}
 
 	@Override
 	public Date getDate() {
-		// TODO Auto-generated method stub
-		return null;
+
+		return this.date;
 	}
 
 	@Override
 	public void setDate(Date date) {
-		// TODO Auto-generated method stub
 
+		this.date=date;
 	}
 
 	@Override
 	public RegisteredUser getReviewer() {
-		// TODO Auto-generated method stub
-		return null;
+
+		return this.reviewer;
 	}
 
 	@Override
 	public void setReviewer(RegisteredUser reviewer) {
-		// TODO Auto-generated method stub
 
+		this.reviewer=reviewer;
 	}
 
 	@Override
 	public RegisteredUser getReviewed() {
-		// TODO Auto-generated method stub
-		return null;
+
+		return this.reviewed;
 	}
 
 	@Override
 	public void setReviewed(RegisteredUser reviewed) {
-		// TODO Auto-generated method stub
+			
+		this.reviewed=reviewed;
+	}
 
+	public long getReviewedId() {
+		return reviewedId;
+	}
+
+	public void setReviewedId(long reviewedId) {
+		this.reviewedId = reviewedId;
+	}
+
+	public long getReviewerId() {
+		return reviewerId;
+	}
+
+	public void setReviewerId(long reviewerId) {
+		this.reviewerId = reviewerId;
 	}
 
 }
