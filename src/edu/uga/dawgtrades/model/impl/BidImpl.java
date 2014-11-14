@@ -17,14 +17,14 @@ public class BidImpl extends Persistent implements Bid {
 		auctionId = auction.getId();
 		registeredUserId = user.getId();
 		this.price = price;
-		this.date = new Date();
+		
 	}
 
 	public BidImpl(long auctionId, long registeredUserId, float price) {
 		this.auctionId = auctionId;
 		this.registeredUserId = registeredUserId;
 		this.price = price;
-		this.date = new Date();
+		
 	}
 
 	@Override
