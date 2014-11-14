@@ -6,20 +6,18 @@ public class Persistent implements Persistable {
 
 	@Override
 	public long getId() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.id;
 	}
 
 	@Override
 	public void setId(long id) {
-		// TODO Auto-generated method stub
+		this.id = id;
 
 	}
 
 	@Override
 	public boolean isPersistent() {
-		// TODO Auto-generated method stub
-		return false;
+		return id >= 0;
 	}
 
 }

@@ -4,99 +4,103 @@ import edu.uga.dawgtrades.model.RegisteredUser;
 
 public class RegisteredUserImpl extends Persistent implements RegisteredUser {
 
+
+
+	private String name;
+	private String firstName;
+	private String lastName;
+	private String password;
+	private String email;
+	private String phone;
+	private boolean canText;
+	private boolean isAdmin;
+
+
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
 
 	@Override
 	public void setName(String name) {
-		// TODO Auto-generated method stub
+		this.name = name;
 
 	}
 
 	@Override
 	public String getFirstName() {
-		// TODO Auto-generated method stub
-		return null;
+		return firstName;
 	}
 
 	@Override
 	public void setFirstName(String firstName) {
-		// TODO Auto-generated method stub
+		this.firstName = firstName;
 
 	}
 
 	@Override
 	public String getLastName() {
-		// TODO Auto-generated method stub
-		return null;
+		return lastName;
 	}
 
 	@Override
 	public void setLastName(String lastName) {
-		// TODO Auto-generated method stub
+		this.lastName = lastName;
 
 	}
 
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
-		return null;
+		return password;
 	}
 
 	@Override
 	public void setPassword(String password) {
-		// TODO Auto-generated method stub
+		this.password = password;
 
 	}
 
 	@Override
 	public boolean getIsAdmin() {
-		// TODO Auto-generated method stub
-		return false;
+		return isAdmin;
 	}
 
 	@Override
 	public void setIsAdmin(boolean isAdmin) {
-		// TODO Auto-generated method stub
+		this.isAdmin = isAdmin;
 
 	}
 
 	@Override
 	public String getEmail() {
-		// TODO Auto-generated method stub
-		return null;
+		return email;
 	}
 
 	@Override
 	public void setEmail(String email) {
-		// TODO Auto-generated method stub
+		this.email = email;
 
 	}
 
 	@Override
 	public String getPhone() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.phone;
 	}
 
 	@Override
 	public void setPhone(String phone) {
-		// TODO Auto-generated method stub
+		this.phone = phone;
 
 	}
 
 	@Override
 	public boolean getCanText() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.canText;
 	}
 
 	@Override
 	public void setCanText(boolean canText) {
-		// TODO Auto-generated method stub
+		this.canText = canText;
 
 	}
 
