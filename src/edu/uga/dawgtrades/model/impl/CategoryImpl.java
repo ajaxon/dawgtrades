@@ -7,7 +7,7 @@ public class CategoryImpl extends Persistent implements Category {
 	private long parentId;
 	private String name;
 	
-	public CategoryImpl(Category parent, String name) {
+	public CategoryImpl(Category parent, String name) throws DTException {
 		
 		super(-1);
 		if(parent == null)
