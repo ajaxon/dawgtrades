@@ -187,9 +187,33 @@ public class RegisteredUserManager {
         
 	}
 	
+	
 	public void delete(RegisteredUser registeredUser) throws DTException{
-		
-		
+		String               deleteRegisteredUserSql = "delete from registeredUser where id = ?";              
+		PreparedStatement    stmt = null;
+		int                  inscnt;
+		    
+		// form the query based on the given registeredUser object instance
+		if( !registeredUser.isPersistent() ) // is the registeredUser object persistent?  If not, nothing to actually delete
+		    return;
+		    
+		try {
+		        
+		    //DELETE t1, t2 FROM t1, t2 WHERE t1.id = t2.id;
+		    //DELETE FROM t1, t2 USING t1, t2 WHERE t1.id = t2.id;
+		    stmt = (PreparedStatement) conn.prepareStatement( deleteRegisteredUserSql );
+		        
+		    stmt.setLong( 1, registeredUser.getId() );
+		        
+		    inscnt = stmt.executeUpdate();
+		        
+		    if( inscnt == 0 ) {
+		        throw new DTException( "registeredUserManager.delete: failed to delete this registeredUser" );
+		    }
+		}
+		catch( SQLException e ) {
+		    throw new DTException( "RegisteredUser.delete: failed to delete this RegisteredUser: " + e.getMessage() );
+		}
 	}
 
 
