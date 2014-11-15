@@ -12,6 +12,10 @@ public class AuctionImpl extends Persistent implements Auction {
 	private Date expiration;
 
 	public AuctionImpl(Item item, float minPrice, Date expiration) {
+		if(item == null)
+			throw new DTException("Item is null");
+		if(!item.isPersistent())
+			throw new DTException("Item is not persistent");
 		itemId = item.getId();
 		this.minPrice = minPrice;
 		this.expiration = expiration;
@@ -46,6 +50,7 @@ public class AuctionImpl extends Persistent implements Auction {
 	@Override
 	public boolean getIsClosed() {
 		Date date = new Date();
+		//date is SysDate
 		if(date.after(this.expiration)){
 			
 			return true;
