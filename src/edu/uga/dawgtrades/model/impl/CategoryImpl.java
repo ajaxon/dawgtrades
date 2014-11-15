@@ -11,17 +11,18 @@ public class CategoryImpl extends Persistent implements Category {
 	public CategoryImpl(Category parent, String name) {
 		
 		super(-1);
-		this.setParent(parent);
+		if(parent == null)
+			throw new DTException("Parent is null");
+		if (!parent.isPersistent())
+			throw new DTException("Parent is not persistent");
 		this.parentId=parent.getId();
 		this.name=name;
 	}
 	
 	public CategoryImpl(long parentId,String name){
-		
 		super(-1);
 		this.parentId=parentId;
 		this.name=name;
-		
 	}
 
 	@Override
@@ -38,23 +39,11 @@ public class CategoryImpl extends Persistent implements Category {
 
 	@Override
 	public long getParentId() {
-		
-		
 		return this.parentId;
 	}
 
 	@Override
 	public void setParentId(long parentId) {
-
 		this.parentId=parentId;
 	}
-
-	public Category getParent() {
-		return parent;
-	}
-
-	public void setParent(Category parent) {
-		this.parent = parent;
-	}
-
 }
