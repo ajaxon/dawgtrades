@@ -27,6 +27,7 @@ public class BidImpl extends Persistent implements Bid {
 		auctionId = auction.getId();
 		registeredUserId = user.getId();
 		this.amount = amount;
+		this.date =new Date();
 
 	}
 
