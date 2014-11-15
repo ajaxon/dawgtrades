@@ -1,15 +1,32 @@
 package edu.uga.dawgtrades.persist.impl;
 
+import java.sql.ResultSet;
 import java.util.Iterator;
 
+import edu.uga.dawgtrades.model.DTException;
+import edu.uga.dawgtrades.model.ObjectModel;
 import edu.uga.dawgtrades.model.RegisteredUser;
 
 public class RegisteredUserIterator implements Iterator<RegisteredUser> {
 
-	@Override
+    private ResultSet rs = null;
+    private ObjectModel objectModel = null;
+    private boolean more = false;
+
+
+    public RegisteredUserIterator(ResultSet rs, ObjectModel objectModel) throws DTException
+    {
+        this.rs = rs;
+        this.objectModel = objectModel;
+        try{
+            more = rs.next();
+        }catch( Exception e){
+            throw new DTException("RegisteredUserIterator: Cannot create User" + e);
+        }
+    }
+    @Override
 	public boolean hasNext() {
-		// TODO Auto-generated method stub
-		return false;
+		return more;
 	}
 
 	@Override
@@ -20,7 +37,7 @@ public class RegisteredUserIterator implements Iterator<RegisteredUser> {
 
 	@Override
 	public void remove() {
-		// TODO Auto-generated method stub
+        throw new UnsupportedOperationException();
 		
 	}
 

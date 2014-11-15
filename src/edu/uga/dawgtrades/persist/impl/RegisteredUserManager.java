@@ -41,27 +41,27 @@ public class RegisteredUserManager {
             if( user.getName() != null ) // clubsuser is unique, so it is sufficient to get a person
                 stmt.setString( 1, user.getName() );
             else
-                throw new DTException( "PersonManager.save: can't save a Person: userName undefined" );
+                throw new DTException( "RegisteredUserManager.save: can't save a RegisteredUser: userName undefined" );
 
             if( user.getFirstName() != null )
                 stmt.setString( 2, user.getFirstName() );
             else
-                throw new DTException( "PersonManager.save: can't save a Person: firstName undefined" );
+                throw new DTException( "RegisteredUserManager.save: can't save a RegisteredUser: firstName undefined" );
 
             if( user.getLastName() != null )
                 stmt.setString( 3,  user.getLastName() );
             else
-                throw new DTException( "PersonManager.save: can't save a Person: email undefined" );
+                throw new DTException( "RegisteredUserManager.save: can't save a RegisteredUser: email undefined" );
 
             if( user.getEmail() != null )
                 stmt.setString( 4, user.getEmail() );
             else
-                throw new DTException( "PersonManager.save: can't save a Person: first name undefined" );
+                throw new DTException( "RegisteredUserManager.save: can't save a RegisteredUser: first name undefined" );
 
             if( user.getPassword() != null )
                 stmt.setString( 5, user.getPassword() );
             else
-                throw new DTException( "PersonManager.save: can't save a Person: last name undefined" );
+                throw new DTException( "RegisteredUserManager.save: can't save a RegisteredUser: last name undefined" );
             if(user.getPhone() != null)
                 stmt.setString(6,user.getPhone());
             else
@@ -97,12 +97,12 @@ public class RegisteredUserManager {
             }
             else {
                 if( inscnt < 1 )
-                    throw new DTException( "PersonManager.save: failed to save a User" );
+                    throw new DTException( "RegisteredUserManager.save: failed to save a User" );
             }
         }
         catch( SQLException e ) {
             e.printStackTrace();
-            throw new DTException( "PersonManager.save: failed to save a User: " + e );
+            throw new DTException( "RegisteredUserManager.save: failed to save a User: " + e );
         }
     }
 
