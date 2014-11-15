@@ -123,7 +123,7 @@ public class RegisteredUserManager {
 	            if( registeredUser.getId() >= 0 ) // id is unique, so it is sufficient to get a registered user
 	                query.append( " where id = " + registeredUser.getId() );
 	            else if( registeredUser.getName() != null ) // userName is unique, so it is sufficient to get a registered user
-	                query.append( " where username = '" + registeredUser.getName() + "'" );
+	                query.append( " where name = '" + registeredUser.getName() + "'" );
 	            else {
 	                if( registeredUser.getPassword() != null )
 	                    condition.append( " password = '" + registeredUser.getPassword() + "'" );
