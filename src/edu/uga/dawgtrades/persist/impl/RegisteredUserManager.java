@@ -92,7 +92,7 @@ public class RegisteredUserManager {
 	
 	            stmt = conn.createStatement();
 	
-	            // retrieve the persistent Person object
+	            // retrieve the persistent RegisteredUser object
 	            //
 	            if( stmt.execute( query.toString() ) ) { // statement returned a result
 	                ResultSet r = stmt.getResultSet();
@@ -101,10 +101,10 @@ public class RegisteredUserManager {
 	        }
 	        catch( Exception e ) {      // just in case...
 	            throw new DTException( "RegisteredUserManager.restore: Could not restore persistent RegisteredUser object; Root cause: " + e );
-        }
+          }
         
-        // if we get to this point, it's an error
-        throw new ClubsException( "RegisteredUser.restore: Could not restore persistent RegisteredUser object" );
+          // if we get to this point, it's an error
+	  throw new DTException( "RegisteredUser.restore: Could not restore persistent RegisteredUser object" );
         
 	}
 	
