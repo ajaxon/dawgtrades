@@ -1,6 +1,7 @@
 package edu.uga.dawgtrades.model.impl;
 
 import edu.uga.dawgtrades.model.Category;
+import edu.uga.dawgtrades.model.DTException;
 
 public class CategoryImpl extends Persistent implements Category {
 
