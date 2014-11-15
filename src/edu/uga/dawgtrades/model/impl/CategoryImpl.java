@@ -5,7 +5,6 @@ import edu.uga.dawgtrades.model.Category;
 public class CategoryImpl extends Persistent implements Category {
 
 	private long parentId;
-	private Category parent;
 	private String name;
 	
 	public CategoryImpl(Category parent, String name) {
