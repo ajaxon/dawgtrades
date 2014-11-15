@@ -32,11 +32,80 @@ public class RegisteredUserManager {
 	}
 	
 	public Iterator<RegisteredUser> restore(RegisteredUser registeredUser) throws DTException{
-		
-		
-		return null;
-		
-		
+		String       selectRegisteredUserSql = "select id, name, firstName, lastName, password, email, phone, canText, isAdmin";              
+	        Statement    stmt = null;
+	        StringBuffer query = new StringBuffer( 100 );
+	        StringBuffer condition = new StringBuffer( 100 );
+	
+	        condition.setLength( 0 );
+	        
+	        // form the query based on the given RegisteredUser object instance
+	        query.append( selectRegisteredUserSql );
+	        
+	        if( registeredUser != null ) {
+	            if( registeredUser.getId() >= 0 ) // id is unique, so it is sufficient to get a registered user
+	                query.append( " where id = " + registeredUser.getId() );
+	            else if( registeredUser.getUserName() != null ) // userName is unique, so it is sufficient to get a registered user
+	                query.append( " where username = '" + registeredUser.getUserName() + "'" );
+	            else {
+	                if( registeredUser.getPassword() != null )
+	                    condition.append( " password = '" + registeredUser.getPassword() + "'" );
+	
+	                if( registeredUser.getEmail() != null ) {
+	                    if( condition.length() > 0 )
+	                        condition.append( " and" );
+	                    condition.append( " email = '" + registeredUser.getEmail() + "'" );
+	                }
+	
+	                if( registeredUser.getFirstName() != null ) {
+	                    if( condition.length() > 0 )
+	                        condition.append( " and" );
+	                    condition.append( " firstName = '" + registeredUser.getFirstName() + "'" );
+	                }
+	
+	                if( registeredUser.getLastName() != null ) {
+	                    if( condition.length() > 0 )
+	                        condition.append( " and" );
+	                    condition.append( " lastName = '" + registeredUser.getLastName() + "'" );
+	                }
+	
+	                if( registeredUser.getAddress() != null ) {
+	                    if( condition.length() > 0 )
+	                        condition.append( " and" );
+	                    condition.append( " address = '" + registeredUser.getAddress() + "'" );
+	                }        
+	
+	                if( registeredUser.getPhone() != null ) {
+	                    if( condition.length() > 0 )
+	                        condition.append( " and" );
+	                    condition.append( " phone = '" + registeredUser.getPhone() + "'" );
+	                }
+	
+	                if( condition.length() > 0 ) {
+	                    query.append(  " where " );
+	                    query.append( condition );
+	                }
+	            }
+	        }
+	        
+	        try {
+	
+	            stmt = conn.createStatement();
+	
+	            // retrieve the persistent Person object
+	            //
+	            if( stmt.execute( query.toString() ) ) { // statement returned a result
+	                ResultSet r = stmt.getResultSet();
+	                return new RegisteredUserIterator( r, objectModel );
+	            }
+	        }
+	        catch( Exception e ) {      // just in case...
+	            throw new DTException( "RegisteredUserManager.restore: Could not restore persistent RegisteredUser object; Root cause: " + e );
+        }
+        
+        // if we get to this point, it's an error
+        throw new ClubsException( "RegisteredUser.restore: Could not restore persistent RegisteredUser object" );
+        
 	}
 	
 	public void delete(RegisteredUser registeredUser) throws DTException{
