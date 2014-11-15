@@ -1,8 +1,11 @@
 package edu.uga.dawgtrades.model.impl;
 
 import java.util.Date;
+import java.util.ArrayList;
 
 import edu.uga.dawgtrades.model.Auction;
+import edu.uga.dawgtrades.model.Bid;
+import edu.uga.dawgtrades.model.DTException;
 import edu.uga.dawgtrades.model.Item;
 
 public class AuctionImpl extends Persistent implements Auction {
@@ -11,12 +14,15 @@ public class AuctionImpl extends Persistent implements Auction {
 	private float minPrice;
 	private Date expiration;
 
-	public AuctionImpl(Item item, float minPrice, Date expiration) {
+
+    private ArrayList<Bid> bids;
+
+	public AuctionImpl(Item item, float minPrice, Date expiration) throws DTException {
 		if(item == null)
 			throw new DTException("Item is null");
 		if(!item.isPersistent())
 			throw new DTException("Item is not persistent");
-		itemId = item.getId();
+		this.itemId = item.getId();
 		this.minPrice = minPrice;
 		this.expiration = expiration;
 	}
@@ -44,21 +50,16 @@ public class AuctionImpl extends Persistent implements Auction {
 
 	@Override
 	public void setExpiration(Date expiration) {
-		this.expiration = expiration;
+		Date now = new Date();
+        if(now.before(expiration))
+            this.expiration = expiration;
+        // invalid expiration date does not get set
 	}
 
 	@Override
 	public boolean getIsClosed() {
-		Date date = new Date();
-		//date is SysDate
-		if(date.after(this.expiration)){
-			
-			return true;
-			
-		}else{
-			
-			return false;
-		}
+		Date now = new Date();
+        return (now.after(this.expiration)) ? true : false;
 	
 	}
 
@@ -80,3 +81,4 @@ public class AuctionImpl extends Persistent implements Auction {
 		this.itemId = itemId;
 	}
 }
+
