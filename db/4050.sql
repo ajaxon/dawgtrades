@@ -67,11 +67,11 @@ CREATE TABLE `auction` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `minPrice` float NOT NULL,
   `expiration` date NOT NULL,
-  'item_id' int(11) unsigned NOT NULL,
+  `item_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-  KEY 'item_id' ('item_id')
-  CONSTRAINT 'item_id' FOREIGN KEY ('item_id') REFERENCES 'item' ('id') ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `item_id` (`item_id`)
+  CONSTRAINT `item_id` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -84,16 +84,16 @@ DROP TABLE IF EXISTS `bid`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `bid` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  'user_id' int(11) unsigned NOT NULL,
-  'auction_id' int(11) unsigned NOT NULL,
-  'date' date NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
+  `auction_id` int(11) unsigned NOT NULL,
+  `date` date NOT NULL,
   `amount` float NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
-  KEY 'user_id' ('user_id'),
-  KEY 'auction_id' ('auction_id'),
-  CONSTRAINT 'user_id' FOREIGN KEY ('user_id') REFERENCES 'user' ('id') ON DELETE CASCADE  ON UPDATE  CASCADE
-  CONSTRAINT 'auction_id' FOREIGN KEY ('auction_id') REFERENCES  'auction' ('id') ON DELETE CASCADE  ON UPDATE  CASCADE
+  KEY `user_id` (`user_id`),
+  KEY `auction_id` (`auction_id`),
+  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE  ON UPDATE  CASCADE
+  CONSTRAINT `auction_id` FOREIGN KEY (`auction_id`) REFERENCES  `auction` (`id`) ON DELETE CASCADE  ON UPDATE  CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -148,6 +148,7 @@ DROP TABLE IF EXISTS `item`;
 CREATE TABLE `item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
+  `identifier` varchar(45) DEFAULT NULL,
   `description` varchar(128) DEFAULT NULL,
   `owner_id` int(11) unsigned NOT NULL,
   `category_id` int(11) unsigned NOT NULL,
@@ -192,11 +193,11 @@ CREATE TABLE `user` (
   `password` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
   `phone` varchar(45) DEFAULT NULL,
-  `canText` tinyint(1) DEFAULT '0',
-  `isAdmin` tinyint(1) DEFAULT '0',
+  `canText` tinyint(1) DEFAULT `0`,
+  `isAdmin` tinyint(1) DEFAULT `0`,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
-  UNIQUE ('email')
+  UNIQUE (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
