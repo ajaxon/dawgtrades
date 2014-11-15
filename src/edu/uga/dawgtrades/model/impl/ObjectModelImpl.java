@@ -256,6 +256,11 @@ public class ObjectModelImpl implements ObjectModel {
 	@Override
 	public Bid createBid(Auction auction, RegisteredUser user, float price)
 			throws DTException {
+
+        if(!auction.isPersistent())
+            throw new DTException("Auction is not persistent.");
+        if(!user.isPersistent())
+            throw new DTException("User is not persistent.");
 		Bid bid = new BidImpl(auction,user,price);
 		return bid;
 	}
