@@ -1,7 +1,9 @@
 package edu.uga.dawgtrades.persist.impl;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.Iterator;
+import java.sql.Statement;
 
 import edu.uga.dawgtrades.model.Attribute;
 import edu.uga.dawgtrades.model.DTException;
@@ -21,8 +23,11 @@ public class RegisteredUserManager {
 
 	
 	public void save(RegisteredUser registeredUser) throws DTException{
-		
-		
+
+		String insertRegisteredUserSql = "insert into registered_user(name,firstName,lastName,email,password,canText);
+		String updateRegisteredUserSql ="";
+		PreparedStatement stmt;
+
 	}
 	
 	public Iterator<RegisteredUser> restore(RegisteredUser registeredUser) throws DTException{
