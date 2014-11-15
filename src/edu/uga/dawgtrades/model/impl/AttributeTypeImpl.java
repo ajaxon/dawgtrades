@@ -4,37 +4,42 @@ import edu.uga.dawgtrades.model.AttributeType;
 import edu.uga.dawgtrades.model.Category;
 
 public class AttributeTypeImpl extends Persistent implements AttributeType {
+	
+	private long categoryId;
+	private String name;
 
-	public AttributeTypeImpl(Category category, String name) {
-		// TODO Auto-generated constructor stub
+	public AttributeTypeImpl(Category category, String name) throws DTException {
+		if(category == null)
+			throw new DTException("Category is null");
+		if(!category.isPersistent())
+			throw new DTException("Category is not persistent");
+		this.categoryId = category.getId();
+		this.name = name;
 	}
 
 	public AttributeTypeImpl(long categoryId, String name) {
-		// TODO Auto-generated constructor stub
+		this.categoryId = category.getId();
+		this.name = name;
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
 
 	@Override
 	public void setName(String name) {
-		// TODO Auto-generated method stub
-
+		this.name = name;
 	}
 
 	@Override
 	public long getCategoryId() {
-		// TODO Auto-generated method stub
-		return 0;
+		return categoryId;
 	}
 
 	@Override
 	public void setCategoryId(long categoryId) {
-		// TODO Auto-generated method stub
-
+		this.categoryId = categoryId;
 	}
 
 }
