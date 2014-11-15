@@ -87,13 +87,13 @@ CREATE TABLE `bid` (
   'user_id' int(11) unsigned NOT NULL,
   'auction_id' int(11) unsigned NOT NULL,
   'date' date NOT NULL,
-
   `amount` float NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY 'user_id' ('user_id'),
   KEY 'auction_id' ('auction_id'),
-  CONSTRAINT 'user_id' FOREIGN KEY ('user_id') REFERENCES 'user' ('id')
+  CONSTRAINT 'user_id' FOREIGN KEY ('user_id') REFERENCES 'user' ('id') ON DELETE CASCADE  ON UPDATE  CASCADE
+  CONSTRAINT 'auction_id' FOREIGN KEY ('auction_id') REFERENCES  'auction' ('id') ON DELETE CASCADE  ON UPDATE  CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -126,7 +126,7 @@ DROP TABLE IF EXISTS `experience_report`;
 CREATE TABLE `experience_report` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `rating` int(11) NOT NULL,
-  `report` varchar(45) DEFAULT NULL,
+  `report` varchar(128) DEFAULT NULL,
   `reviewer_id` int(11) NOT NULL,
   `reviewed_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -148,14 +148,16 @@ DROP TABLE IF EXISTS `item`;
 CREATE TABLE `item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
-  `description` varchar(45) DEFAULT NULL,
-  `user_id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
+  `description` varchar(128) DEFAULT NULL,
+  `owner_id` int(11) unsigned NOT NULL,
+  `category_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `category_id_idx` (`category_id`),
   KEY `user_id_idx` (`user_id`),
-  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `owner_id` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `category_id` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
