@@ -1,9 +1,7 @@
 package edu.uga.dawgtrades.persist.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.util.Iterator;
-import java.sql.Statement;
 
 import edu.uga.dawgtrades.model.Attribute;
 import edu.uga.dawgtrades.model.DTException;
@@ -23,16 +21,95 @@ public class RegisteredUserManager {
 	}
 
 	
-	public void save(RegisteredUser registeredUser) throws DTException{
+	public void save(RegisteredUser user) throws DTException, SQLException {
 
-		String insertRegisteredUserSql = "insert into registered_user(name,firstName,lastName,email,password,canText)";
-		String updateRegisteredUserSql ="";
+		String insertRegisteredUserSql = "insert into user(name,firstName,lastName,email,password,phone,canText, isAdmin)";
+		String updateRegisteredUserSql ="update user set name = ?, firstName = ?, lastName = ?, email = ?, password = ?, phone = ?,canText = ?, isAdmin = ?";
 		PreparedStatement stmt;
+        int inscnt;
+        long userId;
 
-	}
+
+
+        try {
+
+            if( !user.isPersistent() )
+                stmt = (PreparedStatement) conn.prepareStatement( insertRegisteredUserSql );
+            else
+                stmt = (PreparedStatement) conn.prepareStatement( updateRegisteredUserSql );
+
+            if( user.getName() != null ) // clubsuser is unique, so it is sufficient to get a person
+                stmt.setString( 1, user.getName() );
+            else
+                throw new DTException( "PersonManager.save: can't save a Person: userName undefined" );
+
+            if( user.getFirstName() != null )
+                stmt.setString( 2, user.getFirstName() );
+            else
+                throw new DTException( "PersonManager.save: can't save a Person: firstName undefined" );
+
+            if( user.getLastName() != null )
+                stmt.setString( 3,  user.getLastName() );
+            else
+                throw new DTException( "PersonManager.save: can't save a Person: email undefined" );
+
+            if( user.getEmail() != null )
+                stmt.setString( 4, user.getEmail() );
+            else
+                throw new DTException( "PersonManager.save: can't save a Person: first name undefined" );
+
+            if( user.getPassword() != null )
+                stmt.setString( 5, user.getPassword() );
+            else
+                throw new DTException( "PersonManager.save: can't save a Person: last name undefined" );
+            if(user.getPhone() != null)
+                stmt.setString(6,user.getPhone());
+            else
+                stmt.setNull(6, Types.VARCHAR);
+
+            stmt.setBoolean( 7, user.getCanText() );
+            stmt.setBoolean(8,user.getIsAdmin());
+
+
+
+            if( user.isPersistent() )
+                stmt.setLong( 9, user.getId() );
+
+            inscnt = stmt.executeUpdate();
+
+            if( !user.isPersistent() ) {
+                // in case this this object is stored for the first time,
+                // we need to establish its persistent identifier (primary key)
+                if( inscnt == 1 ) {
+                    String sql = "select last_insert_id()";
+                    if( stmt.execute( sql ) ) { // statement returned a result
+                        // retrieve the result
+                        ResultSet r = stmt.getResultSet();
+                        // we will use only the first row!
+                        while( r.next() ) {
+                            // retrieve the last insert auto_increment value
+                            userId = r.getLong( 1 );
+                            if( userId > 0 )
+                                user.setId( userId ); // set this person's db id (proxy object)
+                        }
+                    }
+                }
+            }
+            else {
+                if( inscnt < 1 )
+                    throw new DTException( "PersonManager.save: failed to save a User" );
+            }
+        }
+        catch( SQLException e ) {
+            e.printStackTrace();
+            throw new DTException( "PersonManager.save: failed to save a User: " + e );
+        }
+    }
+
+
 	
 	public Iterator<RegisteredUser> restore(RegisteredUser registeredUser) throws DTException{
-		String       selectRegisteredUserSql = "select id, name, firstName, lastName, password, email, phone, canText, isAdmin";              
+		String       selectRegisteredUserSql = "select id, name, firstName, lastName, password, email, phone, canText, isAdmin from user";
 	        Statement    stmt = null;
 	        StringBuffer query = new StringBuffer( 100 );
 	        StringBuffer condition = new StringBuffer( 100 );
