@@ -110,7 +110,7 @@ public class ObjectModelImpl implements ObjectModel {
 
 	@Override
 	public Item createItem() {
-		Item item = new ItemImpl(null,-1,null,null,null);
+		Item item = new ItemImpl(-1,-1,null,null,null);
 		item.setId(-1);
 		
 		return item;

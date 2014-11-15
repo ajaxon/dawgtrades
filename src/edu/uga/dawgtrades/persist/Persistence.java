@@ -55,19 +55,19 @@ public interface Persistence {
 	  public void                    			saveRegisteredUser( RegisteredUser registeredUser ) throws DTException;
 	  public Iterator<RegisteredUser>          	restoreRegisteredUser( RegisteredUser registeredUser ) throws DTException;
 	  public void		        			 	deleteRegisteredUser(RegisteredUser registeredUser ) throws DTException;
-	  public Category							restoreParentCategoryBy(Category category);
-	  public Iterator<Category>					restoreChildCategoryBy(Category category);
-	  public Category							restoreCategoryBy(AttributeType attributeType);
-	  public Iterator<AttributeType>            restoreAttributeTypeBy(Category category);
-	  public Category							restoreCategoryBy(Item item);
-	  public Iterator<Item>						restoreItemBy(Category category);
-	  public Item								restoreItemBy(Attribute attribute);
-	  public Iterator<Attribute>				restoreAttributeBy(Item item);
-	  public RegisteredUser						restoreRegisteredUserBy(Item item);
-	  public Iterator<Item>						restoreItemBy(RegisteredUser registeredUser);
-	  public Item								restoreItemBy(Auction auction);
-	  public Auction							restoreAuctionBy(Item item);
-	  public AttributeType						restoreAttributeTypeBy(Attribute attribute);
+	  public Category							restoreParentCategoryBy(Category category) throws DTException;
+	  public Iterator<Category>					restoreChildCategoryBy(Category category)throws DTException;
+	  public Category							restoreCategoryBy(AttributeType attributeType)throws DTException;
+	  public Iterator<AttributeType>            restoreAttributeTypeBy(Category category)throws DTException;
+	  public Category							restoreCategoryBy(Item item) throws DTException;
+	  public Iterator<Item>						restoreItemBy(Category category) throws DTException;
+	  public Item								restoreItemBy(Attribute attribute) throws DTException;
+	  public Iterator<Attribute>				restoreAttributeBy(Item item) throws DTException;
+	  public RegisteredUser						restoreRegisteredUserBy(Item item) throws DTException;
+	  public Iterator<Item>						restoreItemBy(RegisteredUser registeredUser) throws DTException;
+	  public Item								restoreItemBy(Auction auction) throws DTException;
+	  public Auction							restoreAuctionBy(Item item) throws DTException;
+	  public AttributeType						restoreAttributeTypeBy(Attribute attribute) throws DTException;
 	  
 	  
 

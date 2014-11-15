@@ -43,7 +43,7 @@ public class RegisteredUserImpl extends Persistent implements RegisteredUser {
 	@Override
 	public void setName(String name) {
 
-		name=this.name;
+		this.name=name;
 	}
 
 	@Override

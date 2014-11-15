@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.util.Iterator;
 
 import edu.uga.dawgtrades.model.Attribute;
+import edu.uga.dawgtrades.model.Auction;
+import edu.uga.dawgtrades.model.Category;
 import edu.uga.dawgtrades.model.DTException;
 import edu.uga.dawgtrades.model.Item;
 import edu.uga.dawgtrades.model.ObjectModel;
+import edu.uga.dawgtrades.model.RegisteredUser;
 
 public class ItemManager {
 
@@ -37,6 +40,30 @@ public class ItemManager {
 	public void delete(Item item) throws DTException{
 		
 		
+	}
+
+
+	public Category restoreCategoryBy(Item item) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public Iterator<Attribute> restoreAttributeBy(Item item) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public RegisteredUser restoreRegisteredUserBy(Item item) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public Auction restoreAuctionBy(Item item) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

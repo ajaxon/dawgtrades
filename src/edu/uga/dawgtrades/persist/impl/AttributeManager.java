@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.util.Iterator;
 
 import edu.uga.dawgtrades.model.Attribute;
+import edu.uga.dawgtrades.model.AttributeType;
 import edu.uga.dawgtrades.model.DTException;
+import edu.uga.dawgtrades.model.Item;
 import edu.uga.dawgtrades.model.ObjectModel;
 
 public class AttributeManager {
@@ -35,6 +37,18 @@ public class AttributeManager {
 	public void delete(Attribute attribute) throws DTException{
 		
 		
+	}
+
+
+	public Item restoreItemBy(Attribute attribute) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public AttributeType restoreAttributeTypeBy(Attribute attribute) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

@@ -7,6 +7,7 @@ import java.sql.Statement;
 
 import edu.uga.dawgtrades.model.Attribute;
 import edu.uga.dawgtrades.model.DTException;
+import edu.uga.dawgtrades.model.Item;
 import edu.uga.dawgtrades.model.ObjectModel;
 import edu.uga.dawgtrades.model.RegisteredUser;
 
@@ -24,7 +25,7 @@ public class RegisteredUserManager {
 	
 	public void save(RegisteredUser registeredUser) throws DTException{
 
-		String insertRegisteredUserSql = "insert into registered_user(name,firstName,lastName,email,password,canText);
+		String insertRegisteredUserSql = "insert into registered_user(name,firstName,lastName,email,password,canText)";
 		String updateRegisteredUserSql ="";
 		PreparedStatement stmt;
 
@@ -41,6 +42,12 @@ public class RegisteredUserManager {
 	public void delete(RegisteredUser registeredUser) throws DTException{
 		
 		
+	}
+
+
+	public Iterator<Item> restoreItemBy(RegisteredUser registeredUser) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

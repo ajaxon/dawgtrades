@@ -27,14 +27,14 @@ public class BidImpl extends Persistent implements Bid {
 		auctionId = auction.getId();
 		registeredUserId = user.getId();
 		this.amount = amount;
-		//date = SystemDate
+
 	}
 
 	public BidImpl(long auctionId, long registeredUserId, float amount) {
 		this.auctionId = auctionId;
 		this.registeredUserId = registeredUserId;
 		this.amount = amount;
-		//date = SystemDate
+
 	}
 
 	@Override
@@ -59,17 +59,17 @@ public class BidImpl extends Persistent implements Bid {
 
 	@Override
 	public boolean isWinning() {
-
+			return false;
 	}
 
 	@Override
 	public Auction getAuction() {
-		return auction;
+		return null;
 	}
 
 	@Override
 	public RegisteredUser getRegisteredUser() {
-		return user;
+		return null;
 	}
 
 }

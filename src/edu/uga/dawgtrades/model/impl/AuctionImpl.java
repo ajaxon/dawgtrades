@@ -45,9 +45,16 @@ public class AuctionImpl extends Persistent implements Auction {
 
 	@Override
 	public boolean getIsClosed() {
-		//get SysDate
-		//if SysDate > expiration, return true
-		//else false
+		Date date = new Date();
+		if(date.after(this.expiration)){
+			
+			return true;
+			
+		}else{
+			
+			return false;
+		}
+	
 	}
 
 	@Override

@@ -37,6 +37,12 @@ public class MembershipManager {
 		
 		
 	}
+
+
+	public Membership restore() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 }
