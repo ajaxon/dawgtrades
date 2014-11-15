@@ -35,6 +35,9 @@ public class ObjectModelImpl implements ObjectModel {
 	@Override
 	public Category createCategory(Category parent, String name)
 			throws DTException {
+
+        if(!parent.isPersistent())
+            throw new DTException("Parent category not persistent");
 		Category category = new CategoryImpl(parent,name);
 		
 		return category;
@@ -71,6 +74,9 @@ public class ObjectModelImpl implements ObjectModel {
 	@Override
 	public AttributeType createAttributeType(Category category, String name)
 			throws DTException {
+
+            if(!category.isPersistent())
+                throw new DTException("Category is not persistent")
 			
 			AttributeType attributeType = new AttributeTypeImpl(category,name);
 			return attributeType;
@@ -104,6 +110,9 @@ public class ObjectModelImpl implements ObjectModel {
 	public Item createItem(Category category, RegisteredUser user,
 			String identifier, String name, String description)
 			throws DTException {
+
+        if(!category.isPersistent())
+            throw new DTException("Category is not persistent.");
 		Item item = new ItemImpl(category,user,identifier,name,description);
 		return item;
 	}
@@ -139,6 +148,8 @@ public class ObjectModelImpl implements ObjectModel {
 	@Override
 	public Attribute createAttribute(AttributeType attributeType, Item item,
 			String value) throws DTException {
+        if(!attributeType.isPersistent())
+            throw new DTException("AttributeType is not persistent");
 		
 		Attribute attribute = new AttributeImpl(attributeType,item,value);
 		return attribute;
@@ -168,6 +179,9 @@ public class ObjectModelImpl implements ObjectModel {
 	@Override
 	public Auction createAuction(Item item, float minPrice, Date expiration)
 			throws DTException {
+
+        if(!item.isPersistent())
+            throw new DTException("Item is not persistent.");
 		Auction auction = new AuctionImpl(item,minPrice,expiration);
 		
 		return auction;

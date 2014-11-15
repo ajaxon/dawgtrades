@@ -69,8 +69,8 @@ CREATE TABLE `auction` (
   `expiration` date NOT NULL,
   `item_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
-  KEY `item_id` (`item_id`)
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `item_id` (`item_id`),
   CONSTRAINT `item_id` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -92,7 +92,7 @@ CREATE TABLE `bid` (
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `user_id` (`user_id`),
   KEY `auction_id` (`auction_id`),
-  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE  ON UPDATE  CASCADE
+  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE  ON UPDATE  CASCADE,
   CONSTRAINT `auction_id` FOREIGN KEY (`auction_id`) REFERENCES  `auction` (`id`) ON DELETE CASCADE  ON UPDATE  CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
