@@ -146,17 +146,13 @@ public class RegisteredUserManager {
 	                    condition.append( " lastName = '" + registeredUser.getLastName() + "'" );
 	                }
 	
-	                if( registeredUser.getIsAdmin() != null ) {
-	                    if( condition.length() > 0 )
-	                        condition.append( " and" );
-	                    condition.append( " isAdmin = '" + registeredUser.getIsAdmin() + "'" );
-	                }   
+	                if( condition.length() > 0 )
+	                    condition.append( " and" );
+	                condition.append( " isAdmin = '" + registeredUser.getIsAdmin() + "'" );
 	                
-	                 if( registeredUser.getCanText() != null ) {
-	                    if( condition.length() > 0 )
+	                if( condition.length() > 0 )
 	                        condition.append( " and" );
 	                    condition.append( " canText = '" + registeredUser.getCanText() + "'" );
-	                }
 	
 	                if( registeredUser.getPhone() != null ) {
 	                    if( condition.length() > 0 )
