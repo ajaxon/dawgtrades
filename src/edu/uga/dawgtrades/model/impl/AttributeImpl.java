@@ -10,7 +10,7 @@ public class AttributeImpl extends Persistent implements Attribute {
 	private long itemId;
 	private String value;
 
-	public AttributeImpl(AttributeType attributeType, Item item, String value) {
+	public AttributeImpl(AttributeType attributeType, Item item, String value) throws DTException {
 		super(-1);
 		if(attributeType == null)
 			throw new DTException("Attribute Type is null");
