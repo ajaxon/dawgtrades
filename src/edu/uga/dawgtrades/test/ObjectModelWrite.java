@@ -1,26 +1,6 @@
 package edu.uga.dawgtrades.test;
 
-import edu.uga.dawgtrades.model.Membership;
-import edu.uga.dawgtrades.model.ObjectModel;
-import edu.uga.dawgtrades.model.RegisteredUser;
-import edu.uga.dawgtrades.model.impl.ObjectModelImpl;
-import edu.uga.dawgtrades.persist.Persistence;
-import edu.uga.dawgtrades.persist.impl.DbUtils;
-import edu.uga.dawgtrades.persist.impl.PersistenceImpl;
-
-
-import java.sql.Connection;
-import java.util.Date;
-
-
-
-
-
-import java.sql.Connection;
-import java.util.Date;
-
 import edu.uga.dawgtrades.model.DTException;
-import edu.uga.dawgtrades.model.Item;
 import edu.uga.dawgtrades.model.Membership;
 import edu.uga.dawgtrades.model.ObjectModel;
 import edu.uga.dawgtrades.model.RegisteredUser;
@@ -28,6 +8,15 @@ import edu.uga.dawgtrades.model.impl.ObjectModelImpl;
 import edu.uga.dawgtrades.persist.Persistence;
 import edu.uga.dawgtrades.persist.impl.DbUtils;
 import edu.uga.dawgtrades.persist.impl.PersistenceImpl;
+
+
+import java.sql.Connection;
+import java.util.Date;
+
+
+
+
+
 
 
 // This is a simple class to test the creation of the entity classes
