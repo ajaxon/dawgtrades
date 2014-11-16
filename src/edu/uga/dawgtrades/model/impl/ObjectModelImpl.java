@@ -45,9 +45,14 @@ public class ObjectModelImpl implements ObjectModel {
 
 	@Override
 	public Category createCategory() {
-		
-		Category category = new CategoryImpl(null,null);
-		category.setId(-1);
+
+        Category category = null;
+        try {
+            category = new CategoryImpl(null,null);
+        } catch (DTException e) {
+            e.printStackTrace();
+        }
+        category.setId(-1);
 		return category;
 	}
 

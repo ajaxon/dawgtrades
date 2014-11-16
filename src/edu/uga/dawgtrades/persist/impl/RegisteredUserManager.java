@@ -217,7 +217,7 @@ public class RegisteredUserManager {
 	}
 
 
-	public Iterator<Item> restoreItemBy(RegisteredUser registeredUser) {
+	public Iterator<Item> restoreItemBy(RegisteredUser registeredUser) throws DTException {
 	    String       selectRegisteredUserSql = "select c.id, c.name, c.identifier, c.description, c.owner_id, c.category_id from registeredUser p, item c where c.owner_id = p.id";              
 	    Statement    stmt = null;
 	    StringBuffer query = new StringBuffer( 100 );
@@ -232,7 +232,7 @@ public class RegisteredUserManager {
 	        if( registeredUser.getId() >= 0 ) // id is unique, so it is sufficient to get a registeredUser
 	            query.append( " and p.id = " + registeredUser.getId() );
 	        else if( registeredUser.getName() != null ) // userName is unique, so it is sufficient to get a registeredUser
-	            query.append( " and p.username = '" + registeredUser.getUserName() + "'" );
+	            query.append( " and p.name = '" + registeredUser.getName() + "'" );
 	        else {
 	            if( registeredUser.getPassword() != null )
 	                condition.append( " p.password = '" + registeredUser.getPassword() + "'" );
