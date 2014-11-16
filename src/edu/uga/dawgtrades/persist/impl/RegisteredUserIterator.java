@@ -2,6 +2,7 @@ package edu.uga.dawgtrades.persist.impl;
 
 import java.sql.ResultSet;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import edu.uga.dawgtrades.model.DTException;
 import edu.uga.dawgtrades.model.ObjectModel;
@@ -31,7 +32,7 @@ public class RegisteredUserIterator implements Iterator<RegisteredUser> {
 
 
 	@Override
-	public RegisteredUser next() throws DTException {
+	public RegisteredUser next(){
 
 		    long   id;
 		    String name;
@@ -59,20 +60,25 @@ public class RegisteredUserIterator implements Iterator<RegisteredUser> {
 		            more = rs.next();
 		        }
 		        catch( Exception e ) {	// just in case...
-		            throw new DTException( "RegisteredUserIterator: No next RegisteredUser object; root cause: " + e );
+		            throw new NoSuchElementException( "RegisteredUserIterator: No next RegisteredUser object; root cause: " + e );
 		        }
-		        
-		        RegisteredUser registeredUser = objectModel.createRegisteredUser( name, firstName, lastName, password, email, phone, canText, isAdmin );
-		        registeredUser.setId( id );
+
+                RegisteredUser registeredUser = null;
+                try {
+                    registeredUser = objectModel.createRegisteredUser( name, firstName, lastName, password, isAdmin, email, phone,canText);
+                } catch (DTException e) {
+                    e.printStackTrace();
+                }
+                registeredUser.setId( id );
 		        
 		        return registeredUser;
 		    }
 		    else {
-		        throw new DTException( "RegisteredUserIterator: No next RegisteredUser object" );
+		        throw new NoSuchElementException( "RegisteredUserIterator: No next RegisteredUser object" );
 		    }
 		}
 
-	}
+
 
 	@Override
 	public void remove() {

@@ -43,13 +43,13 @@ public class ObjectModelDelete
 
             RegisteredUser joeJohnson = null;
             RegisteredUser modelUser = objectModel.createRegisteredUser();
-            modelUser.setFirstName( "joe" );
-            modelUser.setLastName( "johnson" );
+            modelUser.setFirstName("joe");
+            modelUser.setLastName("johnson");
 
             userIter = objectModel.findRegisteredUser( modelUser );
             while( userIter.hasNext() ) {
                 joeJohnson = userIter.next();
-                System.out.println( joeJohnson );
+
 
 
 
@@ -59,6 +59,7 @@ public class ObjectModelDelete
 
             // delete joe Johnson
             if( joeJohnson != null ) {
+                System.out.println(joeJohnson.getId());
                 objectModel.deleteRegisteredUser( joeJohnson );
                 System.out.println( "Deleted user Joe Johnson" );
             }

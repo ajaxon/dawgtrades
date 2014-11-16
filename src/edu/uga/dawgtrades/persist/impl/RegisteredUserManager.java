@@ -189,7 +189,7 @@ public class RegisteredUserManager {
 	
 	
 	public void delete(RegisteredUser registeredUser) throws DTException{
-		String               deleteRegisteredUserSql = "delete from registeredUser where id = ?";              
+		String               deleteRegisteredUserSql = "delete from user where id = ?";
 		PreparedStatement    stmt = null;
 		int                  inscnt;
 		    

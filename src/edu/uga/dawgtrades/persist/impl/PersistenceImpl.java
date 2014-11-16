@@ -227,7 +227,7 @@ public class PersistenceImpl implements Persistence {
 	public void deleteRegisteredUser(RegisteredUser registeredUser)
 			throws DTException {
 		
-		registeredUserManager.restore(registeredUser);
+		registeredUserManager.delete(registeredUser);
 
 	}
 
