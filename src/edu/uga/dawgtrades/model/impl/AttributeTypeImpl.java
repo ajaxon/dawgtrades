@@ -2,6 +2,7 @@ package edu.uga.dawgtrades.model.impl;
 
 import edu.uga.dawgtrades.model.AttributeType;
 import edu.uga.dawgtrades.model.Category;
+import edu.uga.dawgtrades.model.DTException;
 
 public class AttributeTypeImpl extends Persistent implements AttributeType {
 	
@@ -18,7 +19,7 @@ public class AttributeTypeImpl extends Persistent implements AttributeType {
 	}
 
 	public AttributeTypeImpl(long categoryId, String name) {
-		this.categoryId = category.getId();
+		this.categoryId = categoryId;
 		this.name = name;
 	}
 

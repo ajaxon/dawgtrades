@@ -2,6 +2,7 @@ package edu.uga.dawgtrades.model.impl;
 
 import edu.uga.dawgtrades.model.Attribute;
 import edu.uga.dawgtrades.model.AttributeType;
+import edu.uga.dawgtrades.model.DTException;
 import edu.uga.dawgtrades.model.Item;
 
 public class AttributeImpl extends Persistent implements Attribute {
