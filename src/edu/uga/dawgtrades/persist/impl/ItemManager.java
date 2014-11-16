@@ -169,7 +169,32 @@ public class ItemManager {
 	}
 	
 	public void delete(Item item) throws DTException{
-		
+
+		String               deleteItemSql = "delete from item where id = ?";              
+		PreparedStatement    stmt = null;
+		int                  inscnt;
+		    
+		// form the query based on the given item object instance
+		if( !item.isPersistent() ) // is the item object persistent?  If not, nothing to actually delete
+		    return;
+		    
+		try {
+		        
+		    //DELETE t1, t2 FROM t1, t2 WHERE t1.id = t2.id;
+		    //DELETE FROM t1, t2 USING t1, t2 WHERE t1.id = t2.id;
+		    stmt = (PreparedStatement) conn.prepareStatement( deleteItemSql );
+		        
+		    stmt.setLong( 1, item.getId() );
+		        
+		    inscnt = stmt.executeUpdate();
+		        
+		    if( inscnt == 0 ) {
+		        throw new DTException( "itemManager.delete: failed to delete this item" );
+		    }
+		}
+		catch( SQLException e ) {
+		    throw new DTException( "Item.delete: failed to delete this Item: " + e.getMessage() );
+		}
 		
 	}
 
