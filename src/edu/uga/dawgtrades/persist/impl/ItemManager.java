@@ -103,7 +103,7 @@ public class ItemManager {
 	public Iterator<Item> restore(Item item) throws DTException{
 		
 		
-				String       selectItemSql = "select id, categoryId, userId, identifier, name, description from item";
+		String       selectItemSql = "select id, categoryId, userId, identifier, name, description from item";
 	        Statement    stmt = null;
 	        StringBuffer query = new StringBuffer( 100 );
 	        StringBuffer condition = new StringBuffer( 100 );
