@@ -1,9 +1,6 @@
 package edu.uga.dawgtrades.test;
 
-import edu.uga.dawgtrades.model.DTException;
-import edu.uga.dawgtrades.model.Membership;
-import edu.uga.dawgtrades.model.ObjectModel;
-import edu.uga.dawgtrades.model.RegisteredUser;
+import edu.uga.dawgtrades.model.*;
 import edu.uga.dawgtrades.model.impl.ObjectModelImpl;
 import edu.uga.dawgtrades.persist.Persistence;
 import edu.uga.dawgtrades.persist.impl.DbUtils;
@@ -29,11 +26,25 @@ public class ObjectModelWrite
         Connection conn = null;
         ObjectModel objectModel = null;
         Persistence persistence = null;
-
+        // Users
         RegisteredUser bob;
         RegisteredUser        joe;
         RegisteredUser        dan;
         RegisteredUser        tom;
+        // Categories
+        Category computers;
+        Category laptops;
+        //Attribute Types
+        AttributeType brand;
+        AttributeType year;
+        //Attributes
+
+        //Auctions
+        Auction auction1;
+        //Items
+        Item macbookAir;
+
+
 
         Membership membership;
 
@@ -59,12 +70,28 @@ public class ObjectModelWrite
             joe = objectModel.createRegisteredUser( "joe", "joe", "johnson", "password", true, "email@emailtest.com", "343-3232",false );
             dan = objectModel.createRegisteredUser( "mary", "mary", "maryLastname", "Marypass", false, "dan@emailtest.com", "444-9876",true );
             bob = objectModel.createRegisteredUser( "bob", "bob", "bobLastname", "Robertpass", false, "bob@emailtest.com", "567-7788",true );
-            tom = objectModel.createRegisteredUser( "julie", "julie", "julieLastname", "Juliepass", false, "tom@emailtest.com", "364-7592",true );
+            tom = objectModel.createRegisteredUser( "tom", "tom", "tomLastname", "Tompass", false, "tom@emailtest.com", "364-7592",true );
 
             persistence.saveRegisteredUser( joe );
             persistence.saveRegisteredUser( dan );
             persistence.saveRegisteredUser( bob );
             persistence.saveRegisteredUser( tom );
+
+            // create an item that belongs to tom
+            macbookAir = objectModel.createItem();
+            //create an attribute type
+
+
+            //create an attribute
+
+            //create a bid
+
+            //create a category
+            computers = objectModel.createCategory(null,"Computers");
+
+            // create an auction
+
+            auction1 = objectModel.createAuction(macbookAir, 0, new Date());
 
             /*
 
