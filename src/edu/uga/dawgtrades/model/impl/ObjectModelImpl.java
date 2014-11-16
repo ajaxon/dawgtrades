@@ -76,7 +76,7 @@ public class ObjectModelImpl implements ObjectModel {
 			throws DTException {
 
             if(!category.isPersistent())
-                throw new DTException("Category is not persistent")
+                throw new DTException("Category is not persistent");
 			
 			AttributeType attributeType = new AttributeTypeImpl(category,name);
 			return attributeType;
@@ -216,17 +216,16 @@ public class ObjectModelImpl implements ObjectModel {
 	}
 
 	@Override
-	public RegisteredUser createRegisteredUser(String name, String firstName,
-			String lastName, String password, boolean isAdmin, String email,
-			String phone, boolean canText) throws DTException {
+	public RegisteredUser createRegisteredUser(String name, String firstName, String lastName, String password,
+                                               boolean isAdmin, String email, String phone, boolean canText) throws DTException {
 		
-		RegisteredUser user = new RegisteredUserImpl(name,firstName,lastName,password,phone,email,isAdmin,canText);
+		RegisteredUser user = new RegisteredUserImpl(name,firstName,lastName,password,isAdmin,email,phone,canText);
 		return user;
 	}
 
 	@Override
 	public RegisteredUser createRegisteredUser() {
-		RegisteredUser user = new RegisteredUserImpl(null,null,null,null,null,null,false,false);
+		RegisteredUser user = new RegisteredUserImpl(null,null,null,null,false,null,null,false);
 		user.setId(-1);
 		return user;
 	}

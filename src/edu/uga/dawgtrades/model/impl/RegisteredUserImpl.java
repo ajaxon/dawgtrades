@@ -17,10 +17,11 @@ public class RegisteredUserImpl extends Persistent implements RegisteredUser {
 			   String firstName,
 			   String lastName,
 			   String password,
-			   String email,
+			   boolean isAdmin,
+               String email,
 			   String phone,
-	 		   boolean canText,
-			   boolean isAdmin)
+	 		   boolean canText
+			   )
 		{
 				super( -1 );
 				this.name = name;
