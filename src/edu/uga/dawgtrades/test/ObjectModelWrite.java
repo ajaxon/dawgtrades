@@ -57,8 +57,8 @@ public class ObjectModelWrite
 
             // create a few people
             joe = objectModel.createRegisteredUser( "joe", "joe", "johnson", "password", true, "email@emailtest.com", "343-3232",false );
-            dan = objectModel.createRegisteredUser( "mary", "marypass", "maryLastname", "Marypass", false, "dan@emailtest.com", "444-9876",true );
-            bob = objectModel.createRegisteredUser( "bob", "bobpass", "bobLastname", "Robertpass", false, "bob@emailtest.com", "567-7788",true );
+            dan = objectModel.createRegisteredUser( "mary", "mary", "maryLastname", "Marypass", false, "dan@emailtest.com", "444-9876",true );
+            bob = objectModel.createRegisteredUser( "bob", "bob", "bobLastname", "Robertpass", false, "bob@emailtest.com", "567-7788",true );
             tom = objectModel.createRegisteredUser( "julie", "julie", "julieLastname", "Juliepass", false, "tom@emailtest.com", "364-7592",true );
 
             persistence.saveRegisteredUser( joe );
