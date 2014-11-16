@@ -265,7 +265,7 @@ public class RegisteredUserManager {
 	            if( condition.length() == 0 )
 	                condition.append( " p.isAdmin = '" + registeredUser.getIsAdmin() + "'" );
 	            else
-	                condition.append( " AND p.canText = '" + registeredUser.getIsAdmin() + "'" ); 
+	                condition.append( " AND p.isAdmin = '" + registeredUser.getIsAdmin() + "'" ); 
 	            
 	            if( condition.length() > 0 ) {
 	                query.append( condition );
