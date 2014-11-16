@@ -32,8 +32,46 @@ public class ItemIterator implements Iterator<Item> {
 
     @Override
     public Item next() {
-        // TODO Auto-generated method stub
-        return null;
+        
+        
+		    long   id;
+		    String name;
+		    String identifier;
+		    String description;
+		    long owner_id;
+		    long category_id;
+		
+		    if( more ) {
+		
+		        try {
+		            id = rs.getLong( 1 );
+		            name = rs.getString( 2 );
+		            identifier = rs.getString( 3 );
+		            description = rs.getString( 4 );
+		            owner_id = rs.getLong( 5 );
+		            category_id = rs.getLong( 6 );
+		
+		            more = rs.next();
+		        }
+		        catch( Exception e ) {	// just in case...
+		            throw new NoSuchElementException( "ItemIterator: No next Item object; root cause: " + e );
+		        }
+
+                Item item = null;
+                try {
+                    //category = findCategory(category_id)
+                    //user = findUser(owner_id)
+                    item = objectModel.createItem( category, user, identifier, name, description);
+                } catch (DTException e) {
+                    e.printStackTrace();
+                }
+                item.setId( id );
+		        
+		        return item;
+		    }
+		    else {
+		        throw new NoSuchElementException( "RegisteredUserIterator: No next RegisteredUser object" );
+		    }
     }
 
     @Override
