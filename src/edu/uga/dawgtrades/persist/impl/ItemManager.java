@@ -212,8 +212,62 @@ public class ItemManager {
 
 
 	public RegisteredUser restoreRegisteredUserBy(Item item) {
-		// TODO Auto-generated method stub
-		return null;
+	    String       selectItemSql = "select c.id, c.name, c.firstName, c.lastName, c.password, c.email, c.phone, c.canText, c.isAdmin from item p, registeredUser c where p.ownerId = c.id";              
+	    Statement    stmt = null;
+	    StringBuffer query = new StringBuffer( 100 );
+	    StringBuffer condition = new StringBuffer( 100 );
+	
+	    condition.setLength( 0 );
+	    
+	    // form the query based on the given Item object instance
+	    query.append( selectItemSql );
+	    
+	    if( item != null ) {
+	        if( item.getId() >= 0 ) // id is unique, so it is sufficient to get a item
+	            query.append( " and p.id = " + item.getId() );
+	        else if( item.getIdentifier() != null ) // identifier is unique, so it is sufficient to get a item
+	            query.append( " and p.identifier = '" + item.getIdentifier() + "'" );
+	        else {
+	            if( item.categoryId() != null )
+	                condition.append( " p.categoryId = '" + item.getCategoryId() + "'" );
+	
+	            if( item.getUserId() != null && condition.length() == 0 )
+	                condition.append( " p.userId = '" + item.getUserId() + "'" );
+	            else
+	                condition.append( " AND p.userId = '" + item.getUserId() + "'" );
+	
+	            if( item.getName() != null && condition.length() == 0 )
+	                condition.append( " p.name = '" + item.getName() + "'" );
+	            else
+	                condition.append( " AND p.name = '" + item.getName() + "'" );
+	
+	            if( item.getDescription() != null && condition.length() == 0 )
+	                condition.append( " p.description = '" + item.getDescription() + "'" );
+	            else
+	                condition.append( " AND p.description = '" + item.getDescription() + "'" );
+	
+	            if( condition.length() > 0 ) {
+	                query.append( condition );
+	            }
+	        }
+	    }
+	            
+	    try {
+	
+	        stmt = conn.createStatement();
+	
+	        // retrieve the persistent Item object
+	        //
+	        if( stmt.execute( query.toString() ) ) { // statement returned a result
+	            ResultSet r = stmt.getResultSet();
+	            return new RegisteredUserIterator( r, objectModel );
+	        }
+	    }
+	    catch( Exception e ) {      // just in case...
+	        throw new DTException( "ItemManager.restoreEstablishedBy: Could not restore persistent RegisteredUser objects; Root cause: " + e );
+	    }
+	
+	    throw new DTException( "ItemManager.restoreEstablishedBy: Could not restore persistent RegisteredUser objects" );
 	}
 
 
