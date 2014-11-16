@@ -439,4 +439,8 @@ public class ObjectModelImpl implements ObjectModel {
 		return persistence.restoreAttributeTypeBy(attribute);
 	}
 
+    public void setPersistence(Persistence persistence)
+    {
+        this.persistence = persistence;
+    }
 }

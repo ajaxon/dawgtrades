@@ -131,4 +131,8 @@ public class RegisteredUserImpl extends Persistent implements RegisteredUser {
 		this.canText=canText;
 	}
 
+    public String toString()
+    {
+        return this.getFirstName() +" " + this.getLastName();
+    }
 }
