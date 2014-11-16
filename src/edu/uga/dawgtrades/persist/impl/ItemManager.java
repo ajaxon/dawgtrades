@@ -1,6 +1,9 @@
 package edu.uga.dawgtrades.persist.impl;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Iterator;
 
 import edu.uga.dawgtrades.model.Attribute;
@@ -104,7 +107,7 @@ public class ItemManager {
 		
 		
 		String       selectItemSql = "select id, categoryId, userId, identifier, name, description from item";
-	        Statement    stmt = null;
+	        PreparedStatement    stmt = null;
 	        StringBuffer query = new StringBuffer( 100 );
 	        StringBuffer condition = new StringBuffer( 100 );
 	
@@ -213,7 +216,7 @@ public class ItemManager {
 
 	public RegisteredUser restoreRegisteredUserBy(Item item) {
 	    String       selectItemSql = "select c.id, c.name, c.firstName, c.lastName, c.password, c.email, c.phone, c.canText, c.isAdmin from item p, registeredUser c where p.ownerId = c.id";              
-	    Statement    stmt = null;
+	    PreparedStatement    stmt = null;
 	    StringBuffer query = new StringBuffer( 100 );
 	    StringBuffer condition = new StringBuffer( 100 );
 	
@@ -228,13 +231,13 @@ public class ItemManager {
 	        else if( item.getIdentifier() != null ) // identifier is unique, so it is sufficient to get a item
 	            query.append( " and p.identifier = '" + item.getIdentifier() + "'" );
 	        else {
-	            if( item.categoryId() != null )
+	            if( item.getCategoryId() != null )
 	                condition.append( " p.categoryId = '" + item.getCategoryId() + "'" );
 	
-	            if( item.getUserId() != null && condition.length() == 0 )
-	                condition.append( " p.userId = '" + item.getUserId() + "'" );
+	            if( item.getOwnerId() != null && condition.length() == 0 )
+	                condition.append( " p.owner_id = '" + item.getOwnerId() + "'" );
 	            else
-	                condition.append( " AND p.userId = '" + item.getUserId() + "'" );
+	                condition.append( " AND p.userId = '" + item.getOwnerId() + "'" );
 	
 	            if( item.getName() != null && condition.length() == 0 )
 	                condition.append( " p.name = '" + item.getName() + "'" );
@@ -254,7 +257,7 @@ public class ItemManager {
 	            
 	    try {
 	
-	        stmt = conn.createStatement();
+	        stmt = (PreparedStatement)conn.createStatement();
 	
 	        // retrieve the persistent Item object
 	        //
