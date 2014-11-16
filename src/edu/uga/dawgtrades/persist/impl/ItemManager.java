@@ -103,7 +103,67 @@ public class ItemManager {
 	public Iterator<Item> restore(Item item) throws DTException{
 		
 		
-		return null;
+				String       selectItemSql = "select id, categoryId, userId, identifier, name, description from item";
+	        Statement    stmt = null;
+	        StringBuffer query = new StringBuffer( 100 );
+	        StringBuffer condition = new StringBuffer( 100 );
+	
+	        condition.setLength( 0 );
+	        
+	        // form the query based on the given Item object instance
+	        query.append( selectItemSql );
+	        
+	        if( item != null ) {
+	            if( item.getId() >= 0 ) // id is unique, so it is sufficient to get an item
+	                query.append( " where id = " + item.getId() );
+	            else if( item.identifier() != null ) // identifier is unique, so it is sufficient to get an item
+	                query.append( " where identifier = '" + item.getIdentifier() + "'" );
+	            else {
+	                if( item.getCategoryId() != null )
+	                    condition.append( " categoryId = '" + item.getCategoryId() + "'" );
+	
+	                if( item.getUserId != null ) {
+	                    if( condition.length() > 0 )
+	                        condition.append( " and" );
+	                    condition.append( " userId = '" + item.getUserId() + "'" );
+	                }
+	
+	                if( item.getName() != null ) {
+	                    if( condition.length() > 0 )
+	                        condition.append( " and" );
+	                    condition.append( " name = '" + item.getName() + "'" );
+	                }
+	
+	                if( item.getDescription() != null ) {
+	                    if( condition.length() > 0 )
+	                        condition.append( " and" );
+	                    condition.append( " description = '" + item.getDescription() + "'" );
+	                }
+	
+	                if( condition.length() > 0 ) {
+	                    query.append(  " where " );
+	                    query.append( condition );
+	                }
+	            }
+	        }
+	        
+	        try {
+	
+	            stmt = conn.createStatement();
+	
+	            // retrieve the persistent Item object
+	            //
+	            if( stmt.execute( query.toString() ) ) { // statement returned a result
+	                ResultSet r = stmt.getResultSet();
+	                return new ItemIterator( r, objectModel );
+	            }
+	        }
+	        catch( Exception e ) {      // just in case...
+	            throw new DTException( "ItemManager.restore: Could not restore persistent Item object; Root cause: " + e );
+          }
+        
+          // if we get to this point, it's an error
+	  throw new DTException( "Item.restore: Could not restore persistent Item object" );
 		
 		
 	}
