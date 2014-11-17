@@ -2,6 +2,7 @@ package edu.uga.dawgtrades.persist.impl;
 
 import java.sql.ResultSet;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import edu.uga.dawgtrades.model.DTException;
 import edu.uga.dawgtrades.model.Item;
@@ -58,13 +59,12 @@ public class ItemIterator implements Iterator<Item> {
 		        }
 
                 Item item = null;
-                try {
-                    //category = findCategory(category_id)
-                    //user = findUser(owner_id)
-                    item = objectModel.createItem( category, user, identifier, name, description);
-                } catch (DTException e) {
-                    e.printStackTrace();
-                }
+                item.setCategoryId(category_id);
+                item.setDescription(description);
+                item.setOwnerId(owner_id);
+                item.setIdentifier(identifier);
+
+
                 item.setId( id );
 		        
 		        return item;
