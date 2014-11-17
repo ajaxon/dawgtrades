@@ -13,7 +13,6 @@ import edu.uga.dawgtrades.model.DTException;
 import edu.uga.dawgtrades.model.Item;
 import edu.uga.dawgtrades.model.ObjectModel;
 import edu.uga.dawgtrades.model.RegisteredUser;
-import edu.uga.dawgtrades.persist.impl.RegisteredUserIterator;
 
 public class ItemManager {
 
@@ -263,7 +262,12 @@ public class ItemManager {
 	        //
 	        if( stmt.execute( query.toString() ) ) { // statement returned a result
 	            ResultSet r = stmt.getResultSet();
-	            return new RegisteredUserIterator( r, objectModel );
+	            Iterator<RegisteredUser> rUIter = new RegisteredUserIterator( r, objectModel );
+				if( rUIter != null && rUIter.hasNext() ){
+					return rUIter.next();
+				}
+				else
+					return null;
 	        }
 	    }
 	    catch( Exception e ) {      // just in case...
