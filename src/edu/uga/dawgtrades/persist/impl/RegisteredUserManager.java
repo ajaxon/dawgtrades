@@ -218,8 +218,8 @@ public class RegisteredUserManager {
 
 
 	public Iterator<Item> restoreItemBy(RegisteredUser registeredUser) throws DTException {
-	    String       selectRegisteredUserSql = "select c.id, c.name, c.identifier, c.description, c.owner_id, c.category_id from registeredUser p, item c where c.owner_id = p.id";              
-	    Statement    stmt = null;
+	    String       selectRegisteredUserSql = "select I.id, I.name, I.identifier, I.desIription, I.owner_id, I.category_id from registeredUser R, item I where I.owner_id = R.id";
+	    PreparedStatement    stmt = null;
 	    StringBuffer query = new StringBuffer( 100 );
 	    StringBuffer condition = new StringBuffer( 100 );
 	
@@ -230,42 +230,42 @@ public class RegisteredUserManager {
 	    
 	    if( registeredUser != null ) {
 	        if( registeredUser.getId() >= 0 ) // id is unique, so it is sufficient to get a registeredUser
-	            query.append( " and p.id = " + registeredUser.getId() );
+	            query.append( " and R.id = " + registeredUser.getId() );
 	        else if( registeredUser.getName() != null ) // userName is unique, so it is sufficient to get a registeredUser
-	            query.append( " and p.name = '" + registeredUser.getName() + "'" );
+	            query.append( " and R.name = '" + registeredUser.getName() + "'" );
 	        else {
 	            if( registeredUser.getPassword() != null )
-	                condition.append( " p.password = '" + registeredUser.getPassword() + "'" );
+	                condition.append( " R.password = '" + registeredUser.getPassword() + "'" );
 	
 	            if( registeredUser.getEmail() != null && condition.length() == 0 )
-	                condition.append( " p.email = '" + registeredUser.getEmail() + "'" );
+	                condition.append( " R.email = '" + registeredUser.getEmail() + "'" );
 	            else
-	                condition.append( " AND p.email = '" + registeredUser.getEmail() + "'" );
+	                condition.append( " AND R.email = '" + registeredUser.getEmail() + "'" );
 	
 	            if( registeredUser.getFirstName() != null && condition.length() == 0 )
-	                condition.append( " p.firstname = '" + registeredUser.getFirstName() + "'" );
+	                condition.append( " R.firstname = '" + registeredUser.getFirstName() + "'" );
 	            else
-	                condition.append( " AND p.firstname = '" + registeredUser.getFirstName() + "'" );
+	                condition.append( " AND R.firstname = '" + registeredUser.getFirstName() + "'" );
 	
 	            if( registeredUser.getLastName() != null && condition.length() == 0 )
-	                condition.append( " p.lastname = '" + registeredUser.getLastName() + "'" );
+	                condition.append( " R.lastname = '" + registeredUser.getLastName() + "'" );
 	            else
-	                condition.append( " AND p.lastname = '" + registeredUser.getLastName() + "'" );
+	                condition.append( " AND R.lastname = '" + registeredUser.getLastName() + "'" );
 	
 	            if( condition.length() == 0 )
-	                condition.append( " p.canText = '" + registeredUser.getCanText() + "'" );
+	                condition.append( " R.canText = '" + registeredUser.getCanText() + "'" );
 	            else
-	                condition.append( " AND p.canText = '" + registeredUser.getCanText() + "'" );         
+	                condition.append( " AND R.canText = '" + registeredUser.getCanText() + "'" );
 	
 	            if( registeredUser.getPhone() != null && condition.length() == 0 )
-	                condition.append( " p.phone = '" + registeredUser.getPhone() + "'" );
+	                condition.append( " R.phone = '" + registeredUser.getPhone() + "'" );
 	            else
-	                condition.append( " AND p.phone = '" + registeredUser.getPhone() + "'" );
+	                condition.append( " AND R.phone = '" + registeredUser.getPhone() + "'" );
 	            
 	            if( condition.length() == 0 )
-	                condition.append( " p.isAdmin = '" + registeredUser.getIsAdmin() + "'" );
+	                condition.append( " R.isAdmin = '" + registeredUser.getIsAdmin() + "'" );
 	            else
-	                condition.append( " AND p.isAdmin = '" + registeredUser.getIsAdmin() + "'" ); 
+	                condition.append( " AND R.isAdmin = '" + registeredUser.getIsAdmin() + "'" );
 	            
 	            if( condition.length() > 0 ) {
 	                query.append( condition );
@@ -275,7 +275,7 @@ public class RegisteredUserManager {
 	            
 	    try {
 	
-	        stmt = conn.createStatement();
+	        stmt = (PreparedStatement)conn.createStatement();
 	
 	        // retrieve the persistent RegisteredUser object
 	        //
