@@ -259,7 +259,6 @@ public class ItemManager {
 	    try {
 	
 	        stmt = (PreparedStatement)conn.createStatement();
-	
 	        // retrieve the persistent Item object
 	        //
 	        if( stmt.execute( query.toString() ) ) { // statement returned a result
