@@ -3,14 +3,13 @@ package edu.uga.dawgtrades.test;
 import java.sql.Connection;
 import java.util.Iterator;
 
-import edu.uga.dawgtrades.model.DTException;
-import edu.uga.dawgtrades.model.Membership;
-import edu.uga.dawgtrades.model.ObjectModel;
-import edu.uga.dawgtrades.model.RegisteredUser;
+import edu.uga.dawgtrades.model.*;
 import edu.uga.dawgtrades.model.impl.ObjectModelImpl;
 import edu.uga.dawgtrades.persist.Persistence;
 import edu.uga.dawgtrades.persist.impl.DbUtils;
 import edu.uga.dawgtrades.persist.impl.PersistenceImpl;
+import edu.uga.dawgtrades.persist.impl.RegisteredUserIterator;
+import sun.jvm.hotspot.asm.Register;
 
 
 public class ObjectModelDelete
@@ -37,7 +36,8 @@ public class ObjectModelDelete
         objectModel.setPersistence( persistence );
 
         Iterator<RegisteredUser> userIter = null;
-
+        Iterator<RegisteredUser> user2Iter = null;
+        Iterator<Category> categoryIterator = null;
         try {
 
 
@@ -50,10 +50,6 @@ public class ObjectModelDelete
             while( userIter.hasNext() ) {
                 joeJohnson = userIter.next();
 
-
-
-
-
                 }
 
 
@@ -65,8 +61,21 @@ public class ObjectModelDelete
             }
             else
                 System.out.println( "Failed to find Joe Johnson" );
+            // delete all users
+            RegisteredUser user = null;
 
-
+            user2Iter = objectModel.findRegisteredUser(null);
+            while(user2Iter.hasNext()){
+                user = user2Iter.next();
+                objectModel.deleteRegisteredUser(user);
+            }
+            // delete all categories
+            Category category = null;
+            categoryIterator = objectModel.findCategory(null);
+            while(categoryIterator.hasNext()){
+                category = categoryIterator.next();
+                objectModel.deleteCategory(category);
+            }
 
 
         }

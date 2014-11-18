@@ -218,7 +218,7 @@ public class RegisteredUserManager {
 
 
 	public Iterator<Item> restoreItemBy(RegisteredUser registeredUser) throws DTException {
-	    String       selectRegisteredUserSql = "select I.id, I.name, I.identifier, I.desIription, I.owner_id, I.category_id from registeredUser R, item I where I.owner_id = R.id";
+	    String       selectRegisteredUserSql = "select I.id, I.name, I.identifier, I.description, I.owner_id, I.category_id from registeredUser R, item I where I.owner_id = R.id";
 	    PreparedStatement    stmt = null;
 	    StringBuffer query = new StringBuffer( 100 );
 	    StringBuffer condition = new StringBuffer( 100 );

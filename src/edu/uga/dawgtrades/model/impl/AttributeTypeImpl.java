@@ -43,4 +43,7 @@ public class AttributeTypeImpl extends Persistent implements AttributeType {
 		this.categoryId = categoryId;
 	}
 
+    public String toString() {
+        return this.getName();
+    }
 }

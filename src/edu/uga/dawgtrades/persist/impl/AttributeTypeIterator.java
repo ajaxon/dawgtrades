@@ -16,7 +16,7 @@ public class AttributeTypeIterator implements Iterator<AttributeType> {
     private ObjectModel objectModel = null;
     private boolean more;
 
-    public AttributeTypeIterator(ResultSet r, ObjectModel objectModel) throws DTException {
+    public AttributeTypeIterator(ResultSet rs, ObjectModel objectModel) throws DTException {
 
         this.rs=rs;
         this.objectModel=objectModel;
@@ -66,6 +66,7 @@ public class AttributeTypeIterator implements Iterator<AttributeType> {
 
             try {
                 AttributeType attributeType = objectModel.createAttributeType(category, name);
+                attributeType.setId(id);
                 return attributeType;
             } catch (DTException e) {
 

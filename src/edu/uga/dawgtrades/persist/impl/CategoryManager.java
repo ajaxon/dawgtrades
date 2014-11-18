@@ -226,7 +226,7 @@ public class CategoryManager {
 
     public Iterator<AttributeType> restoreAttributeTypeBy(Category category) throws DTException {
         String restoreAttributeBySql = "select a.id, a.category_id, a.name from attribute_type A, category C where A.category_id = C.id";
-        PreparedStatement stmt = null;
+        Statement stmt = null;
         StringBuffer query = new StringBuffer(100);
         StringBuffer condition = new StringBuffer(100);
         condition.setLength(0);
@@ -241,8 +241,8 @@ public class CategoryManager {
 
         query.append(condition);
         try{
-            stmt = (PreparedStatement) conn.createStatement();
 
+            stmt = conn.createStatement();
             if(stmt.execute(query.toString())){
                 ResultSet r = stmt.getResultSet();
                 return new AttributeTypeIterator(r,objectModel);
@@ -257,7 +257,7 @@ public class CategoryManager {
 
 
     public Iterator<Item> restoreItemBy(Category category) throws DTException {
-        String restoreItemBySql = "select i.category_id, i.user_id, i.identifier, i.name, i.description from item I, category C where C.id = I.category_id";
+        String restoreItemBySql = "select i.category_id, i.owner_id, i.identifier, i.name, i.description from item I, category C where C.id = I.category_id";
         PreparedStatement stmt = null;
         StringBuffer query = new StringBuffer(100);
         StringBuffer condition = new StringBuffer(100);

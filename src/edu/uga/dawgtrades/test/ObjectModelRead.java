@@ -46,10 +46,19 @@ public class ObjectModelRead
                 System.out.println( u );
 
             }
+            // Retrieve all categories
             System.out.println("Category objects");
             Iterator<Category> categoryIter = objectModel.findCategory(null);
             while( categoryIter.hasNext()){
                 Category category = categoryIter.next();
+                Iterator<AttributeType> attrTypes = objectModel.getAttributeType(category);
+                while(attrTypes.hasNext())
+                {
+                    AttributeType type = attrTypes.next();
+                    System.out.println(type);
+
+                }
+
                 System.out.println(category);
             }
 
