@@ -1,9 +1,6 @@
 package edu.uga.dawgtrades.persist.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Iterator;
 
 import edu.uga.dawgtrades.model.AttributeType;
@@ -11,6 +8,7 @@ import edu.uga.dawgtrades.model.Category;
 import edu.uga.dawgtrades.model.DTException;
 import edu.uga.dawgtrades.model.Item;
 import edu.uga.dawgtrades.model.ObjectModel;
+import jdk.internal.org.objectweb.asm.Type;
 
 public class CategoryManager {
 
@@ -42,7 +40,10 @@ public class CategoryManager {
 
             }
             stmt.setString(1,category.getName());
-            stmt.setFloat(2, category.getParentId()==0 ? null : category.getParentId());
+            if(category.getParentId() == 0 )
+                stmt.setNull(2, Type.FLOAT);
+            else
+                stmt.setFloat(2, category.getParentId());
 
             if(category.isPersistent()){
                 stmt.setFloat(3,category.getId());
@@ -86,35 +87,35 @@ public class CategoryManager {
     public Iterator<Category> restore(Category category) throws DTException{
 
         String selectCategorySql = "select id, name, parent_id from category";
-        PreparedStatement stmt = null;
+        Statement stmt = null;
         StringBuffer query = new StringBuffer(100);
         StringBuffer condition = new StringBuffer(100);
         condition.setLength(0);
-        if(category!=null){
-            if(category.getId() >=0){
-                query.append(" where id = '"+category.getId()+"'");
-            }
-            else{
-                if(category.getParentId()>0){
-                    condition.append(" parent_id = '"+category.getParentId()+"'");
+        query.append(selectCategorySql);
+        if(category!=null) {
+            if (category.getId() >= 0) {
+                query.append(" where id = '" + category.getId() + "'");
+            } else {
+                if (category.getParentId() > 0) {
+                    condition.append(" parent_id = '" + category.getParentId() + "'");
                 }
-                if(category.getName()!=null){
-                    if(condition.length()>0){
+                if (category.getName() != null) {
+                    if (condition.length() > 0) {
                         condition.append(" and");
                     }
-                    condition.append(" name = '"+category.getName()+"'");
+                    condition.append(" name = '" + category.getName() + "'");
 
                 }
 
-                if(condition.length()>0){
+                if (condition.length() > 0) {
                     query.append(" where ");
                     query.append(condition);
                 }
 
             }
-
+        }
             try{
-                stmt = (PreparedStatement)conn.prepareStatement(selectCategorySql);
+                stmt = conn.createStatement();
                 if(stmt.execute(query.toString())){
                     ResultSet r  = stmt.getResultSet();
                     return new CategoryIterator(r,objectModel);
@@ -126,8 +127,8 @@ public class CategoryManager {
 
             throw new DTException("CategoryManager.restore: could not restore categories");
 
-        }
-        return null;
+
+
 
 
     }

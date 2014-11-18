@@ -65,7 +65,7 @@ SET foreign_key_checks = 1;
 CREATE TABLE `category` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
-  `parent_id` int(11) unsigned NOT NULL,
+  `parent_id` int(11) unsigned NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`),

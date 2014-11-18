@@ -1,11 +1,9 @@
 package edu.uga.dawgtrades.test;
 import java.sql.Connection;
+import java.util.Calendar;
 import java.util.Iterator;
 
-import edu.uga.dawgtrades.model.DTException;
-import edu.uga.dawgtrades.model.Membership;
-import edu.uga.dawgtrades.model.ObjectModel;
-import edu.uga.dawgtrades.model.RegisteredUser;
+import edu.uga.dawgtrades.model.*;
 import edu.uga.dawgtrades.model.impl.ObjectModelImpl;
 import edu.uga.dawgtrades.persist.Persistence;
 import edu.uga.dawgtrades.persist.impl.DbUtils;
@@ -41,12 +39,18 @@ public class ObjectModelRead
         try {
 
             // Retrieve all existing RegisteredUser objects
-            System.out.println( "Club objects:" );
+            System.out.println( "User objects:" );
             Iterator<RegisteredUser> userIter = objectModel.findRegisteredUser( null );
             while( userIter.hasNext() ) {
                 RegisteredUser u = userIter.next();
                 System.out.println( u );
 
+            }
+            System.out.println("Category objects");
+            Iterator<Category> categoryIter = objectModel.findCategory(null);
+            while( categoryIter.hasNext()){
+                Category category = categoryIter.next();
+                System.out.println(category);
             }
 
 
@@ -54,7 +58,7 @@ public class ObjectModelRead
         }
         catch( DTException ce)
         {
-            System.err.println( "ClubsException: " + ce );
+            System.err.println( "DTEException: " + ce );
         }
         catch( Exception e)
         {

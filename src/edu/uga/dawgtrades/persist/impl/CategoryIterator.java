@@ -14,7 +14,7 @@ public class CategoryIterator implements Iterator<Category> {
     private ObjectModel objectModel = null;
     private boolean more;
 
-    public CategoryIterator(ResultSet r, ObjectModel objectModel) throws DTException {
+    public CategoryIterator(ResultSet rs, ObjectModel objectModel) throws DTException {
 
         this.rs = rs;
         this.objectModel=objectModel;

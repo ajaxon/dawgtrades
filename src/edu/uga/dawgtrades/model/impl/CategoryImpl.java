@@ -50,4 +50,8 @@ public class CategoryImpl extends Persistent implements Category {
 	public void setParentId(long parentId) {
 		this.parentId=parentId;
 	}
+
+    public String toString(){
+        return this.getName();
+    }
 }
