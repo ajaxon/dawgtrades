@@ -35,7 +35,7 @@ public class ObjectModelWrite
         Category computers;
         Category laptops;
         //Attribute Types
-        AttributeType brand;
+        AttributeType manufacturer;
         AttributeType year;
         //Attributes
 
@@ -65,6 +65,11 @@ public class ObjectModelWrite
         //objectModel.setPersistence( persistence );
 
         try {
+            //create a category
+            computers = objectModel.createCategory(null,"Computers");
+            //create an attribute type
+            manufacturer = objectModel.createAttributeType(computers,"Manufacturer");
+            year = objectModel.createAttributeType(computers,"Year");
 
             // create a few people
             joe = objectModel.createRegisteredUser( "joe", "joe", "johnson", "password", true, "email@emailtest.com", "343-3232",false );
@@ -78,16 +83,15 @@ public class ObjectModelWrite
             persistence.saveRegisteredUser( tom );
 
             // create an item that belongs to tom
-            macbookAir = objectModel.createItem();
-            //create an attribute type
+            macbookAir = objectModel.createItem(category, tom, "dasfd", "Macbook air for sale", "Used but good condition");
+            persistence.saveItem(macbookAir);
 
 
             //create an attribute
 
             //create a bid
 
-            //create a category
-            computers = objectModel.createCategory(null,"Computers");
+
 
             // create an auction
 
