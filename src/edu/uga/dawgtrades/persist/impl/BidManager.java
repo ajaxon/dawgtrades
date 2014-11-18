@@ -23,7 +23,7 @@ public class BidManager {
 	}
 
 	public void save(Bid bid) throws DTException{
-		String insertBidSql = "insert into bid (auction, user, price) values (?, ?, ?)";
+		String insertBidSql = "insert into bid (user_id, auction_id, date, amount) values (?, ?, ?, ?)";
 		PreparedStatement stmt;
 		int inscnt;
 		long bidId;
@@ -31,9 +31,33 @@ public class BidManager {
 
 		try{
 			stmt = (PreparedStatement) conn.prepareStatement(insertBidSql);
-			stmt.setLong(1, bid.getAuction().getId());
+
+
+			if( bid.getRegisteredUser() != null && bid.getRegisteredUser().getId() >= 0) // clubsuser is unique, so it is sufficient to get a person
+				stmt.setLong(1, bid.getRegisteredUser().getId());
+			else
+				throw new DTException( "BidManager.save: can't save a Bid: registered user is undefined" );
+
+			if( bid.getAuction() != null && bid.getAuction().getId() >= 0 )
+				stmt.setLong(2, bid.getAuction().getId());
+			else
+				throw new DTException( "BidManager.save: can't save a Bid: auction is undefined" );
+
+			if( bid.getDate() != null )
+				stmt.setDate(3, (java.sql.Date) bid.getDate());
+			else
+				throw new DTException( "BidManager.save: can't save a Bid: date undefined" );
+
+			if( bid.getAmount() >= 0 )
+				stmt.setFloat(4, bid.getAmount());
+			else
+				throw new DTException( "BidManager.save: can't save a Bid: amount less than 0" );
+
+
+			/*stmt.setLong(1, bid.getAuction().getId());
 			stmt.setLong(2, bid.getRegisteredUser().getId());
-			stmt.setFloat(3, bid.getAmount());
+			stmt.setFloat(3, bid.getAmount());*/
+
 			inscnt = stmt.executeUpdate();
 
 			if(inscnt >= 1){
@@ -48,21 +72,19 @@ public class BidManager {
 					}
 				}
 			}else{
-				throw new DTException("BidManager.save: failed to save a Membership");
+				throw new DTException("BidManager.save: failed to save a Bid");
 			}
 		}catch(SQLException e){
 			e.printStackTrace();
-			throw new DTException("BidManager.save: failed to save a Membership:" + e);
+			throw new DTException("BidManager.save: failed to save a Bid:" + e);
 		}
 	}
 
 	public Iterator<Bid> restore(Bid bid) throws DTException{
-		String selectBidSql = "select and some stuff I'll implement later"; //implement later
+		String selectBidSql = "select user_id, auction_id, date, amount from bid";
 		Statement stmt = null;
 		StringBuffer query = new StringBuffer(100);
 		StringBuffer condition = new StringBuffer(100);
-
-		//throw errors here all over
 
 		condition.setLength(0);
 		query.append(selectBidSql);
@@ -71,15 +93,19 @@ public class BidManager {
 				query.append("where id = " + bid.getId());
 			}else{
 				if(bid.getAuction() != null){
-					condition.append(" and auctionid = " + bid.getAuction().getId());
+					condition.append(" and auction_id = " + bid.getAuction().getId());
 				}
 				if(bid.getRegisteredUser() != null){
-					condition.append(" and regUserid = " + bid.getRegisteredUser().getId());
+					condition.append(" and user_id = " + bid.getRegisteredUser().getId());
+				}
+				if(bid.getDate() != null){
+					condition.append(" and date = " + bid.getDate());
 				}
 				if(bid.getAmount() != 0){
 					condition.append(" and amount = " + bid.getAmount());
 				}
 				if(condition.length() > 0){
+					query.append(  " where " );
 					query.append(condition);
 				}
 			}
