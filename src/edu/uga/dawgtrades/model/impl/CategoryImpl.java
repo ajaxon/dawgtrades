@@ -11,11 +11,15 @@ public class CategoryImpl extends Persistent implements Category {
 	public CategoryImpl(Category parent, String name) throws DTException {
 		
 		super(-1);
-		if(parent == null)
-			throw new DTException("Parent is null");
-		if (!parent.isPersistent())
-			throw new DTException("Parent is not persistent");
-		this.parentId=parent.getId();
+		if(parent != null)
+        {
+            if (!parent.isPersistent())
+                throw new DTException("Parent is not persistent");
+            else
+                this.parentId = parent.getId();
+        }
+		else
+	        this.parentId=0;
 		this.name=name;
 	}
 	

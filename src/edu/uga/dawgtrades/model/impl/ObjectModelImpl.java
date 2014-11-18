@@ -36,7 +36,7 @@ public class ObjectModelImpl implements ObjectModel {
 	public Category createCategory(Category parent, String name)
 			throws DTException {
 
-        if(!parent.isPersistent())
+        if(parent != null && !parent.isPersistent())
             throw new DTException("Parent category not persistent");
 		Category category = new CategoryImpl(parent,name);
 		

@@ -67,10 +67,12 @@ public class ObjectModelWrite
         try {
             //create a category
             computers = objectModel.createCategory(null,"Computers");
+            persistence.saveCategory(computers);
             //create an attribute type
             manufacturer = objectModel.createAttributeType(computers,"Manufacturer");
             year = objectModel.createAttributeType(computers,"Year");
-
+            persistence.saveAttributeType(manufacturer);
+            persistence.saveAttributeType(year);
             // create a few people
             joe = objectModel.createRegisteredUser( "joe", "joe", "johnson", "password", true, "email@emailtest.com", "343-3232",false );
             dan = objectModel.createRegisteredUser( "mary", "mary", "maryLastname", "Marypass", false, "dan@emailtest.com", "444-9876",true );
@@ -83,7 +85,7 @@ public class ObjectModelWrite
             persistence.saveRegisteredUser( tom );
 
             // create an item that belongs to tom
-            macbookAir = objectModel.createItem(category, tom, "dasfd", "Macbook air for sale", "Used but good condition");
+            macbookAir = objectModel.createItem(computers, tom, "dasfd", "Macbook air for sale", "Used but good condition");
             persistence.saveItem(macbookAir);
 
 
