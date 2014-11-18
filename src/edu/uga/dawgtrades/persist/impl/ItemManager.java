@@ -29,7 +29,7 @@ public class ItemManager {
 	
 	public void save(Item item) throws DTException{
 		
-	    String insertItemSql = "insert into item(category_id, owner_id, identifier, name, description) values (?, ?, ?, ?, ?, ?, ?,?)";
+	    String insertItemSql = "insert into item(category_id, owner_id, identifier, name, description) values (?, ?, ?, ?, ?)";
 	    String updateItemSql ="update item set category_id = ?, owner_id = ?, identifier = ?, name = ?, description = ? where id = ?";
 	    PreparedStatement stmt;
 	    int inscnt;
