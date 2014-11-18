@@ -8,6 +8,7 @@ import edu.uga.dawgtrades.model.DTException;
 import edu.uga.dawgtrades.model.Item;
 import edu.uga.dawgtrades.model.ObjectModel;
 import edu.uga.dawgtrades.model.RegisteredUser;
+import edu.uga.dawgtrades.model.impl.ItemImpl;
 
 public class ItemIterator implements Iterator<Item> {
 
@@ -58,12 +59,13 @@ public class ItemIterator implements Iterator<Item> {
 		            throw new NoSuchElementException( "ItemIterator: No next Item object; root cause: " + e );
 		        }
 
-                Item item = null;
-                item.setCategoryId(category_id);
-                item.setDescription(description);
-                item.setOwnerId(owner_id);
+                //Item item = new ItemImpl(category_id,owner_id,identifier,name,description);
+                Item item = objectModel.createItem();
                 item.setIdentifier(identifier);
-
+                item.setOwnerId(owner_id);
+                item.setDescription(description);
+                item.setCategoryId(category_id);
+                item.setName(name);
 
                 item.setId( id );
 		        

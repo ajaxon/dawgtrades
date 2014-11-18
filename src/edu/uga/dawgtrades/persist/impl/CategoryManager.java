@@ -257,8 +257,8 @@ public class CategoryManager {
 
 
     public Iterator<Item> restoreItemBy(Category category) throws DTException {
-        String restoreItemBySql = "select i.category_id, i.owner_id, i.identifier, i.name, i.description from item I, category C where C.id = I.category_id";
-        PreparedStatement stmt = null;
+        String restoreItemBySql = "select i.id, i.name, i.identifier, i.description, i.owner_id , i.category_id from item I, category C where C.id = I.category_id";
+        Statement stmt = null;
         StringBuffer query = new StringBuffer(100);
         StringBuffer condition = new StringBuffer(100);
 
@@ -273,7 +273,7 @@ public class CategoryManager {
 
         }
         try{
-            stmt = (PreparedStatement) conn.createStatement();
+            stmt = conn.createStatement();
 
             if(stmt.execute(query.toString())){
                 ResultSet r = stmt.getResultSet();

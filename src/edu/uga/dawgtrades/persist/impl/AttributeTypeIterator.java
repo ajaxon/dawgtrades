@@ -50,8 +50,8 @@ public class AttributeTypeIterator implements Iterator<AttributeType> {
 
             try{
                 id = rs.getLong(1);
-                name = rs.getString(2);
-                category_id = rs.getLong(3);
+                category_id= rs.getLong(2);
+                name = rs.getString(3);
 
                 more = rs.next();
 
@@ -61,20 +61,18 @@ public class AttributeTypeIterator implements Iterator<AttributeType> {
                 throw new NoSuchElementException("AttributeTypeIterator:No next AttributeType object"+e);
             }
 
-            Category category = objectModel.createCategory();
-            category.setId(category_id);
+            AttributeType attributeType = null;
 
-            try {
-                AttributeType attributeType = objectModel.createAttributeType(category, name);
-                attributeType.setId(id);
-                return attributeType;
-            } catch (DTException e) {
-
-                e.printStackTrace();
-            }
-
+            attributeType = objectModel.createAttributeType();
+            attributeType.setCategoryId(category_id);
+            attributeType.setName(name);
+            attributeType.setId(id);
+            return attributeType;
+        }else{
+            throw new NoSuchElementException("AttributeTypeIterator:No next AttributeType object");
         }
-        return null;
+
+
     }
 
     @Override

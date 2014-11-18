@@ -108,5 +108,9 @@ public class ItemImpl extends Persistent implements Item {
 
 		this.userId = ownerId;
 	}
+
+    public String toString(){
+        return this.getName();
+    }
 }
 

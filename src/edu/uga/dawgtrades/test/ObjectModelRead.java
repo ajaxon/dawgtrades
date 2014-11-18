@@ -39,18 +39,38 @@ public class ObjectModelRead
         try {
 
             // Retrieve all existing RegisteredUser objects
+
             System.out.println( "User objects:" );
             Iterator<RegisteredUser> userIter = objectModel.findRegisteredUser( null );
             while( userIter.hasNext() ) {
                 RegisteredUser u = userIter.next();
                 System.out.println( u );
+                System.out.println("Items");
+                Iterator<Item> items = objectModel.getItem(u);
+                while(items.hasNext()){
+                    Item item = items.next();
+                    System.out.println(item);
+                }
 
             }
+
+            // Retrieve users items
+
             // Retrieve all categories
+
             System.out.println("Category objects");
             Iterator<Category> categoryIter = objectModel.findCategory(null);
             while( categoryIter.hasNext()){
                 Category category = categoryIter.next();
+
+                // get items by category
+                System.out.println("items by category");
+                Iterator<Item> items = objectModel.getItem(category);
+                while(items.hasNext()){
+                    Item item = items.next();
+                    System.out.println(item);
+                }
+                System.out.println(category);
                 Iterator<AttributeType> attrTypes = objectModel.getAttributeType(category);
                 while(attrTypes.hasNext())
                 {
@@ -59,7 +79,7 @@ public class ObjectModelRead
 
                 }
 
-                System.out.println(category);
+
             }
 
 
