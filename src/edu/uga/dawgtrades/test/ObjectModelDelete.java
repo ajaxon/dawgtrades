@@ -38,6 +38,7 @@ public class ObjectModelDelete
         Iterator<RegisteredUser> userIter = null;
         Iterator<RegisteredUser> user2Iter = null;
         Iterator<Category> categoryIterator = null;
+        Iterator<Item> itemIterator = null;
         try {
 
 
@@ -76,6 +77,16 @@ public class ObjectModelDelete
                 category = categoryIterator.next();
                 objectModel.deleteCategory(category);
             }
+            // delete all items
+            Item item = null;
+            itemIterator = objectModel.findItem(null);
+            while(itemIterator.hasNext())
+            {
+                item = itemIterator.next();
+                objectModel.deleteItem(item);
+            }
+
+
 
 
         }

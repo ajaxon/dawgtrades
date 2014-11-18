@@ -1,5 +1,6 @@
 package edu.uga.dawgtrades.test;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Iterator;
 
@@ -8,16 +9,25 @@ import edu.uga.dawgtrades.model.impl.ObjectModelImpl;
 import edu.uga.dawgtrades.persist.Persistence;
 import edu.uga.dawgtrades.persist.impl.DbUtils;
 import edu.uga.dawgtrades.persist.impl.PersistenceImpl;
+import junit.framework.TestCase;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.Test;
+import sun.jvm.hotspot.asm.Register;
+
 /**
  * Created by Allen on 11/16/14.
  */
-public class ObjectModelRead
+public class ObjectModelRead extends TestCase
 {
-    public static void main(String[] args)
-    {
-        Connection  conn = null;
-        ObjectModel objectModel = null;
-        Persistence persistence = null;
+    static Connection  conn = null;
+    static ObjectModel objectModel = null;
+    static Persistence persistence = null;
+    Category category =  null;
+    RegisteredUser user = null;
+    @Before
+    public void setUp() throws DTException {
+
 
         // get a database connection
         try {
@@ -36,71 +46,87 @@ public class ObjectModelRead
         // connect the ObjectModel module to the Persistence module
         objectModel.setPersistence( persistence );
 
-        try {
 
-            // Retrieve all existing RegisteredUser objects
+        // Get a category
+        Category model = objectModel.createCategory();
+        model.setName("Computers");
+        Iterator<Category> categories = objectModel.findCategory(model);
+        while(categories.hasNext()){
+            category = categories.next();
+        }
+        //
 
-            System.out.println( "User objects:" );
-            Iterator<RegisteredUser> userIter = objectModel.findRegisteredUser( null );
-            while( userIter.hasNext() ) {
-                RegisteredUser u = userIter.next();
-                System.out.println( u );
-                System.out.println("Items");
-                Iterator<Item> items = objectModel.getItem(u);
-                while(items.hasNext()){
-                    Item item = items.next();
-                    System.out.println(item);
-                }
-
-            }
-
-            // Retrieve users items
-
-            // Retrieve all categories
-
-            System.out.println("Category objects");
-            Iterator<Category> categoryIter = objectModel.findCategory(null);
-            while( categoryIter.hasNext()){
-                Category category = categoryIter.next();
-
-                // get items by category
-                System.out.println("items by category");
-                Iterator<Item> items = objectModel.getItem(category);
-                while(items.hasNext()){
-                    Item item = items.next();
-                    System.out.println(item);
-                }
-                System.out.println(category);
-                Iterator<AttributeType> attrTypes = objectModel.getAttributeType(category);
-                while(attrTypes.hasNext())
-                {
-                    AttributeType type = attrTypes.next();
-                    System.out.println(type);
-
-                }
+    }
 
 
-            }
+
+    @Test
+    public void testcheckAllItems() throws DTException {
+
+            Iterator<Item> items = objectModel.findItem(null);
+        int itemcount =0;
+       while(items.hasNext()){
+           Item item = items.next();
+           itemcount++;
+       }
+        assertEquals(itemcount,2);
 
 
+    }
+    @Test
+    public void testgetAllUsers() throws DTException {
+        System.out.println( "User objects:" );
+        Iterator<RegisteredUser> userIter = objectModel.findRegisteredUser( null );
+        int userCount = 0;
+        while( userIter.hasNext() ) {
+            RegisteredUser u = userIter.next();
+            System.out.println( u );
+            userCount++;
 
         }
-        catch( DTException ce)
-        {
-            System.err.println( "DTEException: " + ce );
+        assertEquals(userCount,4);
+
+    }
+    @Test
+    public void test_getItemsByUser() throws DTException {
+        RegisteredUser model = objectModel.createRegisteredUser();
+        model.setName("testName");
+        Iterator<RegisteredUser> users = objectModel.findRegisteredUser(model);
+        int itemsCount = 0;
+        RegisteredUser user=null;
+        while(users.hasNext()){
+            user = users.next();
         }
-        catch( Exception e)
-        {
-            System.err.println( "Exception: " + e );
+        Iterator<Item> items = objectModel.getItem(user);
+        while(items.hasNext()){
+            Item item = items.next();
+            itemsCount++;
         }
-        finally {
-            // close the connection
-            try {
-                conn.close();
-            }
-            catch( Exception e ) {
-                System.err.println( "Exception: " + e );
-            }
+        assertEquals(1,itemsCount);
+
+    }
+    @Test
+    public void testgetAllCategories() throws DTException {
+        Iterator<Category> categories = objectModel.findCategory(null);
+        int categoryCount = 0;
+        while(categories.hasNext()){
+            Category cat = categories.next();
+            categoryCount++;
+        }
+        assertEquals(3,categoryCount);
+    }
+    @Test
+    public void test_getItemsByCategory() throws DTException {
+        Iterator<Item> items = objectModel.getItem(category);
+        while(items.hasNext()){
+            Item item = items.next();
+            System.out.println(item);
         }
     }
+
+    @AfterClass
+    public void teardown() throws SQLException {
+        conn.close();
+
+}
 }

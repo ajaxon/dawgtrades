@@ -21,7 +21,7 @@ public class CategoryManager {
         this.objectModel = objectModel;
     }
 
-
+    // test passing
     public void save(Category category) throws DTException{
         String insertCategorySql = "insert category ( name, parent_id ) values ( ?, ? )";
         String updateCategorySql = "update category set name = ?, parent_id = ? ";
@@ -83,7 +83,7 @@ public class CategoryManager {
         }
 
     }
-
+    // Test passing
     public Iterator<Category> restore(Category category) throws DTException{
 
         String selectCategorySql = "select id, name, parent_id from category";
@@ -132,7 +132,7 @@ public class CategoryManager {
 
 
     }
-
+    // Test passing
     public void delete(Category category) throws DTException{
 
         String deleteAttributeTypeSql = "delete from category where id = ?";
@@ -223,7 +223,7 @@ public class CategoryManager {
         return null;
     }
 
-
+    // Test passed
     public Iterator<AttributeType> restoreAttributeTypeBy(Category category) throws DTException {
         String restoreAttributeBySql = "select a.id, a.category_id, a.name from attribute_type A, category C where A.category_id = C.id";
         Statement stmt = null;
@@ -255,7 +255,7 @@ public class CategoryManager {
 
     }
 
-
+    // Test Passed
     public Iterator<Item> restoreItemBy(Category category) throws DTException {
         String restoreItemBySql = "select i.id, i.name, i.identifier, i.description, i.owner_id , i.category_id from item I, category C where C.id = I.category_id";
         Statement stmt = null;
