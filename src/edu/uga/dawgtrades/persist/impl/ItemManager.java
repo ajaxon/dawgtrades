@@ -265,9 +265,62 @@ public class ItemManager {
 	}
 
 
-	public Iterator<Attribute> restoreAttributeBy(Item item) {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<Attribute> restoreAttributeBy(Item item) throws DTException {
+		String       selectItemSql = "select c.id, c.value, c.attribute_type_id, c.item_id from item p, attribute c where c.item_id = p.id";
+		PreparedStatement    stmt = null;
+		StringBuffer query = new StringBuffer( 100 );
+		StringBuffer condition = new StringBuffer( 100 );
+
+		condition.setLength( 0 );
+
+		// form the query based on the given Item object instance
+		query.append( selectItemSql );
+
+		if( item != null ) {
+			if( item.getId() >= 0 ) // id is unique, so it is sufficient to get a item
+				query.append( " and p.id = " + item.getId() );
+			else if( item.getIdentifier() != null ) // identifier is unique, so it is sufficient to get a item
+				query.append( " and p.identifier = '" + item.getIdentifier() + "'" );
+			else {
+				if( item.getCategoryId() >= 0 )
+					condition.append( " p.category_id = '" + item.getCategoryId() + "'" );
+
+				if( item.getOwnerId() >= 0 && condition.length() == 0 )
+					condition.append( " p.owner_id = '" + item.getOwnerId() + "'" );
+				else
+					condition.append( " AND p.owner_id = '" + item.getOwnerId() + "'" );
+
+				if( item.getName() != null && condition.length() == 0 )
+					condition.append( " p.name = '" + item.getName() + "'" );
+				else
+					condition.append( " AND p.name = '" + item.getName() + "'" );
+
+				if( item.getDescription() != null && condition.length() == 0 )
+					condition.append( " p.description = '" + item.getDescription() + "'" );
+				else
+					condition.append( " AND p.description = '" + item.getDescription() + "'" );
+
+				if( condition.length() > 0 ) {
+					query.append( condition );
+				}
+			}
+		}
+
+		try {
+
+			stmt = (PreparedStatement)conn.createStatement();
+			// retrieve the persistent Item object
+			//
+			if( stmt.execute( query.toString() ) ) { // statement returned a result
+				ResultSet r = stmt.getResultSet();
+				return new AttributeIterator( r, objectModel );
+			}
+		}
+		catch( Exception e ) {      // just in case...
+			throw new DTException( "ItemManager.restoreEstablishedBy: Could not restore persistent Category objects; Root cause: " + e );
+		}
+
+		throw new DTException( "ItemManager.restoreEstablishedBy: Could not restore persistent Category objects" );
 	}
 
 
@@ -289,7 +342,7 @@ public class ItemManager {
 	            query.append( " and p.identifier = '" + item.getIdentifier() + "'" );
 	        else {
 	            if( item.getCategoryId() >= 0 )
-	                condition.append( " p.categoryId = '" + item.getCategoryId() + "'" );
+	                condition.append( " p.category_id = '" + item.getCategoryId() + "'" );
 	
 	            if( item.getOwnerId() >= 0 && condition.length() == 0 )
 	                condition.append( " p.owner_id = '" + item.getOwnerId() + "'" );
@@ -335,9 +388,67 @@ public class ItemManager {
 	}
 
 
-	public Auction restoreAuctionBy(Item item) {
-		// TODO Auto-generated method stub
-		return null;
+	public Auction restoreAuctionBy(Item item) throws DTException {
+		String       selectItemSql = "select c.id, c.minPrice, c.expiration, c.item_id from item p, auction c where c.item_id = p.id";
+		PreparedStatement    stmt = null;
+		StringBuffer query = new StringBuffer( 100 );
+		StringBuffer condition = new StringBuffer( 100 );
+
+		condition.setLength( 0 );
+
+		// form the query based on the given Item object instance
+		query.append( selectItemSql );
+
+		if( item != null ) {
+			if( item.getId() >= 0 ) // id is unique, so it is sufficient to get a item
+				query.append( " and p.id = " + item.getId() );
+			else if( item.getIdentifier() != null ) // identifier is unique, so it is sufficient to get a item
+				query.append( " and p.identifier = '" + item.getIdentifier() + "'" );
+			else {
+				if( item.getCategoryId() >= 0 )
+					condition.append( " p.category_id = '" + item.getCategoryId() + "'" );
+
+				if( item.getOwnerId() >= 0 && condition.length() == 0 )
+					condition.append( " p.owner_id = '" + item.getOwnerId() + "'" );
+				else
+					condition.append( " AND p.owner_id = '" + item.getOwnerId() + "'" );
+
+				if( item.getName() != null && condition.length() == 0 )
+					condition.append( " p.name = '" + item.getName() + "'" );
+				else
+					condition.append( " AND p.name = '" + item.getName() + "'" );
+
+				if( item.getDescription() != null && condition.length() == 0 )
+					condition.append( " p.description = '" + item.getDescription() + "'" );
+				else
+					condition.append( " AND p.description = '" + item.getDescription() + "'" );
+
+				if( condition.length() > 0 ) {
+					query.append( condition );
+				}
+			}
+		}
+
+		try {
+
+			stmt = (PreparedStatement)conn.createStatement();
+			// retrieve the persistent Item object
+			//
+			if( stmt.execute( query.toString() ) ) { // statement returned a result
+				ResultSet r = stmt.getResultSet();
+				Iterator<Auction> aucIter = new AuctionIterator( r, objectModel );
+				if( aucIter != null && aucIter.hasNext() ){
+					return aucIter.next();
+				}
+				else
+					return null;
+			}
+		}
+		catch( Exception e ) {      // just in case...
+			throw new DTException( "ItemManager.restoreEstablishedBy: Could not restore persistent RegisteredUser objects; Root cause: " + e );
+		}
+
+		throw new DTException( "ItemManager.restoreEstablishedBy: Could not restore persistent RegisteredUser objects" );
 	}
 	
 	
