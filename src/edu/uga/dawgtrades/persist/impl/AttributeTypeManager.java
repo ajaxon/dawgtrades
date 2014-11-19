@@ -93,7 +93,7 @@ public class AttributeTypeManager {
 
     }
 
-    public Iterator<AttributeType> restore(AttributeType attributeType) throws DTException{
+    public Iterator<AttributeType> restore(AttributeType attributeType) throws DTException {
 
         String selectAttributeTypeSql = "select id, category_id, name from attribute_type";
         PreparedStatement stmt = null;
@@ -102,52 +102,44 @@ public class AttributeTypeManager {
 
         condition.setLength(0);
 
-        if(attributeType!= null){
-            if(attributeType.getId() >=0){
-                query.append(" where id = "+ attributeType.getId());
+        if (attributeType != null) {
+            if (attributeType.getId() >= 0) {
+                query.append(" where id = " + attributeType.getId());
             }
-            else{
-                if(attributeType.getCategoryId()>0){
-                    condition.append(" category_id = '"+attributeType.getCategoryId()+"'");
+            else {
+                if (attributeType.getCategoryId() > 0) {
+                    condition.append(" category_id = '" + attributeType.getCategoryId() + "'");
                 }
-                if(attributeType.getName()!=null){
-                    if(condition.length()>0){
+                if (attributeType.getName() != null) {
+                    if (condition.length() > 0) {
                         condition.append(" and");
                     }
-                    condition.append(" name = '"+attributeType.getName()+"'");
-
-
-                    if(condition.length()>0){
+                    condition.append(" name = '" + attributeType.getName() + "'");
+                }
+                if (condition.length() > 0) {
 
                         query.append(" where ");
                         query.append(condition);
-                    }
                 }
 
             }
-
-            try{
-                stmt = (PreparedStatement)conn.prepareStatement(selectAttributeTypeSql);
-
-                if(stmt.execute(query.toString())){
-                    ResultSet r = stmt.getResultSet();
-                    return new AttributeTypeIterator(r,objectModel);
-
-                }
-
-            }catch(Exception e){
-                throw new DTException("AttributeTypeManager.restore:Could not restore AttributeType object");
-
-            }
-
-            throw new DTException("AttributeTypeManager.restore:Could not restore AttributeType object");
         }
-        return null;
 
+        try {
+            stmt = (PreparedStatement) conn.prepareStatement(selectAttributeTypeSql);
 
+            if (stmt.execute(query.toString())) {
+                ResultSet r = stmt.getResultSet();
+                return new AttributeTypeIterator(r, objectModel);
 
+            }
 
+        } catch (Exception e) {
+            throw new DTException("AttributeTypeManager.restore:Could not restore AttributeType object");
 
+        }
+
+        throw new DTException("AttributeTypeManager.restore:Could not restore AttributeType object");
     }
 
     public void delete(AttributeType attributeType) throws DTException{
