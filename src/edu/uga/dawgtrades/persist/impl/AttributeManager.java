@@ -86,7 +86,7 @@ public class AttributeManager {
 
     public Iterator<Attribute> restore(Attribute attribute) throws DTException{
 
-        String selectAttributeSql = "select id, value, attribute_type_id, item_Id";
+        String selectAttributeSql = "select id, value, attribute_type_id, item_id";
         PreparedStatement stmt = null;
         StringBuffer query = new StringBuffer(100);
         StringBuffer condition = new StringBuffer(100);
@@ -282,7 +282,7 @@ public class AttributeManager {
             }
         }catch(Exception e){
 
-            throw new DTException("CategoryManager.restoreParentCategoryBy. Could not restore category"+e);
+            throw new DTException("AttributeManager.restore attribute type by attribute. "+e);
         }
 
         return null;

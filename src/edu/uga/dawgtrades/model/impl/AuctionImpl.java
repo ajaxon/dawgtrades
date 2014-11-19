@@ -18,6 +18,7 @@ public class AuctionImpl extends Persistent implements Auction {
     private ArrayList<Bid> bids;
 
 	public AuctionImpl(Item item, float minPrice, Date expiration) throws DTException {
+        super(-1);
 		if(item == null)
 			throw new DTException("Item is null");
 		if(!item.isPersistent())
@@ -28,6 +29,7 @@ public class AuctionImpl extends Persistent implements Auction {
 	}
 	
 	public AuctionImpl(long itemId, float minPrice, Date expiration ){
+        super(-1);
 		this.itemId = itemId;
 		this.minPrice = minPrice;
 		this.expiration = expiration;

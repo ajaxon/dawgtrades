@@ -112,12 +112,13 @@ public class AuctionManager {
                         condition.append(" and");
                     condition.append(" item_id = '" + auction.getItemId() + "'");
                 }
+                /*
                 if (auction.getExpiration() != null) // userName is unique, so it is sufficient to get a registered user
                     if (condition.length() > 0)
                         condition.append(" and");
                 condition.append(" expiration = '" + auction.getExpiration() + "'");
 
-
+*/
                 if (condition.length() > 0) {
                     query.append(" where ");
                     query.append(condition);

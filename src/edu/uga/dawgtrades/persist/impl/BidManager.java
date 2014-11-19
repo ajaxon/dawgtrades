@@ -99,13 +99,22 @@ public class BidManager {
 					condition.append(" and auction_id = " + bid.getAuction().getId());
 				}
 				if(bid.getRegisteredUser() != null){
-					condition.append(" and user_id = " + bid.getRegisteredUser().getId());
+                    if(condition.length()>0)
+					    condition.append(" and user_id = " + bid.getRegisteredUser().getId());
+                    else
+                        condition.append(" user_id = " + bid.getRegisteredUser().getId());
 				}
 				if(bid.getDate() != null){
-					condition.append(" and date = " + bid.getDate());
+                    if(condition.length() >0)
+					    condition.append(" and date = " + bid.getDate());
+                    else
+                        condition.append(" date = " + bid.getDate());
 				}
 				if(bid.getAmount() != 0){
-					condition.append(" and amount = " + bid.getAmount());
+                    if(condition.length()>0)
+					    condition.append(" and amount = " + bid.getAmount());
+                    else
+                        condition.append(" amount = " + bid.getAmount());
 				}
 				if(condition.length() > 0){
 					query.append(  " where " );
