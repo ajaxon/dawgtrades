@@ -36,14 +36,16 @@ public class BidIterator implements Iterator<Bid> {
 		long id;
 		long auctionId;
 		long registeredUserId;
+		java.util.Date date;
 		long price;
 		Bid bid = null;
 		if(more){
 			try{
 				id = rs.getLong(1);
-				auctionId = rs.getLong(2);
-				registeredUserId = rs.getLong(3);
-				price = rs.getLong(4);
+				registeredUserId = rs.getLong(2);
+				auctionId = rs.getLong(3);
+				date = rs.getDate(4);
+				price = rs.getLong(5);
 			}catch(Exception e){
 				throw new NoSuchElementException("BidIterator: No next object; root cause " + e);
 			}
@@ -54,6 +56,7 @@ public class BidIterator implements Iterator<Bid> {
 				registeredUser.setId(registeredUserId);
 				bid = objectModel.createBid(auction, registeredUser, price);
 				bid.setId(id);
+				bid.setDate(date);
 				bid.setAmount(price);
 			}catch(Exception e){}
 			return bid;
