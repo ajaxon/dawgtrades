@@ -188,7 +188,7 @@ public class AttributeManager {
 
 
     public Item restoreItemBy(Attribute attribute) throws DTException {
-        String restoreItemBySql = "select i.id, i.name, i.category_id, i.description, i.identifier, i.owner_id from item I, attribute A where I.id = A.item_id";
+        String restoreItemBySql = "select I.id, I.name, I.identifier, I.description, I.owner_id, I.category_id from item I, attribute A where I.id = A.item_id";
         PreparedStatement stmt = null;
         StringBuffer query = new StringBuffer(100);
         StringBuffer condition = new StringBuffer(100);
@@ -235,7 +235,7 @@ public class AttributeManager {
 
     public AttributeType restoreAttributeTypeBy(Attribute attribute) throws DTException {
 
-        String restoreAttributeTypeBySql = "select T.id, T.name, T.category_id from attribute_type T, attribute A where T.id = A.attribute_type_id";
+        String restoreAttributeTypeBySql = "select T.id, T.category_id, T.name from attribute_type T, attribute A where T.id = A.attribute_type_id";
         PreparedStatement stmt = null;
         StringBuffer query = new StringBuffer(100);
         StringBuffer condition = new StringBuffer(100);
