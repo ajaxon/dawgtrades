@@ -1,9 +1,6 @@
 package edu.uga.dawgtrades.persist.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Iterator;
 
 import edu.uga.dawgtrades.model.Attribute;
@@ -95,51 +92,54 @@ public class AttributeTypeManager {
 
     public Iterator<AttributeType> restore(AttributeType attributeType) throws DTException {
 
-        String selectAttributeTypeSql = "select id, category_id, name from attribute_type";
-        PreparedStatement stmt = null;
-        StringBuffer query = new StringBuffer(100);
-        StringBuffer condition = new StringBuffer(100);
+        String       selectRegisteredUserSql = "select id, name, category_id from attribute_type";
+        Statement stmt = null;
+        StringBuffer query = new StringBuffer( 100 );
+        StringBuffer condition = new StringBuffer( 100 );
 
-        condition.setLength(0);
+        condition.setLength( 0 );
 
-        if (attributeType != null) {
-            if (attributeType.getId() >= 0) {
-                query.append(" where id = " + attributeType.getId());
-            }
+        // form the query based on the given RegisteredUser object instance
+        query.append( selectRegisteredUserSql );
+
+        if( attributeType != null ) {
+            if( attributeType.getId() >= 0 ) // id is unique, so it is sufficient
+                query.append( " where id = " + attributeType.getId() );
+
             else {
-                if (attributeType.getCategoryId() > 0) {
-                    condition.append(" category_id = '" + attributeType.getCategoryId() + "'");
-                }
-                if (attributeType.getName() != null) {
-                    if (condition.length() > 0) {
-                        condition.append(" and");
-                    }
-                    condition.append(" name = '" + attributeType.getName() + "'");
-                }
-                if (condition.length() > 0) {
+                if( attributeType.getName() != null )
+                    condition.append( " name = '" + attributeType.getId() + "'" );
 
-                        query.append(" where ");
-                        query.append(condition);
+                if( attributeType.getCategoryId() >= 0 ) {
+                    if( condition.length() > 0 )
+                        condition.append( " and" );
+                    condition.append( " category_id = '" + attributeType.getCategoryId() + "'" );
                 }
 
+                if( condition.length() > 0 ) {
+                    query.append(  " where " );
+                    query.append( condition );
+                }
             }
         }
 
         try {
-            stmt = (PreparedStatement) conn.prepareStatement(selectAttributeTypeSql);
 
-            if (stmt.execute(query.toString())) {
+            stmt = conn.createStatement();
+
+            // retrieve the persistent RegisteredUser object
+            //
+            if( stmt.execute( query.toString() ) ) { // statement returned a result
                 ResultSet r = stmt.getResultSet();
-                return new AttributeTypeIterator(r, objectModel);
-
+                return new AttributeTypeIterator( r, objectModel );
             }
-
-        } catch (Exception e) {
-            throw new DTException("AttributeTypeManager.restore:Could not restore AttributeType object");
-
+        }
+        catch( Exception e ) {      // just in case...
+            throw new DTException( "AttTypeManager.restore: Could not restore persistent Attribute Type object; Root cause: " + e );
         }
 
-        throw new DTException("AttributeTypeManager.restore:Could not restore AttributeType object");
+        // if we get to this point, it's an error
+        throw new DTException( "AttTypeManager.restore: Could not restore persistent Attribute Type Manager object" );
     }
 
     public void delete(AttributeType attributeType) throws DTException{
