@@ -30,7 +30,7 @@ public class BidManager {
 		//throw exceptions here; not important now
 
 		try{
-			stmt = (PreparedStatement) conn.prepareStatement(insertBidSql);
+			stmt = conn.prepareStatement(insertBidSql);
 
 
 			if( bid.getRegisteredUser() != null && bid.getRegisteredUser().getId() >= 0) // clubsuser is unique, so it is sufficient to get a person

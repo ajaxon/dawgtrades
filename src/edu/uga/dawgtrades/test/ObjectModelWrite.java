@@ -43,6 +43,8 @@ public class ObjectModelWrite
         Auction auction1;
         //Items
         Item macbookAir;
+        // Bid
+        Bid bid;
 
 
 
@@ -100,6 +102,10 @@ public class ObjectModelWrite
 
             auction1 = objectModel.createAuction(macbookAir,5,new Date());
             persistence.saveAuction(auction1);
+
+            // create bid
+            bid = objectModel.createBid(auction1,joe,2);
+            persistence.saveBid(bid);
 
             /*
 

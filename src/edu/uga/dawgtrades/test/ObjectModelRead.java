@@ -216,7 +216,7 @@ public class ObjectModelRead extends TestCase
             bidCount++;
 
         }
-        assertEquals(bidCount,4);
+        assertEquals(1,bidCount);
     }
     @Test
     public void test_bidAmount(){
