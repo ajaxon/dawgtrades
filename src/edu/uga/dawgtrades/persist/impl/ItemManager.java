@@ -215,23 +215,29 @@ public class ItemManager {
 			else if( item.getIdentifier() != null ) // identifier is unique, so it is sufficient to get a item
 				query.append( " and p.identifier = '" + item.getIdentifier() + "'" );
 			else {
-				if( item.getCategoryId() >= 0 )
-					condition.append( " p.category_id = '" + item.getCategoryId() + "'" );
+				if (item.getCategoryId() >= 0)
+					condition.append(" p.category_id = '" + item.getCategoryId() + "'");
 
-				if( item.getOwnerId() >= 0 && condition.length() == 0 )
-					condition.append( " p.owner_id = '" + item.getOwnerId() + "'" );
-				else
-					condition.append( " AND p.owner_id = '" + item.getOwnerId() + "'" );
+				if (item.getOwnerId() >= 0) {
+					if (condition.length() == 0)
+						condition.append(" p.owner_id = '" + item.getOwnerId() + "'");
+					else
+						condition.append(" AND p.owner_id = '" + item.getOwnerId() + "'");
+				}
 
-				if( item.getName() != null && condition.length() == 0 )
-					condition.append( " p.name = '" + item.getName() + "'" );
-				else
-					condition.append( " AND p.name = '" + item.getName() + "'" );
+				if (item.getName() != null) {
+					if (condition.length() == 0)
+						condition.append(" p.name = '" + item.getName() + "'");
+					else
+						condition.append(" AND p.name = '" + item.getName() + "'");
+				}
 
-				if( item.getDescription() != null && condition.length() == 0 )
-					condition.append( " p.description = '" + item.getDescription() + "'" );
-				else
-					condition.append( " AND p.description = '" + item.getDescription() + "'" );
+				if( item.getDescription() != null ) {
+					if(condition.length() == 0)
+						condition.append(" p.description = '" + item.getDescription() + "'");
+					else
+						condition.append(" AND p.description = '" + item.getDescription() + "'");
+				}
 
 				if( condition.length() > 0 ) {
 					query.append( condition );
@@ -282,21 +288,26 @@ public class ItemManager {
 				if( item.getCategoryId() >= 0 )
 					condition.append( " p.category_id = '" + item.getCategoryId() + "'" );
 
-				if( item.getOwnerId() >= 0 && condition.length() == 0 )
-					condition.append( " p.owner_id = '" + item.getOwnerId() + "'" );
-				else
-					condition.append( " AND p.owner_id = '" + item.getOwnerId() + "'" );
+				if( item.getOwnerId() >= 0 ) {
+					if(condition.length() == 0)
+						condition.append(" p.owner_id = '" + item.getOwnerId() + "'");
+					else
+						condition.append(" AND p.owner_id = '" + item.getOwnerId() + "'");
+				}
 
-				if( item.getName() != null && condition.length() == 0 )
-					condition.append( " p.name = '" + item.getName() + "'" );
-				else
-					condition.append( " AND p.name = '" + item.getName() + "'" );
+				if( item.getName() != null) {
+					if(condition.length() == 0)
+						condition.append(" p.name = '" + item.getName() + "'");
+					else
+						condition.append(" AND p.name = '" + item.getName() + "'");
+				}
 
-				if( item.getDescription() != null && condition.length() == 0 )
-					condition.append( " p.description = '" + item.getDescription() + "'" );
-				else
-					condition.append( " AND p.description = '" + item.getDescription() + "'" );
-
+				if( item.getDescription() != null ) {
+					if(condition.length() == 0 )
+						condition.append(" p.description = '" + item.getDescription() + "'");
+					else
+						condition.append(" AND p.description = '" + item.getDescription() + "'");
+				}
 				if( condition.length() > 0 ) {
 					query.append( condition );
 				}
@@ -341,21 +352,27 @@ public class ItemManager {
 	            if( item.getCategoryId() >= 0 )
 	                condition.append( " p.category_id = '" + item.getCategoryId() + "'" );
 	
-	            if( item.getOwnerId() >= 0 && condition.length() == 0 )
-	                condition.append( " p.owner_id = '" + item.getOwnerId() + "'" );
-	            else
-	                condition.append( " AND p.owner_id = '" + item.getOwnerId() + "'" );
+	            if( item.getOwnerId() >= 0 ) {
+					if(condition.length() == 0)
+						condition.append(" p.owner_id = '" + item.getOwnerId() + "'");
+					else
+						condition.append(" AND p.owner_id = '" + item.getOwnerId() + "'");
+				}
 	
-	            if( item.getName() != null && condition.length() == 0 )
-	                condition.append( " p.name = '" + item.getName() + "'" );
-	            else
-	                condition.append( " AND p.name = '" + item.getName() + "'" );
-	
-	            if( item.getDescription() != null && condition.length() == 0 )
-	                condition.append( " p.description = '" + item.getDescription() + "'" );
-	            else
-	                condition.append( " AND p.description = '" + item.getDescription() + "'" );
-	
+	            if( item.getName() != null ) {
+					if (condition.length() == 0)
+						condition.append(" p.name = '" + item.getName() + "'");
+					else
+						condition.append(" AND p.name = '" + item.getName() + "'");
+				}
+
+	            if( item.getDescription() != null && condition.length() == 0 ) {
+					if (condition.length() == 0)
+						condition.append(" p.description = '" + item.getDescription() + "'");
+					else
+						condition.append(" AND p.description = '" + item.getDescription() + "'");
+				}
+
 	            if( condition.length() > 0 ) {
 	                query.append( condition );
 	            }
@@ -405,20 +422,26 @@ public class ItemManager {
 				if( item.getCategoryId() >= 0 )
 					condition.append( " p.category_id = '" + item.getCategoryId() + "'" );
 
-				if( item.getOwnerId() >= 0 && condition.length() == 0 )
-					condition.append( " p.owner_id = '" + item.getOwnerId() + "'" );
-				else
-					condition.append( " AND p.owner_id = '" + item.getOwnerId() + "'" );
+				if( item.getOwnerId() >= 0 ) {
+					if (condition.length() == 0)
+						condition.append(" p.owner_id = '" + item.getOwnerId() + "'");
+					else
+						condition.append(" AND p.owner_id = '" + item.getOwnerId() + "'");
+				}
 
-				if( item.getName() != null && condition.length() == 0 )
-					condition.append( " p.name = '" + item.getName() + "'" );
-				else
-					condition.append( " AND p.name = '" + item.getName() + "'" );
+				if( item.getName() != null ) {
+					if (condition.length() == 0)
+						condition.append(" p.name = '" + item.getName() + "'");
+					else
+						condition.append(" AND p.name = '" + item.getName() + "'");
+				}
 
-				if( item.getDescription() != null && condition.length() == 0 )
-					condition.append( " p.description = '" + item.getDescription() + "'" );
-				else
-					condition.append( " AND p.description = '" + item.getDescription() + "'" );
+				if( item.getDescription() != null ) {
+					if(condition.length() == 0 )
+						condition.append(" p.description = '" + item.getDescription() + "'");
+					else
+						condition.append(" AND p.description = '" + item.getDescription() + "'");
+				}
 
 				if( condition.length() > 0 ) {
 					query.append( condition );
