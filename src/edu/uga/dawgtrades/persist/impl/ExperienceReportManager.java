@@ -22,22 +22,57 @@ public class ExperienceReportManager {
 	}
 
 	public void save(ExperienceReport experienceReport) throws DTException{
-		String insertExReSql = "insert into experienceReport (reviewer, reviewed, rating, report, date) values (?, ?, ?, ?)";
+		String insertExReSql = "insert into experience_report (rating, report, reviewer_id, reviewed_id, date) values (?, ?, ?, ?, ?)";
+		String updateExReSql ="update experience_report set rating = ?, report = ?, reviewer_id = ?, reviewed_id = ?, date = ?  where id = ?";
 		PreparedStatement stmt = null;
 		int inscnt;
 		long experienceReportId;
 		//throw errors here
 		try{
-			stmt = (PreparedStatement) conn.prepareStatement(insertExReSql);
-			stmt.setLong(1, experienceReport.getReviewed().getId());
-			stmt.setLong(2, experienceReport.getReviewer().getId());
-			stmt.setLong(3, experienceReport.getRating());
-			stmt.setString(4, experienceReport.getReport());
+
+			if( !experienceReport.isPersistent() )
+				stmt = (PreparedStatement) conn.prepareStatement( insertExReSql );
+			else
+				stmt = (PreparedStatement) conn.prepareStatement( updateExReSql );
+
+			if( experienceReport.getRating() >= 0 && experienceReport.getRating() <= 5 )
+				stmt.setInt(1, experienceReport.getRating());
+			else
+				throw new DTException( "ExperienceReport.save: can't save an Experience Report: rating is not between 0 and 5" );
+
+			if( experienceReport.getReport() != null )
+				stmt.setString(2, experienceReport.getReport());
+			else
+				throw new DTException( "ExperienceReport.save: can't save a Experience Report: report undefined" );
+
+			if( experienceReport.getReviewer() != null && experienceReport.getReviewer().getId() >= 0 )
+				stmt.setLong(3, experienceReport.getReviewer().getId());
+			else
+				throw new DTException( "ExperienceReport.save: can't save a Experience Report: reviewer is undefined" );
+
+			if( experienceReport.getReviewed() != null && experienceReport.getReviewed().getId() >= 0 )
+				stmt.setLong(4, experienceReport.getReviewed().getId());
+			else
+				throw new DTException( "ExperienceReport.save: can't save a Experience Report: reviewed is undefined" );
+
 			if(experienceReport.getDate() != null){
 				java.util.Date javaDate = experienceReport.getDate();
 				java.sql.Date sqlDate = new java.sql.Date(javaDate.getTime());
 				stmt.setDate(5, sqlDate);
 			}
+			else
+				throw new DTException( "ExperienceReport.save: can't save an Experience Report: date is undefined");
+
+			if( experienceReport.isPersistent() )
+				stmt.setLong( 6, experienceReport.getId() );
+
+
+			/*stmt = (PreparedStatement) conn.prepareStatement(insertExReSql);
+			stmt.setLong(1, experienceReport.getReviewed().getId());
+			stmt.setLong(2, experienceReport.getReviewer().getId());
+			stmt.setLong(3, experienceReport.getRating());
+			stmt.setString(4, experienceReport.getReport());*/
+
 			inscnt = stmt.executeUpdate();
 			if(inscnt >= 1){
 				String sql = "select last insert id()";
@@ -60,7 +95,7 @@ public class ExperienceReportManager {
 	}
 
 	public Iterator<ExperienceReport> restore(ExperienceReport experienceReport) throws DTException{
-		String selectExReSql = "select ...";
+		String selectExReSql = "select id, rating, report, reviewer_id, reviewed_id, date from experience_report";
 		Statement stmt = null;
 		StringBuffer query = new StringBuffer(100);
 		StringBuffer condition = new StringBuffer(100);
@@ -72,10 +107,10 @@ public class ExperienceReportManager {
 				query.append("where id = " + experienceReport.getId());
 			}else{
 				if(experienceReport.getReviewed() != null){
-					condition.append(" and reviewed = " + experienceReport.getReviewed().getId());
+					condition.append(" and reviewed_id = " + experienceReport.getReviewed().getId());
 				}
 				if(experienceReport.getReviewer() != null){
-					condition.append(" and reviewer = " + experienceReport.getReviewer().getId());
+					condition.append(" and reviewer_id = " + experienceReport.getReviewer().getId());
 				}
 				if(experienceReport.getRating() != 0){
 					condition.append(" and rating = " + experienceReport.getRating());
@@ -87,6 +122,7 @@ public class ExperienceReportManager {
 					condition.append(" and date = " + experienceReport.getDate());
 				}
 				if(condition.length() > 0){
+					query.append(  " where " );
 					query.append(condition);
 				}
 			}
@@ -104,7 +140,7 @@ public class ExperienceReportManager {
 	}
 
 	public void delete(ExperienceReport experienceReport) throws DTException{
-		String deleteExReSql = "delete from experienceReprot where id = ?";
+		String deleteExReSql = "delete from experience_report where id = ?";
 		PreparedStatement stmt = null;
 		int inscnt;
 		if(!experienceReport.isPersistent()){
