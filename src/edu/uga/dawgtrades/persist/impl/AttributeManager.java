@@ -1,9 +1,6 @@
 package edu.uga.dawgtrades.persist.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Iterator;
 
 import edu.uga.dawgtrades.model.Attribute;
@@ -235,46 +232,60 @@ public class AttributeManager {
 
     public AttributeType restoreAttributeTypeBy(Attribute attribute) throws DTException {
 
-        String restoreAttributeTypeBySql = "select T.id, T.category_id, T.name from attribute_type T, attribute A where T.id = A.attribute_type_id";
+
+        String restoreAttributeTypeBySql = "select p.id, p.category_id, p.name from attribute_type p, attribute c where p.id = c.attribute_type_id";
+
         PreparedStatement stmt = null;
         StringBuffer query = new StringBuffer(100);
         StringBuffer condition = new StringBuffer(100);
 
         condition.setLength(0);
-
         if(attribute!=null){
 
-            if(attribute.getId()> 0){
+            if(attribute.getId() >= 0){
+                query.append(" and c.id='"+ attribute.getId()+"'");
+            }
+            else {
+                if (attribute.getValue() != null)
+                    condition.append(" c.value = '" + attribute.getValue() + "'");
 
-                query.append(" and A.id='"+attribute.getId()+"'");
+                if (attribute.getAttributeType() >= 0) {
+                    if (condition.length() == 0)
+                        condition.append(" c.attribute_type_id = '" + attribute.getAttributeType() + "'");
+                    else
+                        condition.append( " AND c.attribute_type_id = '" + attribute.getAttributeType() + "'" );
+                }
 
+
+                if (attribute.getItemId() >= 0) {
+                    if(condition.length() == 0)
+                        condition.append(" c.item_id = '" + attribute.getItemId() + "'");
+                    else
+                        condition.append( " AND c.item_id = '" + attribute.getItemId() + "'" );
+                }
+
+                if (condition.length() > 0) {
+                    query.append(condition);
+                }
             }
         }
-        try{
-            stmt = (PreparedStatement)conn.prepareStatement(restoreAttributeTypeBySql);
 
+        try{
+            stmt = (PreparedStatement) conn.prepareStatement(restoreAttributeTypeBySql);
             if(stmt.execute(query.toString())){
                 ResultSet r = stmt.getResultSet();
                 Iterator<AttributeType> attributeTypeIter = new AttributeTypeIterator(r,objectModel);
-                if(attributeTypeIter!=null && attributeTypeIter.hasNext()){
-
+                if(attributeTypeIter != null && attributeTypeIter.hasNext()){
                     return attributeTypeIter.next();
-                }else{
-
+                }else
                     return null;
-                }
             }
-
         }catch(Exception e){
 
-            throw new DTException("AttributeManager.restoreAttributeTypeBy: Could not restore AttributeType"+e);
+            throw new DTException("CategoryManager.restoreParentCategoryBy. Could not restore category"+e);
         }
 
-
-        throw new DTException("AttributeManager.restoreAttributeTypeBy: Could not restore Item");
-
-
-
+        return null;
 
     }
 
