@@ -141,7 +141,7 @@ public class ObjectModelRead extends TestCase
 
         Bid bid = null;
         Bid model = objectModel.createBid();
-        model.setAmount(2);
+        model.setAmount(2.0f);
         Iterator<Bid> bids = objectModel.findBid(model);
         while(bids.hasNext()){
             bid = bids.next();
@@ -273,7 +273,7 @@ public class ObjectModelRead extends TestCase
     }
     @Test
     public void test_bidAmount(){
-        assertEquals(2,bid.getAmount());
+        assertEquals(2.0f,bid.getAmount());
     }
 
     // Attributes
@@ -286,7 +286,7 @@ public class ObjectModelRead extends TestCase
             attribute = attributes.next();
             attrcount++;
         }
-        assertEquals(attrcount,2);
+        assertEquals(1,attrcount);
 
     }
 
@@ -299,8 +299,9 @@ public class ObjectModelRead extends TestCase
     }
 
     @Test
-    public void test_restoreAttributeTypebyAttribute(){
-        fail();
+    public void test_restoreAttributeTypebyAttribute() throws DTException {
+        AttributeType attrType = objectModel.getAttributeType(attribute);
+        assertEquals("Manufacturer",attrType.getName());
     }
     // AttributeType
     /*
@@ -351,7 +352,7 @@ public class ObjectModelRead extends TestCase
             attr = attributes.next();
             attrcount++;
         }
-        assertEquals(2, attrcount);
+        assertEquals(1, attrcount);
     }
     public void test_restoreRegisteredUserbyItem() throws DTException {
         RegisteredUser user = objectModel.getRegisteredUser(item);

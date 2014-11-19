@@ -51,17 +51,23 @@ public class BidIterator implements Iterator<Bid> {
 			}catch(Exception e){
 				throw new NoSuchElementException("BidIterator: No next object; root cause " + e);
 			}
-			try{
-				Auction auction = objectModel.createAuction(null, 0, null);
-				RegisteredUser registeredUser = objectModel.createRegisteredUser(null, null, null, null, false, null, null, false);
+
+				Auction auction = objectModel.createAuction();
+				RegisteredUser registeredUser = objectModel.createRegisteredUser();
 				auction.setId(auctionId);
 				registeredUser.setId(registeredUserId);
-				bid = objectModel.createBid(auction, registeredUser, price);
-				bid.setId(id);
-				bid.setDate(date);
-				bid.setAmount(price);
-			}catch(Exception e){}
-			return bid;
+            try {
+                bid = objectModel.createBid(auction, registeredUser, price);
+                bid.setId(id);
+                bid.setDate(date);
+
+            } catch (DTException e) {
+                e.printStackTrace();
+            }
+
+                return bid;
+
+
 		}else{
 			throw new NoSuchElementException("ExperienceReportIterator: No next object");
 		}
