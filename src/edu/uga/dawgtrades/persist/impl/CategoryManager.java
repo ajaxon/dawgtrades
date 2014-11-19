@@ -156,14 +156,14 @@ public class CategoryManager {
         }
     }
 
-
+    // test passed
     public Category restoreParentBy(Category category) throws DTException {
 
         String restoreParentBySql = "select P.id, P.name, P.parent_id from category P, category C where P.id = C.parent_id";
         PreparedStatement stmt = null;
         StringBuffer query = new StringBuffer(100);
         StringBuffer condition = new StringBuffer(100);
-
+        query.append(restoreParentBySql);
         condition.setLength(0);
         if(category!=null){
 
@@ -190,22 +190,22 @@ public class CategoryManager {
         return null;
     }
 
-
+    // test passed
     public Iterator<Category> restoreChildBy(Category category) throws DTException {
         String restoreChildBySql = "select C.id, C.name, C.parent_id from category C, category P where P.id = C.parent_id";
-        PreparedStatement stmt = null;
+        Statement stmt = null;
         StringBuffer query = new StringBuffer(100);
-
+        query.append(restoreChildBySql);
         if(category!=null){
 
             if(category.getId()>0){
-                query.append("  and P.id='"+category.getId()+"'");
+                query.append(" and P.id='"+category.getId()+"'");
             }
         }
 
         try{
 
-            stmt = (PreparedStatement) conn.prepareStatement(restoreChildBySql);
+            stmt = conn.createStatement();
             if(stmt.execute(query.toString())){
                 ResultSet r = stmt.getResultSet();
                 Iterator<Category> catIter = new CategoryIterator(r,objectModel);
@@ -220,7 +220,7 @@ public class CategoryManager {
         }
 
 
-        return null;
+        throw new DTException( "RegisteredUserManager.restoreEstablishedBy: Could not restore persistent Item objects" );
     }
 
     // Test passed

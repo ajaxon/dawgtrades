@@ -24,6 +24,7 @@ public class ObjectModelRead extends TestCase
     static ObjectModel objectModel = null;
     static Persistence persistence = null;
     Category category =  null;
+    Category child = null;
     RegisteredUser user = null;
     Item item  = null;
     Auction auction = null;
@@ -54,6 +55,7 @@ public class ObjectModelRead extends TestCase
 
         user = getUser();
         category = getCategory();
+        child = getChild();
         item = getItem();
         //attribute = getAttribute();
         auction = getAuction();
@@ -104,8 +106,26 @@ public class ObjectModelRead extends TestCase
         Iterator<Category> categories = objectModel.findCategory(model);
         while(categories.hasNext()){
             category = categories.next();
+
         }
         return category;
+    }
+    public Category getChild() throws DTException {
+        Iterator<Category> children = null;
+        Category category = null;
+        Category child = null;
+        Category model = objectModel.createCategory();
+        model.setName("Computers");
+        Iterator<Category> categories = objectModel.findCategory(model);
+        while(categories.hasNext()){
+            category = categories.next();
+
+        }
+
+        children = objectModel.getChild(category);
+        while(children.hasNext())
+            child = children.next();
+        return child;
     }
     public Item getItem() throws DTException {
         Item item = null;
@@ -118,7 +138,7 @@ public class ObjectModelRead extends TestCase
         return item;
     }
     public Bid getBid() throws DTException {
-        // Get a category
+
         Bid bid = null;
         Bid model = objectModel.createBid();
         model.setAmount(2);
@@ -128,6 +148,7 @@ public class ObjectModelRead extends TestCase
         }
         return bid;
     }
+
     public Auction getAuction() throws DTException {
         Auction auction = null;
         Auction model = objectModel.createAuction();
@@ -178,8 +199,9 @@ public class ObjectModelRead extends TestCase
     }
     // Category
     @Test
-    public void test_restoreParentByCategory()
-    {
+    public void test_restoreParentByCategory() throws DTException {
+        Category parent = objectModel.getParent(child);
+        assertEquals("Computers",parent.getName());
 
     }
     @Test
@@ -196,7 +218,7 @@ public class ObjectModelRead extends TestCase
             Category cat = categories.next();
             categoryCount++;
         }
-        assertEquals(3,categoryCount);
+        assertEquals(2,categoryCount);
     }
     @Test // Restore item by category
     public void test_restoreItemsByCategory() throws DTException {
@@ -309,7 +331,7 @@ public class ObjectModelRead extends TestCase
             Item item = items.next();
             itemcount++;
         }
-        assertEquals(itemcount,2);
+        assertEquals(1,itemcount);
 
 
     }
@@ -338,7 +360,7 @@ public class ObjectModelRead extends TestCase
     }
     public void test_restoreAuctionbyItem() throws DTException {
         Auction auction = objectModel.getAuction(item);
-        assertEquals(5.0,auction.getMinPrice());
+        assertEquals(5.0f,auction.getMinPrice());
     }
     // Membership
 

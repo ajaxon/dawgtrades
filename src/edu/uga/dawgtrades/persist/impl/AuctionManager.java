@@ -177,20 +177,20 @@ public class AuctionManager {
 
     public Item restoreItemBy(Auction auction) throws DTException{
 
-        String restoreItemBySql = "select i.id, i.name, i.identifier, i.description, i.owner_id, i.category_id from item I, auction A where I.id = A.item_id";
-        PreparedStatement stmt = null;
+        String restoreItemBySql = "select I.id, i.name, I.identifier, I.description, I.owner_id, I.category_id from item I, auction A where I.id = A.item_id";
+        Statement stmt = null;
         StringBuffer query = new StringBuffer(100);
         StringBuffer condition = new StringBuffer(100);
 
         condition.setLength(0);
-
+        query.append(restoreItemBySql);
         if(auction != null)
         {
             if(auction.getId() > 0)
-                query.append(" and A.id =" + auction.getId() + "'");
+                query.append(" and A.id =" + auction.getId() );
         }
         try {
-            stmt = (PreparedStatement)conn.prepareStatement(restoreItemBySql);
+            stmt = conn.createStatement();
 
             if (stmt.execute(query.toString())) {
                 ResultSet r = stmt.getResultSet();

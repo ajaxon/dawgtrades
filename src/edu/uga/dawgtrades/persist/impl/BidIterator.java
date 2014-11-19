@@ -46,6 +46,8 @@ public class BidIterator implements Iterator<Bid> {
 				auctionId = rs.getLong(3);
 				date = rs.getDate(4);
 				price = rs.getLong(5);
+
+                more = rs.next();
 			}catch(Exception e){
 				throw new NoSuchElementException("BidIterator: No next object; root cause " + e);
 			}
