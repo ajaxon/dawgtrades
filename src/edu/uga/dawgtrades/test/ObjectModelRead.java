@@ -26,6 +26,7 @@ public class ObjectModelRead extends TestCase
     Category category =  null;
     RegisteredUser user = null;
     Item item  = null;
+    Auction auction = null;
     @Before
     public void setUp() throws DTException {
 
@@ -96,7 +97,19 @@ public class ObjectModelRead extends TestCase
         }
         return bid;
     }
+    public Auction getAuction() throws DTException {
+        Auction auction = null;
+        Auction model = objectModel.createAuction();
+        auction.setMinPrice(5);
+        Iterator<Auction> auctions = objectModel.findAuction(model);
+        while(auctions.hasNext())
+        {
+            auction = auctions.next();
 
+
+        }
+        return auction;
+    }
 
     // RegisteredUser
     @Test
@@ -214,7 +227,7 @@ public class ObjectModelRead extends TestCase
     @Test
     public void test_getAttributes()
     {
-
+        fail();
     }
     @Test
     public void test_restoreItemByAttribute()
@@ -223,19 +236,25 @@ public class ObjectModelRead extends TestCase
     }
     @Test
     public void test_restoreAttributeTypebyAttribute(){
-
+        fail();
     }
     // AttributeType
     @Test
     public void test_restoreCategoryByAttributeType()
     {
-
+        fail();
     }
     // Auction
+    /*
     @Test
-    public void test_restoreItemByAuction(){
+
+    public void test_restoreItemByAuction() throws DTException {
+        Item item = objectModel.getItem(auction);
+        assertEquals("Macbook Air",item.getName());
+        assertEquals("Test",item.getIdentifier());
 
     }
+    */
     // Experience Report
 
     // Items
@@ -275,9 +294,9 @@ public class ObjectModelRead extends TestCase
         assertEquals("Test_name",user.getName());
 
     }
-    public void test_restoreAuctionbyItem()
-    {
-
+    public void test_restoreAuctionbyItem() throws DTException {
+        Auction auction = objectModel.getAuction(item);
+        assertEquals(5.0,auction.getMinPrice());
     }
     // Membership
 

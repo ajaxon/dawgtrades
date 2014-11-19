@@ -87,7 +87,7 @@ public class ObjectModelWrite
             persistence.saveRegisteredUser( tom );
 
             // create an item that belongs to tom
-            macbookAir = objectModel.createItem(computers, joe, "dasfd", "Macbook air for sale", "Used but good condition");
+            macbookAir = objectModel.createItem(computers, joe, "Test", "Macbook Air", "Used but good condition");
             persistence.saveItem(macbookAir);
 
 
@@ -98,7 +98,8 @@ public class ObjectModelWrite
 
             // create an auction
 
-            auction1 = objectModel.createAuction(macbookAir, 0, new Date());
+            auction1 = objectModel.createAuction(macbookAir,5,new Date());
+            persistence.saveAuction(auction1);
 
             /*
 

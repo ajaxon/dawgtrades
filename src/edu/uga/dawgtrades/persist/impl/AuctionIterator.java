@@ -31,8 +31,7 @@ public class AuctionIterator implements Iterator<Auction> {
 
 	@Override
 	public Auction next() {
-		// TODO Auto-generated method stub
-		return null;
+        return null;
 	}
 
 	@Override
