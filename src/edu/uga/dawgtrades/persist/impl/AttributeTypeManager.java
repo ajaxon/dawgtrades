@@ -24,9 +24,6 @@ public class AttributeTypeManager {
 
 
 
-
-
-
     public void save(AttributeType attributeType) throws DTException{
 
         String insertAttributeTypeSql = "insert into attribute_type (category_id ,name) values (?,?)";
