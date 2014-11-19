@@ -68,13 +68,15 @@ public class ObjectModelWrite
             //create a category
             computers = objectModel.createCategory(null,"Computers");
             persistence.saveCategory(computers);
+            laptops = objectModel.createCategory(computers,"Laptops");
+            persistence.saveCategory(laptops);
             //create an attribute type
             manufacturer = objectModel.createAttributeType(computers,"Manufacturer");
             year = objectModel.createAttributeType(computers,"Year");
             persistence.saveAttributeType(manufacturer);
             persistence.saveAttributeType(year);
             // create a few people
-            joe = objectModel.createRegisteredUser( "joe", "joe", "johnson", "password", true, "email@emailtest.com", "343-3232",false );
+            joe = objectModel.createRegisteredUser( "Test_name", "Test_firstname", "johnson", "password", true, "email@emailtest.com", "343-3232",false );
             dan = objectModel.createRegisteredUser( "mary", "mary", "maryLastname", "Marypass", false, "dan@emailtest.com", "444-9876",true );
             bob = objectModel.createRegisteredUser( "bob", "bob", "bobLastname", "Robertpass", false, "bob@emailtest.com", "567-7788",true );
             tom = objectModel.createRegisteredUser( "tom", "tom", "tomLastname", "Tompass", false, "tom@emailtest.com", "364-7592",true );
@@ -85,14 +87,13 @@ public class ObjectModelWrite
             persistence.saveRegisteredUser( tom );
 
             // create an item that belongs to tom
-            macbookAir = objectModel.createItem(computers, tom, "dasfd", "Macbook air for sale", "Used but good condition");
+            macbookAir = objectModel.createItem(computers, joe, "dasfd", "Macbook air for sale", "Used but good condition");
             persistence.saveItem(macbookAir);
 
 
             //create an attribute
-
-            //create a bid
-
+            Attribute attr = objectModel.createAttribute(manufacturer,macbookAir,"Apple");            //create a bid
+            persistence.saveAttribute(attr);
 
 
             // create an auction

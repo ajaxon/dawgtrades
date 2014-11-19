@@ -13,7 +13,7 @@ import junit.framework.TestCase;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
-import sun.jvm.hotspot.asm.Register;
+
 
 /**
  * Created by Allen on 11/16/14.
@@ -25,6 +25,7 @@ public class ObjectModelRead extends TestCase
     static Persistence persistence = null;
     Category category =  null;
     RegisteredUser user = null;
+    Item item  = null;
     @Before
     public void setUp() throws DTException {
 
@@ -47,6 +48,24 @@ public class ObjectModelRead extends TestCase
         objectModel.setPersistence( persistence );
 
 
+        user = getUser();
+        category = getCategory();
+        item = getItem();
+
+        //
+
+    }
+    public RegisteredUser getUser() throws DTException {
+        // Get the test user
+        RegisteredUser modelUser = objectModel.createRegisteredUser();
+        modelUser.setName("Test_name");
+        Iterator<RegisteredUser> users = objectModel.findRegisteredUser(modelUser);
+        while(users.hasNext()){
+            user = users.next();
+        }
+        return user;
+    }
+    public Category getCategory() throws DTException {
         // Get a category
         Category model = objectModel.createCategory();
         model.setName("Computers");
@@ -54,25 +73,32 @@ public class ObjectModelRead extends TestCase
         while(categories.hasNext()){
             category = categories.next();
         }
-        //
-
+        return category;
+    }
+    public Item getItem() throws DTException {
+        Item item = null;
+        Item model = objectModel.createItem();
+        model.setIdentifier("Test");
+        Iterator<Item> items = objectModel.findItem(model);
+        while(items.hasNext()){
+            item = items.next();
+        }
+        return item;
+    }
+    public Bid getBid() throws DTException {
+        // Get a category
+        Bid bid = null;
+        Bid model = objectModel.createBid();
+        model.setAmount(5);
+        Iterator<Bid> bids = objectModel.findBid(model);
+        while(bids.hasNext()){
+            bid = bids.next();
+        }
+        return bid;
     }
 
 
-
-    @Test
-    public void testcheckAllItems() throws DTException {
-
-            Iterator<Item> items = objectModel.findItem(null);
-        int itemcount =0;
-       while(items.hasNext()){
-           Item item = items.next();
-           itemcount++;
-       }
-        assertEquals(itemcount,2);
-
-
-    }
+    // RegisteredUser
     @Test
     public void testgetAllUsers() throws DTException {
         System.out.println( "User objects:" );
@@ -88,15 +114,16 @@ public class ObjectModelRead extends TestCase
 
     }
     @Test
-    public void test_getItemsByUser() throws DTException {
-        RegisteredUser model = objectModel.createRegisteredUser();
-        model.setName("testName");
-        Iterator<RegisteredUser> users = objectModel.findRegisteredUser(model);
+    public void test_Username()
+    {
+        assertEquals("Test_name",user.getName());
+    }
+    @Test
+    public void test_restoreItemsByUser() throws DTException {
+
         int itemsCount = 0;
-        RegisteredUser user=null;
-        while(users.hasNext()){
-            user = users.next();
-        }
+
+
         Iterator<Item> items = objectModel.getItem(user);
         while(items.hasNext()){
             Item item = items.next();
@@ -105,6 +132,18 @@ public class ObjectModelRead extends TestCase
         assertEquals(1,itemsCount);
 
     }
+    // Category
+    @Test
+    public void test_restoreParentByCategory()
+    {
+
+    }
+    @Test
+    public void test_getCategoryName()
+    {
+        assertEquals("Computers",category.getName());
+    }
+
     @Test
     public void testgetAllCategories() throws DTException {
         Iterator<Category> categories = objectModel.findCategory(null);
@@ -115,14 +154,137 @@ public class ObjectModelRead extends TestCase
         }
         assertEquals(3,categoryCount);
     }
-    @Test
-    public void test_getItemsByCategory() throws DTException {
+    @Test // Restore item by category
+    public void test_restoreItemsByCategory() throws DTException {
         Iterator<Item> items = objectModel.getItem(category);
+        int itemcount = 0;
         while(items.hasNext()){
             Item item = items.next();
-            System.out.println(item);
+            itemcount++;
         }
+        assertEquals(1,itemcount);
     }
+    @Test // Restore attributesType by category
+    public void test_restoreAttributeTypesbyCategory() throws DTException {
+       Iterator< AttributeType> attrs = objectModel.getAttributeType(category);
+       int attrcount = 0;
+        while(attrs.hasNext()){
+            AttributeType attr = attrs.next();
+            attrcount++;
+
+        }
+        assertEquals(2,attrcount);
+
+    }
+    @Test // restore child by category CategoryManager.java
+    public void test_restoreChildByCategory() throws DTException {
+        Iterator<Category> child = objectModel.getChild(category);
+        int childcount = 0;
+        Category c = null;
+        while(child.hasNext())
+        {
+            c = child.next();
+            childcount++;
+        }
+        assertEquals(1,childcount);
+        assertEquals("Laptops",c.getName());
+
+    }
+
+    ////// BIDS
+    @Test
+    public void test_getAllBids() throws DTException {
+
+        Iterator<Bid> bidIter = objectModel.findBid(null);
+        int bidCount = 0;
+        while( bidIter.hasNext() ) {
+            Bid u = bidIter.next();
+
+            bidCount++;
+
+        }
+        assertEquals(bidCount,4);
+    }
+    @Test
+    public void test_bidAmount(){
+
+    }
+
+    // Attributes
+    @Test
+    public void test_getAttributes()
+    {
+
+    }
+    @Test
+    public void test_restoreItemByAttribute()
+    {
+
+    }
+    @Test
+    public void test_restoreAttributeTypebyAttribute(){
+
+    }
+    // AttributeType
+    @Test
+    public void test_restoreCategoryByAttributeType()
+    {
+
+    }
+    // Auction
+    @Test
+    public void test_restoreItemByAuction(){
+
+    }
+    // Experience Report
+
+    // Items
+    @Test
+    public void testcheckAllItems() throws DTException {
+
+        Iterator<Item> items = objectModel.findItem(null);
+        int itemcount =0;
+        while(items.hasNext()){
+            Item item = items.next();
+            itemcount++;
+        }
+        assertEquals(itemcount,2);
+
+
+    }
+    @Test
+    public void test_restoreCategoryByItem() throws DTException {
+        Category category = objectModel.getCategory(item);
+        assertEquals("Computers",category.getName());
+
+
+    }
+    public void test_restoreAttributeByItem() throws DTException {
+        Attribute attr  = null;
+        int attrcount =0;
+        Iterator<Attribute> attributes = objectModel.getAttribute(item);
+        while(attributes.hasNext())
+        {
+            attr = attributes.next();
+            attrcount++;
+        }
+        assertEquals(2, attrcount);
+    }
+    public void test_restoreRegisteredUserbyItem() throws DTException {
+        RegisteredUser user = objectModel.getRegisteredUser(item);
+        assertEquals("Test_name",user.getName());
+
+    }
+    public void test_restoreAuctionbyItem()
+    {
+
+    }
+    // Membership
+
+
+
+    //
+
 
     @AfterClass
     public void teardown() throws SQLException {

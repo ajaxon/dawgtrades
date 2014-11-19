@@ -1,9 +1,6 @@
 package edu.uga.dawgtrades.persist.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Iterator;
 
 import edu.uga.dawgtrades.model.Attribute;
@@ -106,7 +103,7 @@ public class ItemManager {
 		
 		
 		String       selectItemSql = "select id, category_id, owner_id, identifier, name, description from item";
-	        PreparedStatement    stmt = null;
+	        Statement    stmt = null;
 	        StringBuffer query = new StringBuffer( 100 );
 	        StringBuffer condition = new StringBuffer( 100 );
 	
@@ -151,7 +148,7 @@ public class ItemManager {
 	        
 	        try {
 	
-	            stmt = (PreparedStatement) conn.createStatement();
+	            stmt = conn.createStatement();
 	
 	            // retrieve the persistent Item object
 	            //
@@ -203,7 +200,7 @@ public class ItemManager {
 
 	public Category restoreCategoryBy(Item item) throws DTException {
 		String       selectItemSql = "select c.id, c.name, c.parent_id from item p, category c where p.category_id = c.id";
-		PreparedStatement    stmt = null;
+		Statement stmt = null;
 		StringBuffer query = new StringBuffer( 100 );
 		StringBuffer condition = new StringBuffer( 100 );
 
@@ -244,7 +241,7 @@ public class ItemManager {
 
 		try {
 
-			stmt = (PreparedStatement)conn.createStatement();
+			stmt = conn.createStatement();
 			// retrieve the persistent Item object
 			//
 			if( stmt.execute( query.toString() ) ) { // statement returned a result
@@ -325,8 +322,8 @@ public class ItemManager {
 
 
 	public RegisteredUser restoreRegisteredUserBy(Item item) throws DTException {
-	    String       selectItemSql = "select c.id, c.name, c.firstName, c.lastName, c.password, c.email, c.phone, c.canText, c.isAdmin from item p, registeredUser c where p.owner_id = c.id";
-	    PreparedStatement    stmt = null;
+	    String       selectItemSql = "select c.id, c.name, c.firstName, c.lastName, c.password, c.email, c.phone, c.canText, c.isAdmin from item p, user c where p.owner_id = c.id";
+	    Statement    stmt = null;
 	    StringBuffer query = new StringBuffer( 100 );
 	    StringBuffer condition = new StringBuffer( 100 );
 	
@@ -367,7 +364,7 @@ public class ItemManager {
 	            
 	    try {
 	
-	        stmt = (PreparedStatement)conn.createStatement();
+	        stmt = conn.createStatement();
 	        // retrieve the persistent Item object
 	        //
 	        if( stmt.execute( query.toString() ) ) { // statement returned a result
