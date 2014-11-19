@@ -78,20 +78,17 @@ public class AttributeIterator implements Iterator<Attribute> {
 
                 e1.printStackTrace();
             }
-            try{
-                attribute = objectModel.createAttribute(attributeType, item, value);
+
+
 
                 return attribute;
-            }catch(DTException e){
 
-                e.printStackTrace();
-            }
         }else {
 
             throw new NoSuchElementException( "AttributeIterator: No next Attribute object" );
 
         }
-        return null;
+
 
     }
 
