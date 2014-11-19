@@ -189,6 +189,25 @@ public class AttributeTypeManager {
             if(attributeType.getId()>0){
                 query.append(" and A.id ='" + attributeType.getId()+"'");
             }
+            else{
+                if(attributeType.getName() != null){
+                    if( condition.length() == 0 )
+                        query.append(" A.name ='" + attributeType.getName()+"'");
+                    else
+                        query.append(" and A.name ='" + attributeType.getName()+"'");
+                }
+
+                if(attributeType.getCategoryId() >= 0){
+                    if( condition.length() == 0 )
+                        query.append(" A.category_id ='" + attributeType.getCategoryId()+"'");
+                    else
+                        query.append(" and A.category_id ='" + attributeType.getCategoryId()+"'");
+                }
+
+                if (condition.length() > 0) {
+                    query.append(condition);
+                }
+            }
 
         }
 
