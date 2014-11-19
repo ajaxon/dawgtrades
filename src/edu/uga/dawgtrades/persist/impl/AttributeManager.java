@@ -195,10 +195,35 @@ public class AttributeManager {
         if(attribute!=null){
 
             if(attribute.getId()> 0){
-
                 query.append(" and A.id='"+attribute.getId()+"'    ");
-
             }
+            else{
+                if(attribute.getValue() != null){
+                    if (condition.length() == 0)
+                        condition.append(" A.value = '" + attribute.getValue() + "'");
+                    else
+                        condition.append( " and A.value = '" + attribute.getValue() + "'" );
+                }
+
+                if(attribute.getAttributeType() >= 0){
+                    if (condition.length() == 0)
+                        condition.append(" A.attribute_type_id = '" + attribute.getAttributeType() + "'");
+                    else
+                        condition.append( " and A.attribute_type_id = '" + attribute.getAttributeType() + "'" );
+                }
+
+                if(attribute.getItemId() >= 0){
+                    if (condition.length() == 0)
+                        condition.append(" A.item_id = '" + attribute.getItemId() + "'");
+                    else
+                        condition.append( " and A.item_id = '" + attribute.getItemId() + "'" );
+                }
+
+                if (condition.length() > 0) {
+                    query.append(condition);
+                }
+            }
+
         }
         try{
             stmt = conn.createStatement();
@@ -223,9 +248,6 @@ public class AttributeManager {
 
         throw new DTException("AttributeManager.restoreItemBy: Could not restore Item");
 
-
-
-
     }
 
 
@@ -246,10 +268,10 @@ public class AttributeManager {
             if(attribute.getId() >= 0){
                 query.append(" and c.id='"+ attribute.getId()+"'");
             }
-            else {/*
+            else {
                 if (attribute.getValue() != null)
                     condition.append(" c.value = '" + attribute.getValue() + "'");
-*/
+
                 if (attribute.getAttributeType() >= 0) {
                     if (condition.length() == 0)
                         condition.append(" c.attribute_type_id = '" + attribute.getAttributeType() + "'");
