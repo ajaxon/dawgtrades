@@ -3,6 +3,7 @@ package edu.uga.dawgtrades.model.impl;
 import java.util.Date;
 
 import edu.uga.dawgtrades.model.Auction;
+import edu.uga.dawgtrades.model.ObjectModel;
 import edu.uga.dawgtrades.model.Bid;
 import edu.uga.dawgtrades.model.DTException;
 import edu.uga.dawgtrades.model.RegisteredUser;
@@ -63,7 +64,8 @@ public class BidImpl extends Persistent implements Bid {
 
 	@Override
 	public boolean isWinning() {
-			return false;
+			Auction auction = this.getAuction();
+        return (auction.getMinPrice() == this.getAmount());
 	}
 
 	@Override
