@@ -110,19 +110,20 @@ public class AttributeTypeManager {
                 if(attributeType.getCategoryId()>0){
                     condition.append(" category_id = '"+attributeType.getCategoryId()+"'");
                 }
-                if(attributeType.getName()!=null){
-                    if(condition.length()>0){
+                if(attributeType.getName()!=null) {
+                    if (condition.length() > 0) {
                         condition.append(" and");
                     }
-                    condition.append(" name = '"+attributeType.getName()+"'");
 
+                    condition.append(" name = '" + attributeType.getName() + "'");
+                }
 
                     if(condition.length()>0){
 
                         query.append(" where ");
                         query.append(condition);
                     }
-                }
+
 
             }
 

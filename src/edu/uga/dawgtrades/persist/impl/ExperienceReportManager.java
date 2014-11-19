@@ -56,9 +56,9 @@ public class ExperienceReportManager {
 				throw new DTException( "ExperienceReport.save: can't save a Experience Report: reviewed is undefined" );
 
 			if(experienceReport.getDate() != null){
-				java.util.Date javaDate = experienceReport.getDate();
-				java.sql.Date sqlDate = new java.sql.Date(javaDate.getTime());
-				stmt.setDate(5, sqlDate);
+                java.sql.Date date = new java.sql.Date(experienceReport.getDate().getTime());
+                stmt.setDate(5,date);
+
 			}
 			else
 				throw new DTException( "ExperienceReport.save: can't save an Experience Report: date is undefined");
