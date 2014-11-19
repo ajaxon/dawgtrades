@@ -8,7 +8,9 @@ import java.util.Iterator;
 import org.junit.Test;
 
 import junit.framework.TestCase;
+import edu.uga.dawgtrades.model.Attribute;
 import edu.uga.dawgtrades.model.AttributeType;
+import edu.uga.dawgtrades.model.Auction;
 import edu.uga.dawgtrades.model.Category;
 import edu.uga.dawgtrades.model.DTException;
 import edu.uga.dawgtrades.model.ExperienceReport;
@@ -87,6 +89,10 @@ public class ObjectModelUpdate extends TestCase
             testAttributeTypeUpdate(objectModel,persistence);
             deleteAllInfoFromTables(conn);
             testItemUpdate(objectModel,persistence);
+            deleteAllInfoFromTables(conn);
+            testAttributeUpdate(objectModel,persistence);
+            deleteAllInfoFromTables(conn);
+            testAuctionUpdate(objectModel,persistence);
 
         }
         catch( DTException ce )
@@ -109,6 +115,139 @@ public class ObjectModelUpdate extends TestCase
             }
         }
     }
+
+    private static void testAuctionUpdate(ObjectModel objectModel,
+                                          Persistence persistence) throws DTException {
+
+        //Create registered user
+        RegisteredUser user1 =objectModel.createRegisteredUser("matt", "Matt", "Lisivick", "hello", false, "email@uga.edu", "67893444323", false);
+        persistence.saveRegisteredUser(user1);
+
+        Iterator<RegisteredUser> users = objectModel.findRegisteredUser(null);
+        while(users.hasNext()){
+            user1 = users.next();
+        }
+
+        //Create category
+        Category category = objectModel.createCategory(null, "Game");
+        persistence.saveCategory(category);
+        Iterator<Category> categories = objectModel.findCategory(null);
+        while(categories.hasNext()){
+            category = categories.next();
+        }
+
+        //Create item
+        Item item = objectModel.createItem(category, user1, "Monopoly", "Monopoly 20", "Cool Game");
+        persistence.saveItem(item);
+
+        Iterator<Item> items = objectModel.findItem(null);
+        while(items.hasNext()){
+            item = items.next();
+        }
+        System.out.println("Item has been created");
+
+
+        //Create auction
+        Auction auction = objectModel.createAuction(item, 20, new Date());
+        persistence.saveAuction(auction);
+        Iterator<Auction> auctions = objectModel.findAuction(null);
+        int auctionCount =0;
+        while(auctions.hasNext()){
+            auction = auctions.next();
+            auctionCount++;
+        }
+        assertEquals(auctionCount,1);
+        System.out.println("Auction Properly Created");
+
+        //Update auction
+
+
+        auction.setMinPrice(14);
+        persistence.saveAuction(auction);
+
+        auctions = objectModel.findAuction(null);
+        auctionCount = 0;
+        while(auctions.hasNext()){
+            auction = auctions.next();
+            auctionCount++;
+        }
+        assertEquals(auctionCount,1);
+        System.out.println("Auction found");
+
+        //Check for update
+        assertEquals(auction.getMinPrice(),14);
+        System.out.println("Auction has been updated");
+
+    }
+
+
+    private static void testAttributeUpdate(ObjectModel objectModel,
+                                            Persistence persistence) throws DTException {
+
+        RegisteredUser user1 =objectModel.createRegisteredUser("matt", "Matt", "Lisivick", "hello", false, "email@uga.edu", "67893444323", false);
+        persistence.saveRegisteredUser(user1);
+        //Create and restore user
+        Iterator<RegisteredUser> users = objectModel.findRegisteredUser(null);
+        while(users.hasNext()){
+            user1 = users.next();
+        }
+        System.out.println("User retrieved");
+
+        //Create and restore category
+        Category category = objectModel.createCategory(null, "Game");
+        persistence.saveCategory(category);
+        Iterator<Category> categories = objectModel.findCategory(null);
+        while(categories.hasNext()){
+            category = categories.next();
+        }
+
+        System.out.println("Category retrieved");
+
+        //Create and restore item
+        Item item = objectModel.createItem(category, user1, "Monopoly", "Monopoly 20", "Cool Game");
+        persistence.saveItem(item);
+
+        Iterator<Item> items = objectModel.findItem(null);
+        while(items.hasNext()){
+            item = items.next();
+        }
+
+        System.out.println("Item retrieved");
+
+        //Create and restore attribute type
+        AttributeType attributeType = objectModel.createAttributeType(category, "Games");
+        persistence.saveAttributeType(attributeType);
+
+        Iterator<AttributeType> attributeTypes = objectModel.getAttributeType(category);
+        while(attributeTypes.hasNext()){
+            attributeType = attributeTypes.next();
+        }
+        System.out.println("Attribute Type retrieved");
+
+        //Create and restore attribute
+        Attribute attribute = objectModel.createAttribute(attributeType, item, "1943");
+        persistence.saveAttribute(attribute);
+
+        Iterator<Attribute> attributes = objectModel.getAttribute(item);
+        while(attributes.hasNext()){
+            attribute = attributes.next();
+        }
+        System.out.println("Attribute restored");
+
+        //Update attribute
+        attribute.setValue("1954");
+        persistence.saveAttribute(attribute);
+
+        attributes = objectModel.getAttribute(item);
+        while(attributes.hasNext()){
+            attribute = attributes.next();
+        }
+
+        //Test update of value
+        assertEquals(attribute.getValue(),"1954");
+
+    }
+
 
     private static void testItemUpdate(ObjectModel objectModel,
                                        Persistence persistence) throws DTException {
@@ -141,6 +280,11 @@ public class ObjectModelUpdate extends TestCase
         RegisteredUser user1 =objectModel.createRegisteredUser("matt", "Matt", "Lisivick", "hello", false, "email@uga.edu", "67893444323", false);
         persistence.saveRegisteredUser(user1);
         System.out.println("User Saved");
+
+        Iterator<RegisteredUser> users = objectModel.findRegisteredUser(null);
+        while(users.hasNext()){
+            user1 = users.next();
+        }
         Item item = objectModel.createItem(category, user1, "Identifier", "1960 Knife", "Its old");
         persistence.saveItem(item);
 
@@ -250,6 +394,8 @@ public class ObjectModelUpdate extends TestCase
         while(users.hasNext()){
             user2 = users.next();
         }
+        System.out.println("Users created");
+
 
         ExperienceReport report = objectModel.createExperienceReport(user1, user2, 4, "Cool time", new Date());
         persistence.saveExperienceReport(report);
@@ -303,13 +449,16 @@ public class ObjectModelUpdate extends TestCase
             user1 = users.next();
 
         }
-
+        //Change user information
         user1.setName("Rick");
         user1.setPhone("8884442222");
+        persistence.saveRegisteredUser(user1);
+
+        //Create user for query
         RegisteredUser user2 = objectModel.createRegisteredUser();
         user2.setFirstName("Rick");
         user2.setPhone("8884442222");
-        persistence.saveRegisteredUser(user1);
+
         users = objectModel.findRegisteredUser(user2);
         int count =0;
         while(users.hasNext()){

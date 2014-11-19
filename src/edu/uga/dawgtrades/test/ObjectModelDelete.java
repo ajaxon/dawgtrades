@@ -3,6 +3,7 @@ package edu.uga.dawgtrades.test;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -178,10 +179,9 @@ public class ObjectModelDelete extends TestCase
         Iterator<Item> itemIter = objectModel.findItem(null);
         int itemCount =0;
         while(itemIter.hasNext()){
-            item = itemIter.next();
             itemCount ++;
         }
-        assertEquals(itemCount,1);
+        assertEquals(itemCount,0);
         System.out.println("Item saved");
 
 
@@ -238,6 +238,8 @@ public class ObjectModelDelete extends TestCase
         while(items.hasNext()){
             item = items.next();
         }
+        System.out.println("Item has been created");
+
         Auction auction = objectModel.createAuction(item, 20, new Date());
         persistence.saveAuction(auction);
         Iterator<Auction> auctions = objectModel.findAuction(null);
@@ -349,7 +351,7 @@ public class ObjectModelDelete extends TestCase
 
 
     public static void deleteAllInfoFromTables(Connection conn) throws SQLException{
-        PreparedStatement stmt = (PreparedStatement) conn.createStatement();
+        Statement stmt = conn.createStatement();
         String sql = "DELETE FROM user";
         stmt.executeUpdate(sql);
         sql = "DELETE FROM attribute";

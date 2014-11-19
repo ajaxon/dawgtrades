@@ -1,5 +1,6 @@
 package edu.uga.dawgtrades.model.impl;
 
+import edu.uga.dawgtrades.model.DTException;
 import edu.uga.dawgtrades.model.RegisteredUser;
 
 public class RegisteredUserImpl extends Persistent implements RegisteredUser {
@@ -110,13 +111,21 @@ public class RegisteredUserImpl extends Persistent implements RegisteredUser {
 	@Override
 	public String getPhone() {
 
+
 		return this.phone;
 	}
 
 	@Override
 	public void setPhone(String phone) {
-
-		this.phone=phone;
+        // all phone numbers should be just digits
+        phone = phone.replaceAll("[^\\d.]","");
+        if(phone.length() != 10 )
+            try {
+                throw new DTException("Phone number is not correct length - needs to be ###-###-####");
+            } catch (DTException e) {
+                e.printStackTrace();
+            }
+        this.phone=phone;
 	}
 
 	@Override
@@ -133,6 +142,6 @@ public class RegisteredUserImpl extends Persistent implements RegisteredUser {
 
     public String toString()
     {
-        return this.getFirstName() +" " + this.getLastName();
+        return "First Name: " + this.getFirstName() +" \n" + "Last Name " +this.getLastName() + "\n" + "Phone number: " + this.getPhone();
     }
 }

@@ -165,6 +165,11 @@ public class ObjectModelRead extends TestCase
 
     // RegisteredUser
     @Test
+    public void test_UserObject()
+    {
+        assertTrue("User object should be persistent",user.isPersistent());
+    }
+    @Test
     public void testgetAllUsers() throws DTException {
         System.out.println( "User objects:" );
         Iterator<RegisteredUser> userIter = objectModel.findRegisteredUser( null );
@@ -259,6 +264,10 @@ public class ObjectModelRead extends TestCase
 
     ////// BIDS
     @Test
+    public void test_Bid(){
+        assertTrue("Bid object should be persistent", bid.isPersistent());
+    }
+    @Test
     public void test_getAllBids() throws DTException {
 
         Iterator<Bid> bidIter = objectModel.findBid(null);
@@ -312,7 +321,11 @@ public class ObjectModelRead extends TestCase
         assertEquals("Manufacturer",attrType.getName());
     }
     // AttributeType
-
+    @Test
+    public void test_AttributeTypeObject()
+    {
+        assertTrue("AttributeType object should be persistent", attributeType.isPersistent());
+    }
     @Test
     public void test_restoreCategoryByAttributeType() throws DTException {
 
@@ -332,6 +345,11 @@ public class ObjectModelRead extends TestCase
     // Experience Report
 
     // Items
+    @Test
+    public void test_ItemObject()
+    {
+        assertTrue("Item should be persistent",item.isPersistent());
+    }
     @Test
     public void testcheckAllItems() throws DTException {
 
