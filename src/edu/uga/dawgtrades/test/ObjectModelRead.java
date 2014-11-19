@@ -27,6 +27,8 @@ public class ObjectModelRead extends TestCase
     RegisteredUser user = null;
     Item item  = null;
     Auction auction = null;
+    Attribute attribute = null;
+    Bid bid = null;
     @Before
     public void setUp() throws DTException {
 
@@ -52,9 +54,22 @@ public class ObjectModelRead extends TestCase
         user = getUser();
         category = getCategory();
         item = getItem();
+        attribute = getAttribute();
+        //auction = getAuction();
+        bid = getBid();
 
         //
 
+    }
+    public Attribute getAttribute() throws DTException {
+        Attribute attribute =  null;
+        Iterator<Attribute> attrs = objectModel.getAttribute(item);
+        while(attrs.hasNext()){
+            attribute = attrs.next();
+            if(attribute.getValue()=="Apple")
+                break;
+        }
+        return attribute;
     }
     public RegisteredUser getUser() throws DTException {
         // Get the test user
@@ -90,7 +105,7 @@ public class ObjectModelRead extends TestCase
         // Get a category
         Bid bid = null;
         Bid model = objectModel.createBid();
-        model.setAmount(5);
+        model.setAmount(2);
         Iterator<Bid> bids = objectModel.findBid(model);
         while(bids.hasNext()){
             bid = bids.next();
@@ -220,18 +235,26 @@ public class ObjectModelRead extends TestCase
     }
     @Test
     public void test_bidAmount(){
-
+        assertEquals(2,bid.getAmount());
     }
 
     // Attributes
     @Test
-    public void test_getAttributes()
-    {
-        fail();
+    public void test_getAttributes() throws DTException {
+        Attribute attribute = null;
+        Iterator<Attribute> attributes = objectModel.getAttribute(item);
+        int attrcount =0;
+        while(attributes.hasNext()){
+            attribute = attributes.next();
+            attrcount++;
+        }
+        assertEquals(attrcount,2);
+
     }
     @Test
-    public void test_restoreItemByAttribute()
-    {
+    public void test_restoreItemByAttribute() throws DTException {
+        Item item = objectModel.getItem(attribute);
+        assertEquals("Macbook Air",item.getName());
 
     }
     @Test

@@ -264,7 +264,7 @@ public class ItemManager {
 
 	public Iterator<Attribute> restoreAttributeBy(Item item) throws DTException {
 		String       selectItemSql = "select c.id, c.value, c.attribute_type_id, c.item_id from item p, attribute c where c.item_id = p.id";
-		PreparedStatement    stmt = null;
+		Statement    stmt = null;
 		StringBuffer query = new StringBuffer( 100 );
 		StringBuffer condition = new StringBuffer( 100 );
 
@@ -305,7 +305,7 @@ public class ItemManager {
 
 		try {
 
-			stmt = (PreparedStatement)conn.createStatement();
+			stmt = conn.createStatement();
 			// retrieve the persistent Item object
 			//
 			if( stmt.execute( query.toString() ) ) { // statement returned a result

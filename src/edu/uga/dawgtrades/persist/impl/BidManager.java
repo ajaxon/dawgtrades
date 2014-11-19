@@ -1,6 +1,7 @@
 package edu.uga.dawgtrades.persist.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,8 +44,10 @@ public class BidManager {
 			else
 				throw new DTException( "BidManager.save: can't save a Bid: auction is undefined" );
 
-			if( bid.getDate() != null )
-				stmt.setDate(3, (java.sql.Date) bid.getDate());
+			if( bid.getDate() != null ) {
+                java.sql.Date date = new java.sql.Date(bid.getDate().getTime());
+                stmt.setDate(3, date);
+            }
 			else
 				throw new DTException( "BidManager.save: can't save a Bid: date undefined" );
 

@@ -199,7 +199,7 @@ public class AttributeManager {
 
             if(attribute.getId()> 0){
 
-                query.append(" and A.id='"+attribute.getId()+"'");
+                query.append(" and A.id='"+attribute.getId()+"'    ");
 
             }
         }
@@ -235,7 +235,7 @@ public class AttributeManager {
 
     public AttributeType restoreAttributeTypeBy(Attribute attribute) throws DTException {
 
-        String restoreAttributeTypeBySql = "select t.id, t.name, t.category_id from attributeType T, attribute A where T.id = A.attribute_type_id";
+        String restoreAttributeTypeBySql = "select T.id, T.name, T.category_id from attribute_type T, attribute A where T.id = A.attribute_type_id";
         PreparedStatement stmt = null;
         StringBuffer query = new StringBuffer(100);
         StringBuffer condition = new StringBuffer(100);

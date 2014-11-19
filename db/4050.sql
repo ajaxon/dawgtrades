@@ -76,12 +76,15 @@ SET foreign_key_checks = 0;
 DROP TABLE IF EXISTS `experience_report`;
 SET foreign_key_checks = 1;
 
+
+
 CREATE TABLE `experience_report` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `rating` int(11) NOT NULL,
   `report` varchar(128) DEFAULT NULL,
   `reviewer_id` int(11) unsigned NOT NULL,
   `reviewed_id` int(11) unsigned NOT NULL,
+  `date` date NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `reviewer_id_idx` (`reviewer_id`),

@@ -13,6 +13,8 @@ public class BidImpl extends Persistent implements Bid {
 	private long registeredUserId;
 	private float amount;
 	private Date date;
+    RegisteredUser user = null;
+    Auction auction = null;
 
 	public BidImpl(Auction auction, RegisteredUser user, float amount) throws DTException {
 		super(-1);
@@ -28,7 +30,8 @@ public class BidImpl extends Persistent implements Bid {
 		registeredUserId = user.getId();
 		this.amount = amount;
 		this.date =new Date();
-
+        this.user = user;
+        this.auction = auction;
 	}
 
 	public BidImpl(long auctionId, long registeredUserId, float amount) {
@@ -65,12 +68,13 @@ public class BidImpl extends Persistent implements Bid {
 
 	@Override
 	public Auction getAuction() {
-		return null;
+		return this.auction;
 	}
 
 	@Override
 	public RegisteredUser getRegisteredUser() {
-		return null;
+
+        return user;
 	}
 
 }

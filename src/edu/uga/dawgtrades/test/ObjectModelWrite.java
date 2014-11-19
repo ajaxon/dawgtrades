@@ -106,8 +106,16 @@ public class ObjectModelWrite
             // create bid
             bid = objectModel.createBid(auction1,joe,2);
             persistence.saveBid(bid);
+            // membership
 
+            membership = objectModel.createMembership(5,new Date());
+            persistence.saveMembership(membership);
+            // experience report
+            ExperienceReport experience = objectModel.createExperienceReport(tom,joe,5,"great seller", new Date());
+            persistence.saveExperienceReport(experience);
             /*
+            // experience report
+
 
             bridge = objectModel.createClub( "Bridge", "33 Leaf St., Blossom, OR. 88888", new Date(), joe );
             persistence.saveClub( bridge );

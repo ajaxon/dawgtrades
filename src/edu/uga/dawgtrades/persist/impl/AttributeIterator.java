@@ -22,6 +22,7 @@ public class AttributeIterator implements Iterator<Attribute> {
         this.objectModel=objectModel;
         try{
 
+            more = rs.next();
 
         }catch(Exception e){
             throw new DTException("AttributeIterator"+ e);
