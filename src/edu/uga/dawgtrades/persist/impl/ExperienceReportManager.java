@@ -75,7 +75,7 @@ public class ExperienceReportManager {
 
 			inscnt = stmt.executeUpdate();
 			if(inscnt >= 1){
-				String sql = "select last insert id()";
+				String sql = "select last_insert_id()";
 				if(stmt.execute(sql)){
 					ResultSet r = stmt.getResultSet();
 					while(r.next()){
