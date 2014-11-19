@@ -29,6 +29,7 @@ public class ObjectModelRead extends TestCase
     Auction auction = null;
     Attribute attribute = null;
     Bid bid = null;
+    AttributeType attributeType = null;
     @Before
     public void setUp() throws DTException {
 
@@ -55,10 +56,22 @@ public class ObjectModelRead extends TestCase
         category = getCategory();
         item = getItem();
         attribute = getAttribute();
-        //auction = getAuction();
+        auction = getAuction();
         bid = getBid();
 
         //
+
+    }
+    public AttributeType getAttributeType() throws DTException {
+        AttributeType attribute_type = null;
+        Iterator<AttributeType> attrs = objectModel.getAttributeType(category);
+        while(attrs.hasNext()){
+            attribute_type = attrs.next();
+            if(attribute_type.getName()=="Brand")
+                break;
+
+        }
+        return attributeType;
 
     }
     public Attribute getAttribute() throws DTException {
@@ -263,21 +276,19 @@ public class ObjectModelRead extends TestCase
     }
     // AttributeType
     @Test
-    public void test_restoreCategoryByAttributeType()
-    {
-        fail();
-    }
-    // Auction
-    /*
-    @Test
+    public void test_restoreCategoryByAttributeType() throws DTException {
 
+        Category category = objectModel.getCategory(attributeType);
+
+    }
+    @Test
     public void test_restoreItemByAuction() throws DTException {
         Item item = objectModel.getItem(auction);
         assertEquals("Macbook Air",item.getName());
         assertEquals("Test",item.getIdentifier());
 
     }
-    */
+
     // Experience Report
 
     // Items

@@ -159,7 +159,7 @@ public class CategoryManager {
 
     public Category restoreParentBy(Category category) throws DTException {
 
-        String restoreParentBySql = "select p.id, p.name, p.parent_id from category P, category C where P.id = C.parent_id";
+        String restoreParentBySql = "select P.id, P.name, P.parent_id from category P, category C where P.id = C.parent_id";
         PreparedStatement stmt = null;
         StringBuffer query = new StringBuffer(100);
         StringBuffer condition = new StringBuffer(100);
@@ -192,7 +192,7 @@ public class CategoryManager {
 
 
     public Iterator<Category> restoreChildBy(Category category) throws DTException {
-        String restoreChildBySql = "select c.id, c.name, c.parent_id from category C, category P where P.id = C.parent_id";
+        String restoreChildBySql = "select C.id, C.name, C.parent_id from category C, category P where P.id = C.parent_id";
         PreparedStatement stmt = null;
         StringBuffer query = new StringBuffer(100);
 
@@ -225,7 +225,7 @@ public class CategoryManager {
 
     // Test passed
     public Iterator<AttributeType> restoreAttributeTypeBy(Category category) throws DTException {
-        String restoreAttributeBySql = "select a.id, a.category_id, a.name from attribute_type A, category C where A.category_id = C.id";
+        String restoreAttributeBySql = "select A.id, A.category_id, A.name from attribute_type A, category C where A.category_id = C.id";
         Statement stmt = null;
         StringBuffer query = new StringBuffer(100);
         StringBuffer condition = new StringBuffer(100);
@@ -257,7 +257,7 @@ public class CategoryManager {
 
     // Test Passed
     public Iterator<Item> restoreItemBy(Category category) throws DTException {
-        String restoreItemBySql = "select i.id, i.name, i.identifier, i.description, i.owner_id , i.category_id from item I, category C where C.id = I.category_id";
+        String restoreItemBySql = "select I.id, I.name, I.identifier, I.description, I.owner_id , I.category_id from item I, category C where C.id = I.category_id";
         Statement stmt = null;
         StringBuffer query = new StringBuffer(100);
         StringBuffer condition = new StringBuffer(100);

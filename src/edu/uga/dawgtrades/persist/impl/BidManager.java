@@ -84,7 +84,7 @@ public class BidManager {
 	}
 
 	public Iterator<Bid> restore(Bid bid) throws DTException{
-		String selectBidSql = "select user_id, auction_id, date, amount from bid";
+		String selectBidSql = "select id,user_id, auction_id, date, amount from bid";
 		Statement stmt = null;
 		StringBuffer query = new StringBuffer(100);
 		StringBuffer condition = new StringBuffer(100);

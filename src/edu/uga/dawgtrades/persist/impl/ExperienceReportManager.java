@@ -95,7 +95,7 @@ public class ExperienceReportManager {
 	}
 
 	public Iterator<ExperienceReport> restore(ExperienceReport experienceReport) throws DTException{
-		String selectExReSql = "select id, rating, report, reviewer_id, reviewed_id, date from experience_report";
+		String selectExReSql = "select id, reviewer_id, reviewer_id, rating, report,  date from experience_report";
 		Statement stmt = null;
 		StringBuffer query = new StringBuffer(100);
 		StringBuffer condition = new StringBuffer(100);
