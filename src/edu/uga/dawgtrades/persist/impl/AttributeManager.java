@@ -86,8 +86,8 @@ public class AttributeManager {
 
     public Iterator<Attribute> restore(Attribute attribute) throws DTException{
 
-        String selectAttributeSql = "select id, value, attribute_type_id, item_id";
-        PreparedStatement stmt = null;
+        String selectAttributeSql = "select id, value, attribute_type_id, item_id from attribute";
+        Statement stmt = null;
         StringBuffer query = new StringBuffer(100);
         StringBuffer condition = new StringBuffer(100);
 
@@ -132,7 +132,7 @@ public class AttributeManager {
 
         try{
 
-            stmt = (PreparedStatement)conn.prepareStatement(selectAttributeSql);
+            stmt = conn.createStatement();
 
 
             if(stmt.execute(query.toString())){
@@ -186,12 +186,12 @@ public class AttributeManager {
 
     public Item restoreItemBy(Attribute attribute) throws DTException {
         String restoreItemBySql = "select I.id, I.name, I.identifier, I.description, I.owner_id, I.category_id from item I, attribute A where I.id = A.item_id";
-        PreparedStatement stmt = null;
+        Statement stmt = null;
         StringBuffer query = new StringBuffer(100);
         StringBuffer condition = new StringBuffer(100);
 
         condition.setLength(0);
-
+        query.append(restoreItemBySql);
         if(attribute!=null){
 
             if(attribute.getId()> 0){
@@ -201,7 +201,7 @@ public class AttributeManager {
             }
         }
         try{
-            stmt = (PreparedStatement)conn.prepareStatement(restoreItemBySql);
+            stmt = conn.createStatement();
 
             if(stmt.execute(query.toString())){
                 ResultSet r = stmt.getResultSet();
@@ -235,11 +235,12 @@ public class AttributeManager {
 
         String restoreAttributeTypeBySql = "select p.id, p.category_id, p.name from attribute_type p, attribute c where p.id = c.attribute_type_id";
 
-        PreparedStatement stmt = null;
+        Statement stmt = null;
         StringBuffer query = new StringBuffer(100);
         StringBuffer condition = new StringBuffer(100);
 
         condition.setLength(0);
+        query.append(restoreAttributeTypeBySql);
         if(attribute!=null){
 
             if(attribute.getId() >= 0){
@@ -271,7 +272,7 @@ public class AttributeManager {
         }
 
         try{
-            stmt = (PreparedStatement) conn.prepareStatement(restoreAttributeTypeBySql);
+            stmt = conn.createStatement();
             if(stmt.execute(query.toString())){
                 ResultSet r = stmt.getResultSet();
                 Iterator<AttributeType> attributeTypeIter = new AttributeTypeIterator(r,objectModel);

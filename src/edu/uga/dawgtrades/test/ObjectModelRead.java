@@ -28,7 +28,7 @@ public class ObjectModelRead extends TestCase
     RegisteredUser user = null;
     Item item  = null;
     Auction auction = null;
-    //Attribute attribute = null;
+    Attribute attribute = null;
     Bid bid = null;
     //AttributeType attributeType = null;
     @Before
@@ -57,7 +57,7 @@ public class ObjectModelRead extends TestCase
         category = getCategory();
         child = getChild();
         item = getItem();
-        //attribute = getAttribute();
+        attribute = getAttribute();
         auction = getAuction();
         bid = getBid();
         //attributeType = getAttributeType();
@@ -289,7 +289,7 @@ public class ObjectModelRead extends TestCase
         assertEquals(attrcount,2);
 
     }
-    /*
+
     @Test
 
     public void test_restoreItemByAttribute() throws DTException {
@@ -297,7 +297,7 @@ public class ObjectModelRead extends TestCase
         assertEquals("Macbook Air",item.getName());
 
     }
-    */
+
     @Test
     public void test_restoreAttributeTypebyAttribute(){
         fail();
