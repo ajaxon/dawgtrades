@@ -92,7 +92,7 @@ public class AttributeTypeManager {
 
     public Iterator<AttributeType> restore(AttributeType attributeType) throws DTException {
 
-        String       selectRegisteredUserSql = "select id, name, category_id from attribute_type";
+        String       selectRegisteredUserSql = "select id, category_id, name from attribute_type";
         Statement stmt = null;
         StringBuffer query = new StringBuffer( 100 );
         StringBuffer condition = new StringBuffer( 100 );
@@ -108,12 +108,12 @@ public class AttributeTypeManager {
 
             else {
                 if( attributeType.getName() != null )
-                    condition.append( " name = '" + attributeType.getId() + "'" );
+                    condition.append( " category_id = '" + attributeType.getCategoryId() + "'" );
 
                 if( attributeType.getCategoryId() >= 0 ) {
                     if( condition.length() > 0 )
                         condition.append( " and" );
-                    condition.append( " category_id = '" + attributeType.getCategoryId() + "'" );
+                    condition.append( " name = '" + attributeType.getName() + "'" );
                 }
 
                 if( condition.length() > 0 ) {
