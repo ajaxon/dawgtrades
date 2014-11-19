@@ -30,7 +30,7 @@ public class ObjectModelRead extends TestCase
     Auction auction = null;
     Attribute attribute = null;
     Bid bid = null;
-    //AttributeType attributeType = null;
+    AttributeType attributeType = null;
     @Before
     public void setUp() throws DTException {
 
@@ -60,12 +60,12 @@ public class ObjectModelRead extends TestCase
         attribute = getAttribute();
         auction = getAuction();
         bid = getBid();
-        //attributeType = getAttributeType();
+        attributeType = getAttributeType();
 
         //
 
     }
-    /*
+
     public AttributeType getAttributeType() throws DTException {
         AttributeType attribute_type = null;
         Iterator<AttributeType> attrs = objectModel.getAttributeType(category);
@@ -75,10 +75,10 @@ public class ObjectModelRead extends TestCase
                 break;
 
         }
-        return attributeType;
+        return attribute_type;
 
     }
-    */
+
     public Attribute getAttribute() throws DTException {
         Attribute attribute =  null;
         Iterator<Attribute> attrs = objectModel.getAttribute(item);
@@ -278,6 +278,13 @@ public class ObjectModelRead extends TestCase
 
     // Attributes
     @Test
+    public void test_Attribute(){
+        assertEquals("Apple",attribute.getValue());
+        assertTrue("Attribute is persistent",attribute.isPersistent());
+
+    }
+
+    @Test
     public void test_getAttributes() throws DTException {
         Attribute attribute = null;
         Iterator<Attribute> attributes = objectModel.getAttribute(item);
@@ -296,6 +303,7 @@ public class ObjectModelRead extends TestCase
         Item item = objectModel.getItem(attribute);
         assertEquals("Macbook Air",item.getName());
 
+
     }
 
     @Test
@@ -304,14 +312,15 @@ public class ObjectModelRead extends TestCase
         assertEquals("Manufacturer",attrType.getName());
     }
     // AttributeType
-    /*
+
     @Test
     public void test_restoreCategoryByAttributeType() throws DTException {
 
         Category category = objectModel.getCategory(attributeType);
+        assertEquals("Computers",category.getName());
 
     }
-    */
+
     @Test
     public void test_restoreItemByAuction() throws DTException {
         Item item = objectModel.getItem(auction);

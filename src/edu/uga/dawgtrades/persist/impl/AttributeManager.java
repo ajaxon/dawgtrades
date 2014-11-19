@@ -246,15 +246,15 @@ public class AttributeManager {
             if(attribute.getId() >= 0){
                 query.append(" and c.id='"+ attribute.getId()+"'");
             }
-            else {
+            else {/*
                 if (attribute.getValue() != null)
                     condition.append(" c.value = '" + attribute.getValue() + "'");
-
+*/
                 if (attribute.getAttributeType() >= 0) {
                     if (condition.length() == 0)
                         condition.append(" c.attribute_type_id = '" + attribute.getAttributeType() + "'");
                     else
-                        condition.append( " AND c.attribute_type_id = '" + attribute.getAttributeType() + "'" );
+                        condition.append( " and c.attribute_type_id = '" + attribute.getAttributeType() + "'" );
                 }
 
 
@@ -262,7 +262,7 @@ public class AttributeManager {
                     if(condition.length() == 0)
                         condition.append(" c.item_id = '" + attribute.getItemId() + "'");
                     else
-                        condition.append( " AND c.item_id = '" + attribute.getItemId() + "'" );
+                        condition.append( " and c.item_id = '" + attribute.getItemId() + "'" );
                 }
 
                 if (condition.length() > 0) {

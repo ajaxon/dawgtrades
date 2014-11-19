@@ -177,13 +177,13 @@ public class AttributeTypeManager {
 
     public Category restoreCategoryBy(AttributeType attributeType) throws DTException {
 
-        String restoreCategoryBySql = "select c.id, c.name, c.parent_id from category C, attribute_type A where C.id = A.category_id";
-        PreparedStatement stmt = null;
+        String restoreCategoryBySql = "select C.id, C.name, C.parent_id from category C, attribute_type A where C.id = A.category_id";
+        Statement stmt = null;
         StringBuffer query = new StringBuffer(100);
         StringBuffer condition = new StringBuffer(100);
 
         condition.setLength(0);
-
+        query.append(restoreCategoryBySql);
         if(attributeType != null){
 
             if(attributeType.getId()>0){
@@ -193,7 +193,7 @@ public class AttributeTypeManager {
         }
 
         try{
-            stmt = (PreparedStatement) conn.prepareStatement(restoreCategoryBySql);
+            stmt = conn.createStatement();
 
             if(stmt.execute(query.toString())){
                 ResultSet r = stmt.getResultSet();
