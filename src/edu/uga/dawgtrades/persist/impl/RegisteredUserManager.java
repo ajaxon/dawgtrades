@@ -237,31 +237,39 @@ public class RegisteredUserManager {
 	            if( registeredUser.getPassword() != null )
 	                condition.append( " R.password = '" + registeredUser.getPassword() + "'" );
 	
-	            if( registeredUser.getEmail() != null && condition.length() == 0 )
-	                condition.append( " R.email = '" + registeredUser.getEmail() + "'" );
-	            else
-	                condition.append( " AND R.email = '" + registeredUser.getEmail() + "'" );
+	            if( registeredUser.getEmail() != null) {
+					if (condition.length() == 0)
+						condition.append(" R.email = '" + registeredUser.getEmail() + "'");
+					else
+						condition.append(" AND R.email = '" + registeredUser.getEmail() + "'");
+				}
 	
-	            if( registeredUser.getFirstName() != null && condition.length() == 0 )
-	                condition.append( " R.firstname = '" + registeredUser.getFirstName() + "'" );
-	            else
-	                condition.append( " AND R.firstname = '" + registeredUser.getFirstName() + "'" );
-	
-	            if( registeredUser.getLastName() != null && condition.length() == 0 )
-	                condition.append( " R.lastname = '" + registeredUser.getLastName() + "'" );
-	            else
-	                condition.append( " AND R.lastname = '" + registeredUser.getLastName() + "'" );
-	
+	            if( registeredUser.getFirstName() != null ) {
+					if (condition.length() == 0)
+						condition.append(" R.firstname = '" + registeredUser.getFirstName() + "'");
+					else
+						condition.append(" AND R.firstname = '" + registeredUser.getFirstName() + "'");
+				}
+
+	            if( registeredUser.getLastName() != null) {
+					if (condition.length() == 0)
+						condition.append(" R.lastname = '" + registeredUser.getLastName() + "'");
+					else
+						condition.append(" AND R.lastname = '" + registeredUser.getLastName() + "'");
+				}
+
 	            if( condition.length() == 0 )
 	                condition.append( " R.canText = '" + registeredUser.getCanText() + "'" );
 	            else
 	                condition.append( " AND R.canText = '" + registeredUser.getCanText() + "'" );
 	
-	            if( registeredUser.getPhone() != null && condition.length() == 0 )
-	                condition.append( " R.phone = '" + registeredUser.getPhone() + "'" );
-	            else
-	                condition.append( " AND R.phone = '" + registeredUser.getPhone() + "'" );
-	            
+	            if( registeredUser.getPhone() != null ) {
+					if (condition.length() == 0)
+						condition.append(" R.phone = '" + registeredUser.getPhone() + "'");
+					else
+						condition.append(" AND R.phone = '" + registeredUser.getPhone() + "'");
+				}
+
 	            if( condition.length() == 0 )
 	                condition.append( " R.isAdmin = '" + registeredUser.getIsAdmin() + "'" );
 	            else
