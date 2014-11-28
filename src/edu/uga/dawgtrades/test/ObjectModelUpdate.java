@@ -1,13 +1,11 @@
 package edu.uga.dawgtrades.test;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 import java.util.Iterator;
-
+import static org.junit.Assert.*;
 import org.junit.Test;
-
-import junit.framework.TestCase;
 import edu.uga.dawgtrades.model.Attribute;
 import edu.uga.dawgtrades.model.AttributeType;
 import edu.uga.dawgtrades.model.Auction;
@@ -23,10 +21,10 @@ import edu.uga.dawgtrades.persist.Persistence;
 import edu.uga.dawgtrades.persist.impl.DbUtils;
 import edu.uga.dawgtrades.persist.impl.PersistenceImpl;
 
-public class ObjectModelUpdate extends TestCase
+public class ObjectModelUpdate
 {
     public static void deleteAllInfoFromTables(Connection conn) throws SQLException{
-        PreparedStatement stmt = (PreparedStatement) conn.createStatement();
+        Statement stmt = conn.createStatement();
         String sql = "DELETE FROM user";
         stmt.executeUpdate(sql);
         sql = "DELETE FROM attribute";
@@ -115,7 +113,7 @@ public class ObjectModelUpdate extends TestCase
             }
         }
     }
-
+    @Test
     private static void testAuctionUpdate(ObjectModel objectModel,
                                           Persistence persistence) throws DTException {
 
@@ -180,7 +178,7 @@ public class ObjectModelUpdate extends TestCase
 
     }
 
-
+    @Test
     private static void testAttributeUpdate(ObjectModel objectModel,
                                             Persistence persistence) throws DTException {
 
@@ -248,7 +246,7 @@ public class ObjectModelUpdate extends TestCase
 
     }
 
-
+    @Test
     private static void testItemUpdate(ObjectModel objectModel,
                                        Persistence persistence) throws DTException {
 
