@@ -7,6 +7,8 @@ import java.sql.Statement;
 import java.util.Date;
 import java.util.Iterator;
 
+import edu.uga.dawgtrades.servlets.Register;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import junit.framework.TestCase;
@@ -29,7 +31,35 @@ import edu.uga.dawgtrades.persist.impl.PersistenceImpl;
 
 public class ObjectModelDelete extends TestCase
 {
+    Connection  conn = null;
+    ObjectModel objectModel = null;
+    Persistence persistence = null;
+    @BeforeClass
+    public void setUp() throws DTException {
 
+
+        // get a database connection
+        try {
+            conn = DbUtils.connect();
+        }
+        catch (Exception seq) {
+            System.err.println( "ObjectModelRead: Unable to obtain a database connection" + seq.toString());
+        }
+
+        // obtain a reference to the ObjectModel module
+        objectModel = new ObjectModelImpl();
+
+        // obtain a reference to Persistence module and connect it to the ObjectModel
+        persistence = new PersistenceImpl( conn, objectModel );
+
+        // connect the ObjectModel module to the Persistence module
+        objectModel.setPersistence( persistence );
+
+
+
+        //
+
+    }
     @Test
     public static void testDeleteUser(ObjectModel objectModel, Persistence persistence) throws DTException{
 
@@ -106,23 +136,11 @@ public class ObjectModelDelete extends TestCase
     }
 
     @Test
-    public static void testDeleteExperienceReport(ObjectModel objectModel, Persistence persistence) throws DTException{
+    public void test_DeleteExperienceReport() throws DTException{
 
-        RegisteredUser user1 =objectModel.createRegisteredUser("matt", "Matt", "Lisivick", "hello", false, "email@uga.edu", "67893444323", false);
-        RegisteredUser user2 =objectModel.createRegisteredUser("jam", "Steve", "Ya", "ok", false, "eml@uga.edu", "423432432", false);
-        persistence.saveRegisteredUser(user1);
-        persistence.saveRegisteredUser(user2);
-        Iterator<RegisteredUser> users = objectModel.findRegisteredUser(user1);
-        while(users.hasNext()){
-            user1 = users.next();
-        }
-        users = objectModel.findRegisteredUser(user2);
-        while(users.hasNext()){
-            user2 = users.next();
-        }
 
-        ExperienceReport report = objectModel.createExperienceReport(user1, user2, 4, "Cool time", new Date());
-        persistence.saveExperienceReport(report);
+
+        ExperienceReport report = null;
         Iterator<ExperienceReport> reports = objectModel.findExperienceReport(null);
         int experienceReportCount = 0;
 
@@ -130,8 +148,8 @@ public class ObjectModelDelete extends TestCase
             experienceReportCount ++;
             report = reports.next();
         }
-        assertEquals(experienceReportCount,1);
-        System.out.println("Experience report added");
+        assertEquals(1,experienceReportCount);
+
         persistence.deleteExperienceReport(report);
         reports = objectModel.findExperienceReport(null);
         experienceReportCount = 0;
@@ -139,13 +157,13 @@ public class ObjectModelDelete extends TestCase
             experienceReportCount ++;
             report = reports.next();
         }
-        assertEquals(experienceReportCount,0);
+        assertEquals(0,experienceReportCount);
         System.out.println("Experience report deleted");
 
     }
 
     @Test
-    public static void testDeleteAttributeAndItem(ObjectModel objectModel, Persistence persistence) throws DTException{
+    public void test_DeleteAttributeAndItem(ObjectModel objectModel, Persistence persistence) throws DTException{
         Category category = objectModel.createCategory(null, "Games");
         persistence.saveCategory(category);
         Iterator<Category> categories = objectModel.findCategory(null);
@@ -215,68 +233,42 @@ public class ObjectModelDelete extends TestCase
     }
 
     @Test
-    public static void testDeleteAuctionAndBid(ObjectModel objectModel, Persistence persistence) throws DTException{
+    public void test_DeleteAuctionAndBid(ObjectModel objectModel, Persistence persistence) throws DTException{
 
 
-        RegisteredUser user1 =objectModel.createRegisteredUser("matt", "Matt", "Lisivick", "hello", false, "email@uga.edu", "67893444323", false);
-        persistence.saveRegisteredUser(user1);
 
-        Iterator<RegisteredUser> users = objectModel.findRegisteredUser(null);
-        while(users.hasNext()){
-            user1 = users.next();
-        }
 
-        Category category = objectModel.createCategory(null, "Game");
-        persistence.saveCategory(category);
-        Iterator<Category> categories = objectModel.findCategory(null);
-        while(categories.hasNext()){
-            category = categories.next();
-        }
-        Item item = objectModel.createItem(category, user1, "Monopoly", "Monopoly 20", "Cool Game");
-        persistence.saveItem(item);
 
-        Iterator<Item> items = objectModel.findItem(null);
-        while(items.hasNext()){
-            item = items.next();
-        }
-        System.out.println("Item has been created");
 
-        Auction auction = objectModel.createAuction(item, 20, new Date());
-        persistence.saveAuction(auction);
+
+
+        Auction auction = null;
         Iterator<Auction> auctions = objectModel.findAuction(null);
         int auctionCount =0;
         while(auctions.hasNext()){
             auction = auctions.next();
             auctionCount++;
         }
-        assertEquals(auctionCount,1);
-        System.out.println("Auction Properly Created");
+        assertEquals(1,auctionCount);
 
-        RegisteredUser user2 =objectModel.createRegisteredUser("jam", "Steve", "Ya", "ok", false, "eml@uga.edu", "423432432", false);
-        persistence.saveRegisteredUser(user2);
-        users = objectModel.findRegisteredUser(user2);
-        while(users.hasNext()){
-            user2 = users.next();
-        }
-        assertTrue(user2.getId()>0);
-        System.out.println("User 2 found");
-        Bid bid = objectModel.createBid(auction, user2, 40);
-        persistence.saveBid(bid);
+
+
+       Bid bid = null;
         Iterator<Bid> bids = objectModel.findBid(null);
         int bidCount = 0;
         while(bids.hasNext()){
             bid = bids.next();
             bidCount++;
         }
-        assertEquals(bidCount,1);
-        System.out.println("Bid properly added");
+        assertEquals(1,bidCount);
+
         persistence.deleteBid(bid);
         bids = objectModel.findBid(null);
         bidCount = 0;
         while(bids.hasNext()){
             bidCount++;
         }
-        assertEquals(bidCount,0);
+        assertEquals(0,bidCount);
         System.out.println("Bid deleted");
 
         persistence.deleteAuction(auction);
@@ -285,14 +277,22 @@ public class ObjectModelDelete extends TestCase
         while(auctions.hasNext()){
             auctionCount++;
         }
-        assertEquals(auctionCount,0);
+        assertEquals(0,auctionCount);
         System.out.println("Auction deleted");
 
+        Item item = null;
+        int itemCount = 0;
+        Iterator<Item> items = objectModel.findItem(null);
+        while(items.hasNext()){
+            item = items.next();
+            itemCount++;
+        }
+        assertEquals("All items belonging to auction should have been deleted automatically",0,itemCount);
 
     }
 
     @Test
-    public static void testDeleteAttributeType(ObjectModel objectModel, Persistence persistence) throws DTException{
+    public void test_DeleteAttributeType(ObjectModel objectModel, Persistence persistence) throws DTException{
         Category category = objectModel.createCategory(null, "Games");
         persistence.saveCategory(category);
         Iterator<Category> categories = objectModel.findCategory(null);
@@ -335,13 +335,13 @@ public class ObjectModelDelete extends TestCase
 
 
     }
+    @Test
+    public void test_DeleteMembership(ObjectModel objectModel, Persistence persistence) throws DTException{
 
-    public static void testDeleteMembership(ObjectModel objectModel, Persistence persistence) throws DTException{
-        Membership membership = objectModel.createMembership(10, new Date());
-        persistence.saveMembership(membership);
-        membership = objectModel.findMembership();
+        Membership membership = objectModel.findMembership();
         assertTrue(membership.getId()>0);
-        System.out.println("Membership saved.");
+
+
         persistence.deleteMembership(membership);
         Membership membership2 = objectModel.findMembership();
         assertTrue(!membership2.isPersistent());
@@ -351,95 +351,10 @@ public class ObjectModelDelete extends TestCase
 
 
 
-    public static void deleteAllInfoFromTables(Connection conn) throws SQLException{
-        Statement stmt = conn.createStatement();
-        String sql = "DELETE FROM user";
-        stmt.executeUpdate(sql);
-        sql = "DELETE FROM attribute";
-        stmt.executeUpdate(sql);
-        sql = "DELETE FROM attribute_type";
-        stmt.executeUpdate(sql);
-        sql = "DELETE FROM auction";
-        stmt.executeUpdate(sql);
-        sql = "DELETE FROM bid";
-        stmt.executeUpdate(sql);
-        sql = "DELETE FROM category";
-        stmt.executeUpdate(sql);
-        sql = "DELETE FROM experience_report";
-        stmt.executeUpdate(sql);
-        sql = "DELETE FROM item";
-        stmt.executeUpdate(sql);
-        sql = "DELETE FROM membership";
-        stmt.executeUpdate(sql);
-        sql = "DELETE FROM user";
-        stmt.executeUpdate(sql);
 
 
 
-    }
 
-
-    public static void main(String[] args)
-    {
-        Connection  conn = null;
-        ObjectModel objectModel = null;
-        Persistence persistence = null;
-
-        // get a database connection
-        try {
-            conn = DbUtils.connect();
-        }
-        catch (Exception seq) {
-            System.err.println( "ObjectModelDelete: Unable to obtain a database connection" );
-        }
-
-        // obtain a reference to the ObjectModel module
-        objectModel = new ObjectModelImpl();
-        // obtain a reference to Persistence module and connect it to the ObjectModel
-        persistence = new PersistenceImpl( conn, objectModel );
-        // connect the ObjectModel module to the Persistence module
-        objectModel.setPersistence( persistence );
-
-
-        try {
-
-            deleteAllInfoFromTables(conn);
-            //Delete User Test
-            testDeleteUser(objectModel,persistence);
-            deleteAllInfoFromTables(conn);
-            //Delete Category Test
-            testDeleteCategory(objectModel,persistence);
-            deleteAllInfoFromTables(conn);
-            //Delete AttributeType Test
-            testDeleteAttributeType(objectModel,persistence);
-            deleteAllInfoFromTables(conn);
-            //Delete Attribute & Item Test
-            testDeleteAttributeAndItem(objectModel,persistence);
-            deleteAllInfoFromTables(conn);
-            testDeleteExperienceReport(objectModel,persistence);
-            deleteAllInfoFromTables(conn);
-
-        }
-        catch( DTException ce )
-        {
-            System.err.println( "DTException: " + ce );
-            ce.printStackTrace();
-        }
-        catch( Exception e )
-        {
-            System.err.println( "Exception: " + e );
-            e.printStackTrace();
-        }
-        finally {
-            // close the connection
-            try {
-                conn.close();
-            }
-            catch( Exception e ) {
-                System.err.println( "Exception: " + e );
-            }
-        }
-    }
 
 
 }
