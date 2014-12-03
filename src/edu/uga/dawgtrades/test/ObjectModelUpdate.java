@@ -234,6 +234,7 @@ public class ObjectModelUpdate
 
         //Update attribute
         attribute.setValue("1954");
+
         persistence.saveAttribute(attribute);
 
         attributes = objectModel.getAttribute(item);
@@ -312,7 +313,7 @@ public class ObjectModelUpdate
 
     }
 
-
+    @Test
     private static void testAttributeTypeUpdate(ObjectModel objectModel,
                                                 Persistence persistence) throws DTException {
         Category category = objectModel.createCategory(null, "Games");
@@ -348,7 +349,7 @@ public class ObjectModelUpdate
         System.out.println("AttributeType Changed");
     }
 
-
+    @Test
     private static void testCategoryUpdate(ObjectModel objectModel,
                                            Persistence persistence) throws DTException {
         Category category = null;
@@ -377,7 +378,7 @@ public class ObjectModelUpdate
 
     }
 
-
+    @Test
     private static void testExperienceReport(ObjectModel objectModel,
                                              Persistence persistence) throws DTException {
         RegisteredUser user1 =objectModel.createRegisteredUser("matt", "Matt", "Lisivick", "hello", false, "email@uga.edu", "67893444323", false);

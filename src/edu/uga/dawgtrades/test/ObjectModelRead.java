@@ -12,6 +12,7 @@ import edu.uga.dawgtrades.persist.impl.PersistenceImpl;
 import junit.framework.TestCase;
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 
@@ -31,7 +32,7 @@ public class ObjectModelRead extends TestCase
     Attribute attribute = null;
     Bid bid = null;
     AttributeType attributeType = null;
-    @Before
+    @BeforeClass
     public void setUp() throws DTException {
 
 
