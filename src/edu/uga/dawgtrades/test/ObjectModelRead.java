@@ -185,6 +185,19 @@ public class ObjectModelRead extends TestCase
 
     }
     @Test
+    public void test_restoreUserby() throws DTException {
+        RegisteredUser modelUser = objectModel.createRegisteredUser();
+        modelUser.setLastName("johnson");
+        Iterator<RegisteredUser> users = objectModel.findRegisteredUser(modelUser);
+        int usercount = 0 ;
+        while(users.hasNext()){
+            user = users.next();
+            usercount++;
+        }
+        assertEquals(1,usercount);
+        assertEquals("Test_name",user.getName());
+    }
+    @Test
     public void test_Username()
     {
         assertEquals("Test_name",user.getName());
