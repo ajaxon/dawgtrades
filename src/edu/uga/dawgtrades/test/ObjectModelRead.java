@@ -41,7 +41,7 @@ public class ObjectModelRead extends TestCase
             conn = DbUtils.connect();
         }
         catch (Exception seq) {
-            System.err.println( "ObjectModelDelete: Unable to obtain a database connection" );
+            System.err.println( "ObjectModelRead: Unable to obtain a database connection" + seq.toString());
         }
 
         // obtain a reference to the ObjectModel module
