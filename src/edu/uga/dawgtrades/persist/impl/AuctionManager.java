@@ -177,7 +177,7 @@ public class AuctionManager {
 
     public Item restoreItemBy(Auction auction) throws DTException{
 
-        String restoreItemBySql = "select I.id, i.name, I.identifier, I.description, I.owner_id, I.category_id from item I, auction A where I.id = A.item_id";
+        String restoreItemBySql = "select I.id, I.name, I.identifier, I.description, I.owner_id, I.category_id from item I, auction A where I.id = A.item_id";
         Statement stmt = null;
         StringBuffer query = new StringBuffer(100);
         StringBuffer condition = new StringBuffer(100);

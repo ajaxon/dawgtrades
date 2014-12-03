@@ -181,7 +181,7 @@ public class ObjectModelRead extends TestCase
             userCount++;
 
         }
-        assertEquals(userCount,4);
+        assertEquals(4,userCount);
 
     }
     @Test

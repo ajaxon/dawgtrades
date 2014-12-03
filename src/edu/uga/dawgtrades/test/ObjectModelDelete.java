@@ -82,7 +82,8 @@ public class ObjectModelDelete extends TestCase
             category = categories.next();
             categoryCount++;
         }
-        assertEquals(categoryCount,2);
+
+        assertEquals(2,categoryCount);
         System.out.println("Category2 has been added");
         categories = objectModel.findCategory(null);
         categoryCount =0;
