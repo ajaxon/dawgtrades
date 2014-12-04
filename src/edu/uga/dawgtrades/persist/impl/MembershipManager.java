@@ -1,7 +1,7 @@
 package edu.uga.dawgtrades.persist.impl;
 
 import java.sql.Connection;
-import java.sql.Date;
+import java.sql.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -148,15 +148,16 @@ public class MembershipManager {
 
     public Membership restore() throws DTException {
         String selectMembershipSql = "select id, price, date from membership";
-        PreparedStatement stmt = null;
+        Statement stmt = null;
         StringBuffer query = new StringBuffer(100);
         StringBuffer condition = new StringBuffer(100);
 
         condition.setLength(0);
+        query.append(selectMembershipSql);
 
         try{
-            stmt = (PreparedStatement) conn.prepareStatement(selectMembershipSql);
-            if(stmt.equals(query.toString())){
+            stmt = conn.createStatement();
+            if(stmt.execute(query.toString())){
                 ResultSet r = stmt.getResultSet();
                 MembershipIterator memberIter = new MembershipIterator(r,objectModel);
                 if(memberIter.hasNext()){
@@ -167,7 +168,7 @@ public class MembershipManager {
 
             }
         }catch(Exception e){
-            throw new DTException("MembershipManager.restore:Could not restore membership objects");
+            throw new DTException("MembershipManager.restore: " + e.toString());
         }
 
         return null;

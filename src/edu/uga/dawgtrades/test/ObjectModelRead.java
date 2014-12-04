@@ -357,7 +357,7 @@ public class ObjectModelRead extends TestCase
     }
 
     // Experience Report
-    /*
+
     public void test_restoreExperienceReport() throws DTException {
         ExperienceReport xp = objectModel.createExperienceReport();
         xp.setRating(5);
@@ -369,7 +369,7 @@ public class ObjectModelRead extends TestCase
         assertEquals(1,reportCount);
 
     }
-*/
+
     // Items
     @Test
     public void test_ItemObject()
@@ -417,8 +417,13 @@ public class ObjectModelRead extends TestCase
         assertEquals(5.0f,auction.getMinPrice());
     }
     // Membership
+    @Test
+    public void test_restoreMembership() throws DTException {
 
 
+        Membership membership = objectModel.findMembership();
+        assertEquals(5.0f,membership.getPrice());
+    }
 
     //
 
