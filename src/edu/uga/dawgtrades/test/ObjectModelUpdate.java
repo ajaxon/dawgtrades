@@ -15,6 +15,7 @@ import edu.uga.dawgtrades.model.Auction;
 import edu.uga.dawgtrades.model.Bid;
 import edu.uga.dawgtrades.model.Category;
 import edu.uga.dawgtrades.model.DTException;
+import edu.uga.dawgtrades.model.ExperienceReport;
 import edu.uga.dawgtrades.model.Item;
 import edu.uga.dawgtrades.model.Membership;
 import edu.uga.dawgtrades.model.ObjectModel;
@@ -40,6 +41,7 @@ public class ObjectModelUpdate extends TestCase {
     Attribute attribute = null;
     Bid bid = null;
     AttributeType attributeType = null;
+    ExperienceReport experienceReport = null;
     @BeforeClass
     public void setUp() throws DTException {
 
@@ -70,7 +72,7 @@ public class ObjectModelUpdate extends TestCase {
         auction = getAuction();
         bid = getBid();
         attributeType = getAttributeType();
-
+        experienceReport = getExperienceReport();
         //
 
     }
@@ -119,6 +121,20 @@ public class ObjectModelUpdate extends TestCase {
         }
         return category;
     }
+    
+    public ExperienceReport getExperienceReport() throws DTException {
+    	
+    	ExperienceReport modelExperienceReport = objectModel.createExperienceReport();
+    	Iterator<ExperienceReport> experienceReports = objectModel.findExperienceReport(modelExperienceReport);
+    	while(experienceReports.hasNext()){
+    		experienceReport = experienceReports.next();
+    	}
+    	return experienceReport;
+    	
+    }
+    
+    
+    
     public Category getChild() throws DTException {
         Iterator<Category> children = null;
         Category category = null;
@@ -195,7 +211,6 @@ public class ObjectModelUpdate extends TestCase {
     @Test
     public void test_update_last_name_User() throws DTException{
      	RegisteredUser tempUser = user;
-    	System.out.println(user.getLastName());
      	user.setLastName("ChangeName");
      	persistence.saveRegisteredUser(user);
      	RegisteredUser userTest = objectModel.createRegisteredUser();
@@ -217,7 +232,6 @@ public class ObjectModelUpdate extends TestCase {
     @Test
     public void test_update_password_User() throws DTException{
      	RegisteredUser tempUser = user;
-       	System.out.println(user.getPassword());
      	user.setPassword("ChangeName");
      	persistence.saveRegisteredUser(user);
      	RegisteredUser userTest = objectModel.createRegisteredUser();
@@ -241,7 +255,6 @@ public class ObjectModelUpdate extends TestCase {
     	Item itemTemp = item;
     	item.setDescription("ChangeItem");
     	persistence.saveItem(item);
-    	System.out.println("Item saved");
     	Item itemTest = objectModel.createItem();
     	itemTest.setDescription("ChangeItem");
     	Iterator<Item> items = objectModel.findItem(itemTest);
@@ -262,7 +275,6 @@ public class ObjectModelUpdate extends TestCase {
     	Item itemTemp = item;
     	item.setIdentifier("ChangeItem");
     	persistence.saveItem(item);
-    	System.out.println("Item saved");
     	Item itemTest = objectModel.createItem();
     	itemTest.setIdentifier("ChangeItem");
     	Iterator<Item> items = objectModel.findItem(itemTest);
@@ -276,7 +288,7 @@ public class ObjectModelUpdate extends TestCase {
     	System.out.println("Item Identifier Updated Correctly");
 
     }
-    
+//    
     
     @Test
     public void test_update_Category() throws DTException{
@@ -319,30 +331,30 @@ public class ObjectModelUpdate extends TestCase {
     	System.out.println("AttributeType Name Updated Correctly");
     	  	
     }
-    @Test
-    public void test_update_name_Auction() throws DTException{
-    	Auction auctionTemp = auction;
-    	System.out.println("Auction Id is "+auction.getId());
-    	if(auction.getExpiration()==null){
-    		System.out.println("Auction Expiration is null");
-    	}
-    	assertTrue(auction.getExpiration()!=null);
-    	auction.setMinPrice(50f);
-    	persistence.saveAuction(auction);
-    	Auction auctionTest = objectModel.createAuction();
-    	auctionTest.setMinPrice(50f);
-    	Iterator<Auction> auctions = objectModel.findAuction(auctionTest);
-    	int count = 0;
-    	while(auctions.hasNext()){
-    		auctions.next();
-    		count ++;
-    		
-    		
-    	}
-    	assertEquals(1,count);
-    	persistence.saveAuction(auctionTemp);
-    	System.out.println("Auction Price Updated Correctly");
-    }
+//    @Test
+//    public void test_update_name_Auction() throws DTException{
+//    	Auction auctionTemp = auction;
+//    	System.out.println("Auction Id is "+auction.getId());
+//    	if(auction.getExpiration()==null){
+//    		System.out.println("Auction Expiration is null");
+//    	}
+//    	assertTrue(auction.getExpiration()!=null);
+//    	auction.setMinPrice(50f);
+//    	persistence.saveAuction(auction);
+//    	Auction auctionTest = objectModel.createAuction();
+//    	auctionTest.setMinPrice(50f);
+//    	Iterator<Auction> auctions = objectModel.findAuction(auctionTest);
+//    	int count = 0;
+//    	while(auctions.hasNext()){
+//    		auctions.next();
+//    		count ++;
+//    		
+//    		
+//    	}
+//    	assertEquals(1,count);
+//    	persistence.saveAuction(auctionTemp);
+//    	System.out.println("Auction Price Updated Correctly");
+//    }
    
     @Test
     public void test_update_price_Membership() throws DTException {
@@ -357,6 +369,25 @@ public class ObjectModelUpdate extends TestCase {
         persistence.saveMembership(membershipTemp);
         System.out.println("Membership price updated correctly");
     }
+    
+//    @Test 
+//    public void test_update_experienceReport() throws DTException {
+//    	ExperienceReport tempReport = experienceReport;
+//    	experienceReport.setRating(1);
+//    	persistence.saveExperienceReport(experienceReport);
+//    	ExperienceReport expTest = objectModel.createExperienceReport();
+//    	expTest.setRating(1);
+//    	Iterator<ExperienceReport> reports = objectModel.findExperienceReport(expTest);
+//    	int count = 0;
+//    	while(reports.hasNext()){
+//    		reports.next();
+//    		count++;
+//    		
+//    	}
+//    	assertEquals(1,count);
+//    	persistence.saveExperienceReport(tempReport);
+//    	System.out.println("ExperienceReport rating updated correctly");
+//    }
 
     @AfterClass
     public void teardown() throws SQLException {
