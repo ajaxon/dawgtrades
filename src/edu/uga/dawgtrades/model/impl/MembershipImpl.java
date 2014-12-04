@@ -8,13 +8,24 @@ public class MembershipImpl extends Persistent implements Membership {
 
 	private float price;
 	private Date date;
+    private static MembershipImpl instance = null;
 	
 	public MembershipImpl(float price, Date date)
 	{
-		super(-1);
-		this.price = price;
-		this.date = date;
+
+            super(-1);
+            this.price = price;
+            this.date = date;
+        
+
 	}
+    public static MembershipImpl getInstance()
+    {
+        if(instance == null){
+           // instance = new MembershipImpl();
+        }
+        return instance;
+    }
 	
 	@Override
 	public float getPrice() {

@@ -26,10 +26,18 @@
         <servlet-name>UpdateCategory</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.UpdateCategory</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateCategory</servlet-name>
+        <url-pattern>/update_category</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>DeleteCategory</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.DeleteCategory</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteCategory</servlet-name>
+        <url-pattern>/delete_category</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>DeleteItem</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.DeleteItem</servlet-class>
@@ -97,6 +105,10 @@
     <servlet>
         <servlet-name>SetMembershipPrice</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.SetMembershipPrice</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DefineCategory</servlet-name>
+        <servlet-class>edu.uga.dawgtrades.servlets.DefineCategory</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
