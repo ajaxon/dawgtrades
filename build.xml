@@ -1,7 +1,7 @@
-<project name="ClubsBuilder" default="build">
+<project name="DawgTrades" default="compile">
 
   <property name="src.dir"       value="src" />
-  <property name="class.dir"     value="classes" />
+  <property name="class.dir"     value="WEB-INF/classes" />
 
 
   <!--
@@ -13,6 +13,11 @@
   <path id="classpath">
       <fileset dir="/opt/classes">
           <include name="mysql-connector-java-5.1.22-bin.jar"/>
+	  <include name="servlet-api.jar"/> 
+     </fileset>
+      <fileset dir="lib">
+	<include name="junit-4.11.jar"/>
+	<include name="freemarker.jar"/>
       </fileset>
   </path>
 
@@ -28,6 +33,85 @@
       <javac srcdir="${src.dir}" destdir="${class.dir}">
           <classpath refid="classpath"/>
       </javac>
-  </target>	
-	
+  </target>
+
+ <target name="deploy">
+ 	<war destfile="team2_dawgtrades.war" webxml="web.xml">
+ 	<fileset dir="WebContent">
+ 		<include name="**.*"/>
+ 	</fileset>
+ 	<lib dir="lib">
+ 	</lib>
+ 	<classes dir="${class.dir}"/>
+  	</war>
+  </target>
+  <target name="test-read">
+	<junit haltonfailure="on">
+	<formatter type="brief" usefile="false"/>
+	<test name="edu.uga.dawgtrades.test.ObjectModelRead"/>
+	<classpath>
+	<fileset dir="lib/">
+		<include name="junit-4.11.jar"/>
+	</fileset>
+	<fileset dir="/opt/classes">
+		<include name="mysql-connector-java-5.1.22-bin.jar"/>
+	</fileset>
+	<pathelement location="${class.dir}"/>
+	</classpath>
+	</junit>
+
+ </target>
+
+  <target name="test-update">
+	<junit haltonfailure="on">
+	<formatter type="brief" usefile="false"/>
+	<test name="edu.uga.dawgtrades.test.ObjectModelUpdate"/>
+	<classpath>
+	<fileset dir="lib/">
+		<include name="junit-4.11.jar"/>
+	</fileset>
+	<fileset dir="/opt/classes">
+		<include name="mysql-connector-java-5.1.22-bin.jar"/>
+	</fileset>
+	<pathelement location="${class.dir}"/>
+	</classpath>
+	</junit>
+
+ </target>
+ 
+  <target name="test-delete">
+	<junit haltonfailure="on">
+	<formatter type="brief" usefile="false"/>
+	<test name="edu.uga.dawgtrades.test.ObjectModelDelete"/>
+	<classpath>
+	<fileset dir="lib/">
+		<include name="junit-4.11.jar"/>
+	</fileset>
+	<fileset dir="/opt/classes">
+		<include name="mysql-connector-java-5.1.22-bin.jar"/>
+	</fileset>
+	<pathelement location="${class.dir}"/>
+	</classpath>
+	</junit>
+
+ </target>
+
+
+
+  <target name="test-write" depends="compile">
+     	<java fork="true" failonerror="yes" classname="edu.uga.dawgtrades.test.ObjectModelWrite">	
+	       <classpath>
+     	 		<pathelement location="${class.dir}"/>
+     	 		<fileset dir="lib/">
+				<include name="junit-4.11.jar"/>
+			</fileset>
+     	 		<fileset dir ="/opt/classes">
+     	 			<include name="mysql-connector-java-5.1.22-bin.jar"/>
+			</fileset>
+     	 	</classpath>
+	</java>
+	</target>
+  
+
+ 
 </project>
