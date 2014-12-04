@@ -60,105 +60,63 @@ public class ObjectModelDelete extends TestCase
         //
 
     }
-    @Test
-    public static void testDeleteUser(ObjectModel objectModel, Persistence persistence) throws DTException{
-
-        RegisteredUser user1 =objectModel.createRegisteredUser("matt", "Matt", "Lisivick", "hello", false, "email@uga.edu", "67893444323", false);
-        persistence.saveRegisteredUser(user1);
-        RegisteredUser userFind = objectModel.createRegisteredUser();
-        userFind.setFirstName("Matt");
-        Iterator<RegisteredUser> userIter = objectModel.findRegisteredUser(userFind);
-        int userCount = 0;
-        RegisteredUser u = null;
-        while(userIter.hasNext()){
-            u = userIter.next();
-            System.out.println(u.getName());
-            userCount++;
-
-        }
-        assertEquals(userCount,1);
-        System.out.println("User found");
-        persistence.deleteRegisteredUser(u);
-        userIter = objectModel.findRegisteredUser(userFind);
-        userCount = 0;
-        while(userIter.hasNext()){
-            u = userIter.next();
-            System.out.println(u.getName());
-            userCount++;
-
-        }
-        assertEquals(userCount,0);
-        System.out.println("User has been deleted");
-
-    }
 
     @Test
-    public static void testDeleteCategory(ObjectModel objectModel, Persistence persistence) throws DTException{
-        Category category = objectModel.createCategory(null, "Games");
-        Category category2 = null;
-        persistence.saveCategory(category);
-        Iterator<Category> categories = objectModel.findCategory(null);
-        int categoryCount = 0;
-        while(categories.hasNext()){
-            category = categories.next();
-            categoryCount++;
+    public void test_DeleteAuctionAndBid(ObjectModel objectModel, Persistence persistence) throws DTException{
+
+
+
+
+
+
+
+
+        Auction auction = null;
+        Iterator<Auction> auctions = objectModel.findAuction(null);
+        int auctionCount =0;
+        while(auctions.hasNext()){
+            auction = auctions.next();
+            auctionCount++;
         }
-        assertEquals(categoryCount,1);
-        System.out.println("Category has been added");
-        category2 = objectModel.createCategory(category, "Board Games");
-        persistence.saveCategory(category2);
-        categoryCount = 0;
-        while(categories.hasNext()){
-            category = categories.next();
-            categoryCount++;
+        assertEquals(1,auctionCount);
+
+
+
+        Bid bid = null;
+        Iterator<Bid> bids = objectModel.findBid(null);
+        int bidCount = 0;
+        while(bids.hasNext()){
+            bid = bids.next();
+            bidCount++;
         }
+        assertEquals(1,bidCount);
 
-        assertEquals(2,categoryCount);
-        System.out.println("Category2 has been added");
-        categories = objectModel.findCategory(null);
-        categoryCount =0;
-        while(categories.hasNext()){
-            objectModel.deleteCategory(categories.next());
-            categoryCount ++;
+        persistence.deleteBid(bid);
+        bids = objectModel.findBid(null);
+        bidCount = 0;
+        while(bids.hasNext()){
+            bidCount++;
         }
-        assertEquals(categoryCount,2);
-        System.out.println("Two categories found");
-        categories = objectModel.findCategory(null);
-        categoryCount =0;
-        while(categories.hasNext()){
-            categoryCount ++;
+        assertEquals(0,bidCount);
+        System.out.println("Bid deleted");
 
+        persistence.deleteAuction(auction);
+        auctions = objectModel.findAuction(null);
+        auctionCount = 0;
+        while(auctions.hasNext()){
+            auctionCount++;
         }
-        assertEquals(categoryCount,0);
-        System.out.println("Categories Deleted");
+        assertEquals(0,auctionCount);
+        System.out.println("Auction deleted");
 
-
-    }
-
-    @Test
-    public void test_DeleteExperienceReport() throws DTException{
-
-
-
-        ExperienceReport report = null;
-        Iterator<ExperienceReport> reports = objectModel.findExperienceReport(null);
-        int experienceReportCount = 0;
-
-        while(reports.hasNext()){
-            experienceReportCount ++;
-            report = reports.next();
+        Item item = null;
+        int itemCount = 0;
+        Iterator<Item> items = objectModel.findItem(null);
+        while(items.hasNext()){
+            item = items.next();
+            itemCount++;
         }
-        assertEquals(1,experienceReportCount);
-
-        persistence.deleteExperienceReport(report);
-        reports = objectModel.findExperienceReport(null);
-        experienceReportCount = 0;
-        while(reports.hasNext()){
-            experienceReportCount ++;
-            report = reports.next();
-        }
-        assertEquals(0,experienceReportCount);
-        System.out.println("Experience report deleted");
+        assertEquals("All items belonging to auction should have been deleted automatically",0,itemCount);
 
     }
 
@@ -233,116 +191,93 @@ public class ObjectModelDelete extends TestCase
     }
 
     @Test
-    public void test_DeleteAuctionAndBid(ObjectModel objectModel, Persistence persistence) throws DTException{
+    public void test_DeleteExperienceReport() throws DTException{
 
 
 
+        ExperienceReport report = null;
+        Iterator<ExperienceReport> reports = objectModel.findExperienceReport(null);
+        int experienceReportCount = 0;
 
-
-
-
-
-        Auction auction = null;
-        Iterator<Auction> auctions = objectModel.findAuction(null);
-        int auctionCount =0;
-        while(auctions.hasNext()){
-            auction = auctions.next();
-            auctionCount++;
+        while(reports.hasNext()){
+            experienceReportCount ++;
+            report = reports.next();
         }
-        assertEquals(1,auctionCount);
+        assertEquals(1,experienceReportCount);
 
-
-
-       Bid bid = null;
-        Iterator<Bid> bids = objectModel.findBid(null);
-        int bidCount = 0;
-        while(bids.hasNext()){
-            bid = bids.next();
-            bidCount++;
+        persistence.deleteExperienceReport(report);
+        reports = objectModel.findExperienceReport(null);
+        experienceReportCount = 0;
+        while(reports.hasNext()){
+            experienceReportCount ++;
+            report = reports.next();
         }
-        assertEquals(1,bidCount);
-
-        persistence.deleteBid(bid);
-        bids = objectModel.findBid(null);
-        bidCount = 0;
-        while(bids.hasNext()){
-            bidCount++;
-        }
-        assertEquals(0,bidCount);
-        System.out.println("Bid deleted");
-
-        persistence.deleteAuction(auction);
-        auctions = objectModel.findAuction(null);
-        auctionCount = 0;
-        while(auctions.hasNext()){
-            auctionCount++;
-        }
-        assertEquals(0,auctionCount);
-        System.out.println("Auction deleted");
-
-        Item item = null;
-        int itemCount = 0;
-        Iterator<Item> items = objectModel.findItem(null);
-        while(items.hasNext()){
-            item = items.next();
-            itemCount++;
-        }
-        assertEquals("All items belonging to auction should have been deleted automatically",0,itemCount);
+        assertEquals(0,experienceReportCount);
+        System.out.println("Experience report deleted");
 
     }
 
     @Test
-    public void test_DeleteAttributeType(ObjectModel objectModel, Persistence persistence) throws DTException{
-        Category category = objectModel.createCategory(null, "Games");
-        persistence.saveCategory(category);
-        Iterator<Category> categories = objectModel.findCategory(null);
-        int categoryCount =0;
-        while(categories.hasNext()){
-            categoryCount++;
-            category = categories.next();
+    public void testDeleteUser() throws DTException{
+
+
+
+
+        Iterator<RegisteredUser> userIter = objectModel.findRegisteredUser(null);
+        int userCount = 0;
+        RegisteredUser u = null;
+        while(userIter.hasNext()){
+            u = userIter.next();
+
+            userCount++;
 
         }
-        assertEquals(categoryCount,1);
-        System.out.println("Category properly added.");
-        AttributeType attributeType = objectModel.createAttributeType(category, "Year Made");
-        persistence.saveAttributeType(attributeType);
-        Iterator<AttributeType> attributeTypes =  objectModel.getAttributeType(category);
-        int attributeTypeCount = 0;
-        while(attributeTypes.hasNext()){
-            attributeType = attributeTypes.next();
-            attributeTypeCount++;
+        assertEquals(4,userCount);
+
+
+        Iterator<RegisteredUser> userIter2 = objectModel.findRegisteredUser(null);
+
+
+        userCount = 0;
+        while(userIter2.hasNext()){
+            u = userIter2.next();
+            System.out.println(u.getName());
+            persistence.deleteRegisteredUser(u);
 
 
         }
+        Iterator<RegisteredUser> userIter3 = objectModel.findRegisteredUser(null);
+        userCount = 0;
+        while(userIter3.hasNext()){
+            u = userIter3.next();
+            userCount++;
 
-        assertEquals(attributeTypeCount,1);
-        System.out.println("AttributeType added.");
-        attributeTypes = objectModel.getAttributeType(category);
-        attributeTypeCount=0;
-        while(attributeTypes.hasNext()){
-            objectModel.deleteAttributeType(attributeType);
-            attributeTypeCount++;
-        }
 
-        assertEquals(attributeTypeCount,1);
-        attributeTypeCount=0;
-        attributeTypes = objectModel.getAttributeType(category);
-        while(attributeTypes.hasNext()){
-            attributeTypeCount++;
+
         }
-        assertEquals(attributeTypeCount,0);
-        System.out.println("AttributeType deleted.");
+        assertEquals(0,userCount);
+
+
+    }
+
+
+    @Test
+    public void test_DeleteAttributeType() throws DTException{
+
+
+
+
 
 
     }
     @Test
-    public void test_DeleteMembership(ObjectModel objectModel, Persistence persistence) throws DTException{
+    public void test_DeleteMembership() throws DTException{
 
         Membership membership = objectModel.findMembership();
         assertTrue(membership.getId()>0);
 
 
-        persistence.deleteMembership(membership);
+
         Membership membership2 = objectModel.findMembership();
         assertTrue(!membership2.isPersistent());
         System.out.println("Membership has been deleted");
@@ -350,9 +285,42 @@ public class ObjectModelDelete extends TestCase
     }
 
 
+    @Test
+    public void testDeleteCategory() throws DTException{
+        Category category = null;
+        Iterator<Category> categories = objectModel.findCategory(null);
+        int categoryCount = 0;
+        while(categories.hasNext()){
+            category = categories.next();
+            categoryCount++;
+        }
+        assertEquals(2,categoryCount);
 
 
 
+
+
+        Iterator<Category> categories2 = objectModel.findCategory(null);
+
+        while(categories2.hasNext()){
+            category = categories2.next();
+
+            objectModel.deleteCategory(category);
+
+        }
+
+
+        Iterator<Category> categories3 = objectModel.findCategory(null);
+        categoryCount =0;
+        while(categories3.hasNext()){
+            categoryCount ++;
+
+        }
+        assertEquals(0,categoryCount);
+        System.out.println("Categories Deleted");
+
+
+    }
 
 
 

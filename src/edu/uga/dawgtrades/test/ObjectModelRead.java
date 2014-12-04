@@ -357,7 +357,19 @@ public class ObjectModelRead extends TestCase
     }
 
     // Experience Report
+    /*
+    public void test_restoreExperienceReport() throws DTException {
+        ExperienceReport xp = objectModel.createExperienceReport();
+        xp.setRating(5);
+        int reportCount = 0;
+        Iterator<ExperienceReport> exp = objectModel.findExperienceReport(xp);
+        while(exp.hasNext()){
+            reportCount++;
+        }
+        assertEquals(1,reportCount);
 
+    }
+*/
     // Items
     @Test
     public void test_ItemObject()

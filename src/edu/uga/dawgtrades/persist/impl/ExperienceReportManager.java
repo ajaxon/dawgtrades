@@ -104,22 +104,37 @@ public class ExperienceReportManager {
 		query.append(selectExReSql);
 		if(experienceReport != null){
 			if(experienceReport.isPersistent()){
-				query.append("where id = " + experienceReport.getId());
+				query.append("where id = '" + experienceReport.getId() + "'");
 			}else{
 				if(experienceReport.getReviewed() != null){
-					condition.append(" and reviewed_id = " + experienceReport.getReviewed().getId());
+                    if (condition.length() > 0) {
+                        condition.append(" and");
+                    }
+					condition.append(" reviewed_id = '" + experienceReport.getReviewed().getId() + "'");
 				}
 				if(experienceReport.getReviewer() != null){
-					condition.append(" and reviewer_id = " + experienceReport.getReviewer().getId());
+                    if (condition.length() > 0) {
+                        condition.append(" and");
+                    }
+					condition.append(" reviewer_id = '" + experienceReport.getReviewer().getId() + "'");
 				}
 				if(experienceReport.getRating() != 0){
-					condition.append(" and rating = " + experienceReport.getRating());
+                    if (condition.length() > 0) {
+                        condition.append(" and");
+                    }
+					condition.append(" rating = '" + experienceReport.getRating() + "'");
 				}
 				if(experienceReport.getReport() != null){
-					condition.append(" and report = " + experienceReport.getReport());
+                    if (condition.length() > 0) {
+                        condition.append(" and");
+                    }
+					condition.append(" report = '" + experienceReport.getReport() + "'");
 				}
 				if(experienceReport.getDate() != null){
-					condition.append(" and date = " + experienceReport.getDate());
+                    if (condition.length() > 0) {
+                        condition.append(" and");
+                    }
+					condition.append(" date = '" + experienceReport.getDate() + "'");
 				}
 				if(condition.length() > 0){
 					query.append(  " where " );
