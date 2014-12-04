@@ -364,6 +364,7 @@ public class ObjectModelRead extends TestCase
         int reportCount = 0;
         Iterator<ExperienceReport> exp = objectModel.findExperienceReport(xp);
         while(exp.hasNext()){
+            exp.next();
             reportCount++;
         }
         assertEquals(1,reportCount);

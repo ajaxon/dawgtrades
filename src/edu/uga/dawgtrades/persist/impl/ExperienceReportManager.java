@@ -95,7 +95,7 @@ public class ExperienceReportManager {
 	}
 
 	public Iterator<ExperienceReport> restore(ExperienceReport experienceReport) throws DTException{
-		String selectExReSql = "select id, reviewer_id, reviewer_id, rating, report,  date from experience_report";
+		String selectExReSql = "select id, reviewer_id, reviewed_id, rating, report,  date from experience_report";
 		Statement stmt = null;
 		StringBuffer query = new StringBuffer(100);
 		StringBuffer condition = new StringBuffer(100);
@@ -149,9 +149,9 @@ public class ExperienceReportManager {
 				return new ExperienceReportIterator(r, objectModel);
 			}
 		}catch(Exception e){
-			throw new DTException("ExperienceReport.restore error " + e);
+			throw new DTException("ExperienceReport.restore error " + e.toString());
 		}
-		throw new DTException("ExperienceReprot.restore error");
+		throw new DTException("ExperienceReport.restore error" );
 	}
 
 	public void delete(ExperienceReport experienceReport) throws DTException{

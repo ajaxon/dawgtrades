@@ -63,6 +63,7 @@ public class ItemManager {
 	        if( item.getDescription() != null )
 	            stmt.setString( 5, item.getDescription() );
 	        else
+	        	throw new DTException("ItemManager.save: can't save an Item:description undefined");
 	       
 	        if( item.isPersistent() )
 	            stmt.setLong( 6, item.getId() );

@@ -27,7 +27,7 @@ public class MembershipManager {
     public void save(Membership membership) throws DTException{
 
         String insertMembershipSql = "insert into membership(price,date) values(?,?)";
-        String updateMembershipSql = "update membership price = ?, date = ? where id = ?";
+        String updateMembershipSql = "update membership set price = ?, date = ? where id = ?";
         PreparedStatement stmt;
         int inscnt;
         long membershipId;
