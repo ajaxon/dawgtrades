@@ -8,7 +8,7 @@ import edu.uga.dawgtrades.model.Category;
 import edu.uga.dawgtrades.model.DTException;
 import edu.uga.dawgtrades.model.Item;
 import edu.uga.dawgtrades.model.ObjectModel;
-import jdk.internal.org.objectweb.asm.Type;
+
 
 public class CategoryManager {
 
@@ -24,7 +24,7 @@ public class CategoryManager {
     // test passing
     public void save(Category category) throws DTException{
         String insertCategorySql = "insert category ( name, parent_id ) values ( ?, ? )";
-        String updateCategorySql = "update category set name = ?, parent_id = ? ";
+        String updateCategorySql = "update category set name = ?, parent_id = ? where id = ?";
         PreparedStatement stmt = null;
         int inscnt;
         long categoryId;
@@ -41,7 +41,7 @@ public class CategoryManager {
             }
             stmt.setString(1,category.getName());
             if(category.getParentId() == 0 )
-                stmt.setNull(2, Type.FLOAT);
+                stmt.setNull(2, Types.FLOAT);
             else
                 stmt.setFloat(2, category.getParentId());
 

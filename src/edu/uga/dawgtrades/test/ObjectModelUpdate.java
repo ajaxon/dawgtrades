@@ -1,471 +1,349 @@
 package edu.uga.dawgtrades.test;
+
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Date;
 import java.util.Iterator;
-import static org.junit.Assert.*;
+
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
+
 import edu.uga.dawgtrades.model.Attribute;
 import edu.uga.dawgtrades.model.AttributeType;
 import edu.uga.dawgtrades.model.Auction;
+import edu.uga.dawgtrades.model.Bid;
 import edu.uga.dawgtrades.model.Category;
 import edu.uga.dawgtrades.model.DTException;
-import edu.uga.dawgtrades.model.ExperienceReport;
 import edu.uga.dawgtrades.model.Item;
-import edu.uga.dawgtrades.model.Membership;
 import edu.uga.dawgtrades.model.ObjectModel;
 import edu.uga.dawgtrades.model.RegisteredUser;
 import edu.uga.dawgtrades.model.impl.ObjectModelImpl;
 import edu.uga.dawgtrades.persist.Persistence;
 import edu.uga.dawgtrades.persist.impl.DbUtils;
 import edu.uga.dawgtrades.persist.impl.PersistenceImpl;
+import junit.framework.TestCase;
 
-public class ObjectModelUpdate
-{
-    public static void deleteAllInfoFromTables(Connection conn) throws SQLException{
-        Statement stmt = conn.createStatement();
-        String sql = "DELETE FROM user";
-        stmt.executeUpdate(sql);
-        sql = "DELETE FROM attribute";
-        stmt.executeUpdate(sql);
-        sql = "DELETE FROM attribute_type";
-        stmt.executeUpdate(sql);
-        sql = "DELETE FROM auction";
-        stmt.executeUpdate(sql);
-        sql = "DELETE FROM bid";
-        stmt.executeUpdate(sql);
-        sql = "DELETE FROM category";
-        stmt.executeUpdate(sql);
-        sql = "DELETE FROM experience_report";
-        stmt.executeUpdate(sql);
-        sql = "DELETE FROM item";
-        stmt.executeUpdate(sql);
-        sql = "DELETE FROM membership";
-        stmt.executeUpdate(sql);
-        sql = "DELETE FROM user";
-        stmt.executeUpdate(sql);
+public class ObjectModelUpdate extends TestCase {
 
+	
 
+    static Connection  conn = null;
+    static ObjectModel objectModel = null;
+    static Persistence persistence = null;
+    Category category =  null;
+    Category child = null;
+    RegisteredUser user = null;
+    Item item  = null;
+    Auction auction = null;
+    Attribute attribute = null;
+    Bid bid = null;
+    AttributeType attributeType = null;
+    @BeforeClass
+    public void setUp() throws DTException {
 
-    }
-
-
-    public static void main(String[] args)
-    {
-        Connection  conn = null;
-        ObjectModel objectModel = null;
-        Persistence persistence = null;
 
         // get a database connection
         try {
             conn = DbUtils.connect();
         }
         catch (Exception seq) {
-            System.err.println( "ObjectModelUpdate: Unable to obtain a database connection" );
+            System.err.println( "ObjectModelUpdate: Unable to obtain a database connection" + seq.toString());
         }
 
         // obtain a reference to the ObjectModel module
         objectModel = new ObjectModelImpl();
+
         // obtain a reference to Persistence module and connect it to the ObjectModel
         persistence = new PersistenceImpl( conn, objectModel );
+
         // connect the ObjectModel module to the Persistence module
         objectModel.setPersistence( persistence );
 
 
-        try {
+        user = getUser();
+        category = getCategory();
+        child = getChild();
+        item = getItem();
+        attribute = getAttribute();
+        auction = getAuction();
+        bid = getBid();
+        attributeType = getAttributeType();
 
-            deleteAllInfoFromTables(conn);
-            testUserUpdate(objectModel,persistence);
-            deleteAllInfoFromTables(conn);
-            testMembershipUpdate(objectModel,persistence);
-            deleteAllInfoFromTables(conn);
-            testExperienceReport(objectModel,persistence);
-            deleteAllInfoFromTables(conn);
-            testCategoryUpdate(objectModel,persistence);
-            deleteAllInfoFromTables(conn);
-            testAttributeTypeUpdate(objectModel,persistence);
-            deleteAllInfoFromTables(conn);
-            testItemUpdate(objectModel,persistence);
-            deleteAllInfoFromTables(conn);
-            testAttributeUpdate(objectModel,persistence);
-            deleteAllInfoFromTables(conn);
-            testAuctionUpdate(objectModel,persistence);
+        //
 
-        }
-        catch( DTException ce )
-        {
-            System.err.println( "DTException: " + ce );
-            ce.printStackTrace();
-        }
-        catch( Exception e )
-        {
-            System.err.println( "Exception: " + e );
-            e.printStackTrace();
-        }
-        finally {
-            // close the connection
-            try {
-                conn.close();
-            }
-            catch( Exception e ) {
-                System.err.println( "Exception: " + e );
-            }
-        }
     }
-    @Test
-    private static void testAuctionUpdate(ObjectModel objectModel,
-                                          Persistence persistence) throws DTException {
 
-        //Create registered user
-        RegisteredUser user1 =objectModel.createRegisteredUser("matt", "Matt", "Lisivick", "hello", false, "email@uga.edu", "67893444323", false);
-        persistence.saveRegisteredUser(user1);
+    public AttributeType getAttributeType() throws DTException {
+        AttributeType attribute_type = null;
+        Iterator<AttributeType> attrs = objectModel.getAttributeType(category);
+        while(attrs.hasNext()){
+            attribute_type = attrs.next();
+            if(attribute_type.getName()=="Brand")
+                break;
 
-        Iterator<RegisteredUser> users = objectModel.findRegisteredUser(null);
+        }
+        return attribute_type;
+
+    }
+
+    public Attribute getAttribute() throws DTException {
+        Attribute attribute =  null;
+        Iterator<Attribute> attrs = objectModel.getAttribute(item);
+        while(attrs.hasNext()){
+            attribute = attrs.next();
+            if(attribute.getValue()=="Apple")
+                break;
+        }
+        return attribute;
+    }
+    public RegisteredUser getUser() throws DTException {
+        // Get the test user
+        RegisteredUser modelUser = objectModel.createRegisteredUser();
+        modelUser.setName("Test_name");
+        Iterator<RegisteredUser> users = objectModel.findRegisteredUser(modelUser);
         while(users.hasNext()){
-            user1 = users.next();
+            user = users.next();
         }
-
-        //Create category
-        Category category = objectModel.createCategory(null, "Game");
-        persistence.saveCategory(category);
-        Iterator<Category> categories = objectModel.findCategory(null);
+        return user;
+    }
+    public Category getCategory() throws DTException {
+        // Get a category
+        Category model = objectModel.createCategory();
+        model.setName("Computers");
+        Iterator<Category> categories = objectModel.findCategory(model);
         while(categories.hasNext()){
             category = categories.next();
+
         }
-
-        //Create item
-        Item item = objectModel.createItem(category, user1, "Monopoly", "Monopoly 20", "Cool Game");
-        persistence.saveItem(item);
-
-        Iterator<Item> items = objectModel.findItem(null);
-        while(items.hasNext()){
-            item = items.next();
-        }
-        System.out.println("Item has been created");
-
-
-        //Create auction
-        Auction auction = objectModel.createAuction(item, 20, new Date());
-        persistence.saveAuction(auction);
-        Iterator<Auction> auctions = objectModel.findAuction(null);
-        int auctionCount =0;
-        while(auctions.hasNext()){
-            auction = auctions.next();
-            auctionCount++;
-        }
-        assertEquals(auctionCount,1);
-        System.out.println("Auction Properly Created");
-
-        //Update auction
-
-
-        auction.setMinPrice(14);
-        persistence.saveAuction(auction);
-
-        auctions = objectModel.findAuction(null);
-        auctionCount = 0;
-        while(auctions.hasNext()){
-            auction = auctions.next();
-            auctionCount++;
-        }
-        assertEquals(auctionCount,1);
-        System.out.println("Auction found");
-
-        //Check for update
-        assertEquals(auction.getMinPrice(),14);
-        System.out.println("Auction has been updated");
-
+        return category;
     }
-
-    @Test
-    private static void testAttributeUpdate(ObjectModel objectModel,
-                                            Persistence persistence) throws DTException {
-
-        RegisteredUser user1 =objectModel.createRegisteredUser("matt", "Matt", "Lisivick", "hello", false, "email@uga.edu", "67893444323", false);
-        persistence.saveRegisteredUser(user1);
-        //Create and restore user
-        Iterator<RegisteredUser> users = objectModel.findRegisteredUser(null);
-        while(users.hasNext()){
-            user1 = users.next();
-        }
-        System.out.println("User retrieved");
-
-        //Create and restore category
-        Category category = objectModel.createCategory(null, "Game");
-        persistence.saveCategory(category);
-        Iterator<Category> categories = objectModel.findCategory(null);
-        while(categories.hasNext()){
-            category = categories.next();
-        }
-
-        System.out.println("Category retrieved");
-
-        //Create and restore item
-        Item item = objectModel.createItem(category, user1, "Monopoly", "Monopoly 20", "Cool Game");
-        persistence.saveItem(item);
-
-        Iterator<Item> items = objectModel.findItem(null);
-        while(items.hasNext()){
-            item = items.next();
-        }
-
-        System.out.println("Item retrieved");
-
-        //Create and restore attribute type
-        AttributeType attributeType = objectModel.createAttributeType(category, "Games");
-        persistence.saveAttributeType(attributeType);
-
-        Iterator<AttributeType> attributeTypes = objectModel.getAttributeType(category);
-        while(attributeTypes.hasNext()){
-            attributeType = attributeTypes.next();
-        }
-        System.out.println("Attribute Type retrieved");
-
-        //Create and restore attribute
-        Attribute attribute = objectModel.createAttribute(attributeType, item, "1943");
-        persistence.saveAttribute(attribute);
-
-        Iterator<Attribute> attributes = objectModel.getAttribute(item);
-        while(attributes.hasNext()){
-            attribute = attributes.next();
-        }
-        System.out.println("Attribute restored");
-
-        //Update attribute
-        attribute.setValue("1954");
-
-        persistence.saveAttribute(attribute);
-
-        attributes = objectModel.getAttribute(item);
-        while(attributes.hasNext()){
-            attribute = attributes.next();
-        }
-
-        //Test update of value
-        assertEquals(attribute.getValue(),"1954");
-
-    }
-
-    @Test
-    private static void testItemUpdate(ObjectModel objectModel,
-                                       Persistence persistence) throws DTException {
-
-        Category category = objectModel.createCategory(null, "Games");
-        persistence.saveCategory(category);
-        Iterator<Category> categories = objectModel.findCategory(null);
-        int categoryCount =0;
-        while(categories.hasNext()){
-            categoryCount++;
-            category = categories.next();
-
-        }
-        assertEquals(categoryCount,1);
-        System.out.println("Category properly added.");
-        AttributeType attributeType = objectModel.createAttributeType(category, "Year Made");
-        persistence.saveAttributeType(attributeType);
-        Iterator<AttributeType> attributeTypes =  objectModel.getAttributeType(category);
-        int attributeTypeCount = 0;
-        while(attributeTypes.hasNext()){
-            attributeType = attributeTypes.next();
-            attributeTypeCount++;
-
-
-        }
-
-        assertEquals(attributeTypeCount,1);
-        System.out.println("AttributeType added.");
-
-        RegisteredUser user1 =objectModel.createRegisteredUser("matt", "Matt", "Lisivick", "hello", false, "email@uga.edu", "67893444323", false);
-        persistence.saveRegisteredUser(user1);
-        System.out.println("User Saved");
-
-        Iterator<RegisteredUser> users = objectModel.findRegisteredUser(null);
-        while(users.hasNext()){
-            user1 = users.next();
-        }
-        Item item = objectModel.createItem(category, user1, "Identifier", "1960 Knife", "Its old");
-        persistence.saveItem(item);
-
-        Iterator<Item> itemIter = objectModel.findItem(null);
-        int itemCount =0;
-        while(itemIter.hasNext()){
-            itemCount ++;
-            item = itemIter.next();
-        }
-        assertEquals(itemCount,1);
-        System.out.println("Item saved");
-        item.setDescription("new description");
-        persistence.saveItem(item);
-
-        Item item2 = objectModel.createItem();
-        item2.setDescription("new description");
-        itemIter = objectModel.findItem(item2);
-        itemCount =0;
-        while(itemIter.hasNext()){
-            itemCount ++;
-            item = itemIter.next();
-        }
-        assertEquals(itemCount,1);
-        System.out.println("Item updated");
-
-
-
-    }
-
-    @Test
-    private static void testAttributeTypeUpdate(ObjectModel objectModel,
-                                                Persistence persistence) throws DTException {
-        Category category = objectModel.createCategory(null, "Games");
-        persistence.saveCategory(category);
-        Iterator<Category> categories = objectModel.findCategory(null);
-        int categoryCount =0;
-        while(categories.hasNext()){
-            categoryCount++;
-            category = categories.next();
-
-        }
-        assertEquals(categoryCount,1);
-        System.out.println("Category properly added.");
-        AttributeType attributeType = objectModel.createAttributeType(category, "Year Made");
-        persistence.saveAttributeType(attributeType);
-        Iterator<AttributeType> attributeTypes =  objectModel.getAttributeType(category);
-        int attributeTypeCount = 0;
-        while(attributeTypes.hasNext()){
-            attributeType = attributeTypes.next();
-            attributeTypeCount++;
-        }
-
-        assertEquals(attributeTypeCount,1);
-        System.out.println("AttributeType added.");
-        attributeType.setName("Different Type");
-        persistence.saveAttributeType(attributeType);
-        attributeTypes = objectModel.getAttributeType(category);
-        while(attributeTypes.hasNext()){
-            attributeType = attributeTypes.next();
-
-        }
-        assertEquals(attributeType.getName(),"Different Type");
-        System.out.println("AttributeType Changed");
-    }
-
-    @Test
-    private static void testCategoryUpdate(ObjectModel objectModel,
-                                           Persistence persistence) throws DTException {
+    public Category getChild() throws DTException {
+        Iterator<Category> children = null;
         Category category = null;
-        persistence.saveCategory(category);
-        Iterator<Category> categories = objectModel.findCategory(null);
-        int categoryCount = 0;
+        Category child = null;
+        Category model = objectModel.createCategory();
+        model.setName("Computers");
+        Iterator<Category> categories = objectModel.findCategory(model);
         while(categories.hasNext()){
             category = categories.next();
-            categoryCount++;
-        }
-        assertEquals(categoryCount,1);
-        System.out.println("Category has been added.");
-        category.setName("Something else");
-        persistence.saveCategory(category);
-        Category category2 = objectModel.createCategory();
-        category2.setName("Something else");
-        categories = objectModel.findCategory(category2);
-        categoryCount =0;
-        while(categories.hasNext()){
-            category = categories.next();
-            categoryCount++;
 
         }
-        assertEquals(categoryCount,1);
-        System.out.println("Category has been updated");
 
+        children = objectModel.getChild(category);
+        while(children.hasNext())
+            child = children.next();
+        return child;
+    }
+    public Item getItem() throws DTException {
+        Item item = null;
+        Item model = objectModel.createItem();
+        model.setIdentifier("Test");
+        Iterator<Item> items = objectModel.findItem(model);
+        while(items.hasNext()){
+            item = items.next();
+        }
+        return item;
+    }
+    public Bid getBid() throws DTException {
+
+        Bid bid = null;
+        Bid model = objectModel.createBid();
+        model.setAmount(2.0f);
+        Iterator<Bid> bids = objectModel.findBid(model);
+        while(bids.hasNext()){
+            bid = bids.next();
+        }
+        return bid;
     }
 
+    public Auction getAuction() throws DTException {
+        Auction auction = null;
+        Auction model = objectModel.createAuction();
+        model.setMinPrice(5.0f);
+        model.setExpiration(new Date(0));
+        Iterator<Auction> auctions = objectModel.findAuction(model);
+        while(auctions.hasNext())
+        {
+            auction = auctions.next();
+
+
+        }
+        return auction;
+    }
     @Test
-    private static void testExperienceReport(ObjectModel objectModel,
-                                             Persistence persistence) throws DTException {
-        RegisteredUser user1 =objectModel.createRegisteredUser("matt", "Matt", "Lisivick", "hello", false, "email@uga.edu", "67893444323", false);
-        RegisteredUser user2 =objectModel.createRegisteredUser("jam", "Steve", "Ya", "ok", false, "eml@uga.edu", "423432432", false);
-        persistence.saveRegisteredUser(user1);
-        persistence.saveRegisteredUser(user2);
-        Iterator<RegisteredUser> users = objectModel.findRegisteredUser(user1);
-        while(users.hasNext()){
-            user1 = users.next();
-        }
-        users = objectModel.findRegisteredUser(user2);
-        while(users.hasNext()){
-            user2 = users.next();
-        }
-        System.out.println("Users created");
-
-
-        ExperienceReport report = objectModel.createExperienceReport(user1, user2, 4, "Cool time", new Date());
-        persistence.saveExperienceReport(report);
-        Iterator<ExperienceReport> reports = objectModel.findExperienceReport(null);
-        int experienceReportCount = 0;
-
-        while(reports.hasNext()){
-            experienceReportCount ++;
-            report = reports.next();
-        }
-        assertEquals(experienceReportCount,1);
-        System.out.println("Experience report added.");
-        report.setRating(1);
-        persistence.saveExperienceReport(report);
-        ExperienceReport reportCompare = objectModel.createExperienceReport();
-        reportCompare.setRating(1);
-        reports = objectModel.findExperienceReport(reportCompare);
-        experienceReportCount = 0;
-        while(reports.hasNext()){
-            experienceReportCount ++;
-        }
-        assertEquals(experienceReportCount,1);
-        System.out.println("Experience report has been changed");
+   public void test_update_first_name_User() throws DTException{
+    	RegisteredUser tempUser = user;
+    	user.setFirstName("ChangeName");
+    	persistence.saveRegisteredUser(user);
+    	RegisteredUser userTest = objectModel.createRegisteredUser();
+    	userTest.setFirstName("ChangeName");
+    	Iterator<RegisteredUser> users = objectModel.findRegisteredUser(userTest);
+    	int count =0;
+    	while(users.hasNext()){
+    		users.next();
+    		count++;
+    	}
+    	assertEquals(1,count);
+    	//User returned to original information
+    	persistence.saveRegisteredUser(tempUser);
+    	System.out.println("User First Name Updated Correctly");
+    	
+    	
     }
-
-
+    
     @Test
-    private static void testMembershipUpdate(ObjectModel objectModel,
-                                             Persistence persistence) throws DTException {
-        Membership membership = objectModel.createMembership(4, new java.util.Date());
-        persistence.saveMembership(membership);
-        membership = objectModel.findMembership();
-        membership.setPrice(15);
-        persistence.saveMembership(membership);
-        membership.setPrice(0);
-        membership = objectModel.findMembership();
-        assertEquals(15,membership.getPrice());
-        System.out.println("Membership has been updated");
-    }
+    public void test_update_last_name_User() throws DTException{
+     	RegisteredUser tempUser = user;
+    	System.out.println(user.getLastName());
+     	user.setLastName("ChangeName");
+     	persistence.saveRegisteredUser(user);
+     	RegisteredUser userTest = objectModel.createRegisteredUser();
+     	userTest.setLastName("ChangeName");
+     	Iterator<RegisteredUser> users = objectModel.findRegisteredUser(userTest);
+     	int count =0;
+     	while(users.hasNext()){
+     		users.next();
+     		count++;
+     	}
+     	assertEquals(1,count);
+     	//User returned to original information
+     	persistence.saveRegisteredUser(tempUser);
+    	System.out.println("User Last Name Updated Correctly");
 
-
+     	
+     }
+    
     @Test
-    private static void testUserUpdate(ObjectModel objectModel,
-                                       Persistence persistence) throws DTException {
+    public void test_update_password_User() throws DTException{
+     	RegisteredUser tempUser = user;
+       	System.out.println(user.getPassword());
+     	user.setPassword("ChangeName");
+     	persistence.saveRegisteredUser(user);
+     	RegisteredUser userTest = objectModel.createRegisteredUser();
+     	userTest.setPassword("ChangeName");
+     	Iterator<RegisteredUser> users = objectModel.findRegisteredUser(userTest);
+     	int count =0;
+     	while(users.hasNext()){
+     		users.next();
+     		count++;
+     	}
+     	assertEquals(1,count);
+     	//User returned to original information
+     	persistence.saveRegisteredUser(tempUser);
+    	System.out.println("User Password Updated Correctly");
 
-        RegisteredUser user1 =objectModel.createRegisteredUser("matt", "Matt", "Lisivick", "hello", false, "email@uga.edu", "67893444323", false);
-        persistence.saveRegisteredUser(user1);
-        Iterator<RegisteredUser> users = persistence.restoreRegisteredUser(user1);
-        while(users.hasNext()){
-
-            user1 = users.next();
-
-        }
-        //Change user information
-        user1.setName("Rick");
-        user1.setPhone("8884442222");
-        persistence.saveRegisteredUser(user1);
-
-        //Create user for query
-        RegisteredUser user2 = objectModel.createRegisteredUser();
-        user2.setFirstName("Rick");
-        user2.setPhone("8884442222");
-
-        users = objectModel.findRegisteredUser(user2);
-        int count =0;
-        while(users.hasNext()){
-            count++;
-        }
-        assertEquals(count,1);
-        System.out.println("User has been updated");
+     	
+     }
+    
+    @Test
+    public void test_update_description_Item() throws DTException{
+    	Item itemTemp = item;
+    	item.setDescription("ChangeItem");
+    	persistence.saveItem(item);
+    	System.out.println("Item saved");
+    	Item itemTest = objectModel.createItem();
+    	itemTest.setDescription("ChangeItem");
+    	Iterator<Item> items = objectModel.findItem(itemTest);
+    	int count = 0;
+    	while(items.hasNext()){
+    		items.next();
+    		count++;
+    	}
+    	assertEquals(1,count);
+    	persistence.saveItem(itemTemp);
+    	System.out.println("Item Description Updated Correctly");
 
     }
 
+    
+    @Test
+    public void test_update_identifier_Item() throws DTException{
+    	Item itemTemp = item;
+    	item.setIdentifier("ChangeItem");
+    	persistence.saveItem(item);
+    	System.out.println("Item saved");
+    	Item itemTest = objectModel.createItem();
+    	itemTest.setIdentifier("ChangeItem");
+    	Iterator<Item> items = objectModel.findItem(itemTest);
+    	int count = 0;
+    	while(items.hasNext()){
+    		items.next();
+    		count++;
+    	}
+    	assertEquals(1,count);
+    	persistence.saveItem(itemTemp);
+    	System.out.println("Item Identifier Updated Correctly");
+
+    }
+    
+    
+    @Test
+    public void test_update_Category() throws DTException{
+    	Category categoryTemp = category;
+    	category.setName("ChangeName");
+    	persistence.saveCategory(category);
+    	Category categoryTest = objectModel.createCategory();
+    	categoryTest.setName("ChangeName");
+    	Iterator<Category> categories = objectModel.findCategory(categoryTest);
+    	int count = 0;
+    	while(categories.hasNext()){
+    		count++;
+    		categories.next();
+    	}
+    	assertEquals(1,count);
+    	persistence.saveCategory(categoryTemp);
+    	System.out.println("Category Name Updated Correctly");
+
+    	
+    	
+    }
+    @Test
+    public void test_update_name_AttributeType() throws DTException{
+    	AttributeType typeTemp = attributeType;
+    	attributeType.setName("ChangeName");
+    	persistence.saveAttributeType(attributeType);
+    	AttributeType type = objectModel.createAttributeType();
+    	type.setName("ChangeName");
+    	Iterator<AttributeType>  attributeTypes = objectModel.getAttributeType(category);
+    	boolean found = false;
+    	while(attributeTypes.hasNext()){
+    		type = attributeTypes.next();
+    		if(type.getName().equals("ChangeName")){
+    			found = true;
+    		}
+    		
+    	}
+    	assertTrue(found); 
+    	persistence.saveAttributeType(typeTemp);
+    	System.out.println("AttributeType Name Updated Correctly");
+    	  	
+    }
+    @Test
+    public void test_update_name_Auction() throws DTException{
+    	Auction auctionTemp = auction;
+    	auction.setMinPrice(50f);
+    	persistence.saveAuction(auction);
+    	Auction auctionTest = objectModel.createAuction();
+    	auctionTest.setMinPrice(50f);
+    	Iterator<Auction> auctions = objectModel.findAuction(auctionTest);
+    	int count = 0;
+    	while(auctions.hasNext()){
+    		auctions.next();
+    		count ++;
+    		
+    		
+    	}
+    	assertEquals(1,count);
+    	persistence.saveAuction(auctionTemp);
+    	System.out.println("Auction Price Updated Correctly");
+    }
+   
+
+
+    @AfterClass
+    public void teardown() throws SQLException {
+        conn.close();
+
+}
 }
