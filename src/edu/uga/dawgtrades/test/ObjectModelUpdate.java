@@ -16,6 +16,7 @@ import edu.uga.dawgtrades.model.Bid;
 import edu.uga.dawgtrades.model.Category;
 import edu.uga.dawgtrades.model.DTException;
 import edu.uga.dawgtrades.model.Item;
+import edu.uga.dawgtrades.model.Membership;
 import edu.uga.dawgtrades.model.ObjectModel;
 import edu.uga.dawgtrades.model.RegisteredUser;
 import edu.uga.dawgtrades.model.impl.ObjectModelImpl;
@@ -161,7 +162,6 @@ public class ObjectModelUpdate extends TestCase {
         Auction auction = null;
         Auction model = objectModel.createAuction();
         model.setMinPrice(5.0f);
-        model.setExpiration(new Date(0));
         Iterator<Auction> auctions = objectModel.findAuction(model);
         while(auctions.hasNext())
         {
@@ -322,6 +322,11 @@ public class ObjectModelUpdate extends TestCase {
     @Test
     public void test_update_name_Auction() throws DTException{
     	Auction auctionTemp = auction;
+    	System.out.println("Auction Id is "+auction.getId());
+    	if(auction.getExpiration()==null){
+    		System.out.println("Auction Expiration is null");
+    	}
+    	assertTrue(auction.getExpiration()!=null);
     	auction.setMinPrice(50f);
     	persistence.saveAuction(auction);
     	Auction auctionTest = objectModel.createAuction();
@@ -339,7 +344,19 @@ public class ObjectModelUpdate extends TestCase {
     	System.out.println("Auction Price Updated Correctly");
     }
    
+    @Test
+    public void test_update_price_Membership() throws DTException {
 
+
+        Membership membership = objectModel.findMembership();
+        Membership membershipTemp = membership;
+        membership.setPrice(7);
+        persistence.saveMembership(membership);
+        membership = objectModel.findMembership();
+        assertEquals(7.0f,membership.getPrice());
+        persistence.saveMembership(membershipTemp);
+        System.out.println("Membership price updated correctly");
+    }
 
     @AfterClass
     public void teardown() throws SQLException {
