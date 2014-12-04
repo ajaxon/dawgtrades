@@ -12,10 +12,6 @@ import edu.uga.dawgtrades.model.Bid;
 import edu.uga.dawgtrades.model.DTException;
 import edu.uga.dawgtrades.model.ObjectModel;
 
-
-//junk
-
-
 public class BidManager {
 
 	private ObjectModel objectModel = null;
