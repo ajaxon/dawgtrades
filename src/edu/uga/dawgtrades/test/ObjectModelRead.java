@@ -4,11 +4,13 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Iterator;
 
+import edu.uga.dawgtrades.authentication.SessionManager;
 import edu.uga.dawgtrades.model.*;
 import edu.uga.dawgtrades.model.impl.ObjectModelImpl;
 import edu.uga.dawgtrades.persist.Persistence;
 import edu.uga.dawgtrades.persist.impl.DbUtils;
 import edu.uga.dawgtrades.persist.impl.PersistenceImpl;
+import edu.uga.dawgtrades.servlets.Register;
 import junit.framework.TestCase;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -196,6 +198,22 @@ public class ObjectModelRead extends TestCase
         }
         assertEquals(1,usercount);
         assertEquals("Test_name",user.getName());
+    }
+    @Test
+    public void test_restoreUserbyLogin() throws DTException {
+        RegisteredUser testuser = null;
+        RegisteredUser modelUser = objectModel.createRegisteredUser();
+        modelUser.setName("Test_name");
+        modelUser.setPassword("password");
+        Iterator<RegisteredUser> users = objectModel.findRegisteredUser(modelUser);
+        int usercount = 0;
+        while(users.hasNext()){
+            testuser = users.next();
+            usercount++;
+        }
+        assertEquals(1,usercount);
+        assertEquals("johnson",testuser.getLastName());
+        System.out.println("logged in user is" + testuser.getFirstName() + testuser.getLastName());
     }
     @Test
     public void test_Username()
@@ -428,6 +446,13 @@ public class ObjectModelRead extends TestCase
 
     //
 
+
+    // Session Manager
+    @Test
+    public void test_getSession() throws DTException {
+        String ssid = SessionManager.login("mary","Marypass");
+        assertNotNull(ssid);
+    }
 
     @AfterClass
     public void teardown() throws SQLException {

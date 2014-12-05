@@ -20,7 +20,7 @@ public class DefineCategory extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
+ // load template and populate
 
 
     }

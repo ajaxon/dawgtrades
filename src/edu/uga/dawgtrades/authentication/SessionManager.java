@@ -52,7 +52,7 @@ public class SessionManager {
 		loginUser.setName(username);
 		loginUser.setPassword(password);
 		
-		Iterator<RegisteredUser> users = persistence.restoreRegisteredUser(knownUser);
+		Iterator<RegisteredUser> users = persistence.restoreRegisteredUser(loginUser);
 		if(users.hasNext()){
 			knownUser = users.next();
 			System.out.println("Have user");
