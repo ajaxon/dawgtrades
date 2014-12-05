@@ -36,7 +36,7 @@ public class Session extends Thread {
 
     public Connection getConnection()
     {
-    		  extendExpiration();
+    	extendExpiration();
     	return conn;
     }
     

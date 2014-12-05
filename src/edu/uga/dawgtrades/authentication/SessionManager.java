@@ -39,19 +39,21 @@ public class SessionManager {
 		
 		try{
 			conn = DbUtils.connect();
-			
+			System.out.println("Established Connection");
 			
 		}catch(Exception seq){
 			throw new DTException("SessionManager.login: Unable to get DB connection");
 		}
 		
 		s = new Session( conn);
+		System.out.println("Created new session");
 		objectModel = new ObjectModelImpl();
 		persistence = new PersistenceImpl(conn,objectModel);
+		System.out.println("Created new objectModel and persistence");
 		loginUser = objectModel.createRegisteredUser();
 		loginUser.setName(username);
 		loginUser.setPassword(password);
-		
+		System.out.println("Set name and password of loginUser");
 		Iterator<RegisteredUser> users = persistence.restoreRegisteredUser(loginUser);
 		if(users.hasNext()){
 			knownUser = users.next();
@@ -62,7 +64,7 @@ public class SessionManager {
 		
 		
 		loginUser = null;
-		
+		System.out.println("Login user == null");
 		return createSession(s,knownUser);
 		
 		}else{
@@ -72,7 +74,7 @@ public class SessionManager {
 	}
 	
 	private static String createSession(Session session, RegisteredUser user) throws DTException{
-		
+		System.out.println("Creating Session");
 		if(user==null){
 			if(session.getConnection()!=null){
 				try{
@@ -83,13 +85,12 @@ public class SessionManager {
 					throw new DTException("SessionManager.createSession: No user found"+sqlEx);
 				}
 				
-			}else{
-				return "No connection to DB";
 			}
 		}
 		if(loggedIn.containsKey(user.getName())){
 			Session qs = loggedIn.get(user.getName());
 			qs.setUser(user);
+			System.out.println("User already exists");
 			return qs.getSessionId();
 			
 		}
@@ -99,11 +100,12 @@ public class SessionManager {
 		sessions.put(ssid, session);
 		loggedIn.put(user.getName(), session);
 		session.start();
-		
+		System.out.println("Session started");
 		
 		return ssid;
 	}
-	public static void logout(Session s) throws DTException{
+	public static void logout(String ssid) throws DTException{
+		Session s = getSessionById(ssid);
 		s.setExpiration(new Date());
 		s.interrupt();
 		removeSession(s);
@@ -131,6 +133,8 @@ public class SessionManager {
 	  public static String secureHash( String input ) 
 	            throws DTException
 	    {
+		  
+		  	System.out.println("Writing secure hash");
 	        StringBuilder output = new StringBuilder();
 	        try {
 	            MessageDigest md = MessageDigest.getInstance( "SHA" );
@@ -149,6 +153,7 @@ public class SessionManager {
 	            throw new DTException(
 	                    "SessionManager.secureHash: Invalid Encryption Algorithm" );
 	        }
+	        System.out.println("Outputing hash");
 	        return output.toString();
 	    }
 }
