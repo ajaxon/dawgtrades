@@ -15,5 +15,7 @@ ${message}
   <br> <label>Phone Number</label> <input type=text" name="phone">
  <br> <label></label>   <input type="submit" name="Register" value="submit">
     </form>
+    
+    <a href="home.html">Back to login</a>
 </body>
 </html>
