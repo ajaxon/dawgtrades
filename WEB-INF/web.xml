@@ -8,7 +8,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 
     version="2.5">
       <welcome-file-list>
-        <welcome-file>home.html</welcome-file>
+        <welcome-file>/templates/home.html</welcome-file>
     </welcome-file-list>
     <servlet>
         <servlet-name>freemarker</servlet-name>
@@ -16,7 +16,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <!-- FreemarkerServlet settings: -->
         <init-param>
             <param-name>TemplatePath</param-name>
-            <param-value>/</param-value>
+            <param-value>/templates</param-value>
         </init-param>
         <init-param>
             <param-name>NoCache</param-name>
