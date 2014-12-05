@@ -1,6 +1,67 @@
-<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+
+    version="2.5">
+      <welcome-file-list>
+        <welcome-file>home.html</welcome-file>
+    </welcome-file-list>
     <servlet>
+        <servlet-name>freemarker</servlet-name>
+        <servlet-class>freemarker.ext.servlet.FreemarkerServlet</servlet-class>
+        <!-- FreemarkerServlet settings: -->
+        <init-param>
+            <param-name>TemplatePath</param-name>
+            <param-value>/</param-value>
+        </init-param>
+        <init-param>
+            <param-name>NoCache</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ContentType</param-name>
+            <param-value>text/html; charset=UTF-8</param-value>
+            <!-- Forces UTF-8 output encoding! -->
+        </init-param>
+        <!-- FreeMarker settings: -->
+        <init-param>
+            <param-name>template_update_delay</param-name>
+            <param-value>0</param-value>
+            <!-- 0 is for development only! Use higher value otherwise. -->
+        </init-param>
+        <init-param>
+            <param-name>default_encoding</param-name>
+            <param-value>ISO-8859-1</param-value>
+            <!-- The encoding of the template files. -->
+        </init-param>
+        <init-param>
+            <param-name>number_format</param-name>
+            <param-value>0.##########</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    
+    <servlet-mapping>
+  <servlet-name>freemarker</servlet-name>
+  <url-pattern>*.ftl</url-pattern>
+</servlet-mapping>
+    
+    
+    <security-constraint>
+  <web-resource-collection>
+    <web-resource-name>FreeMarker MVC Views</web-resource-name>
+    <url-pattern>*.ftl</url-pattern>
+  </web-resource-collection>
+  <auth-constraint>
+    <!-- Nobody is allowed to visit these -->
+  </auth-constraint>
+</security-constraint>  
+    
+     <servlet>
         <servlet-name>Register</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.Register</servlet-class>
     </servlet>
@@ -26,18 +87,10 @@
         <servlet-name>UpdateCategory</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.UpdateCategory</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>UpdateCategory</servlet-name>
-        <url-pattern>/update_category</url-pattern>
-    </servlet-mapping>
     <servlet>
         <servlet-name>DeleteCategory</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.DeleteCategory</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>DeleteCategory</servlet-name>
-        <url-pattern>/delete_category</url-pattern>
-    </servlet-mapping>
     <servlet>
         <servlet-name>DeleteItem</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.DeleteItem</servlet-class>
@@ -106,16 +159,9 @@
         <servlet-name>SetMembershipPrice</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.SetMembershipPrice</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>DefineCategory</servlet-name>
-        <servlet-class>edu.uga.dawgtrades.servlets.DefineCategory</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
-
-
-
 
 </web-app>
