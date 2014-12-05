@@ -111,6 +111,10 @@
         <servlet-class>edu.uga.dawgtrades.servlets.DefineCategory</servlet-class>
     </servlet>
     <servlet-mapping>
+        <servlet-name>DefineCategory</servlet-name>
+        <url-pattern>/define_category</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>Logout</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>

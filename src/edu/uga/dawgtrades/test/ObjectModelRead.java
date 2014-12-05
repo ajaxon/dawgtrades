@@ -451,6 +451,7 @@ public class ObjectModelRead extends TestCase
     @Test
     public void test_getSession() throws DTException {
         String ssid = null;
+
         ssid = SessionManager.login("mary","Marypass");
         assertNotNull(ssid);
         System.out.println(ssid);
