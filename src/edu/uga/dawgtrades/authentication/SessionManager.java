@@ -83,8 +83,9 @@ public class SessionManager {
 					throw new DTException("SessionManager.createSession: No user found"+sqlEx);
 				}
 				
+			}else{
+				return "No connection to DB";
 			}
-			throw new DTException("SessionManager.createSession: Bad username or password");
 		}
 		if(loggedIn.containsKey(user.getName())){
 			Session qs = loggedIn.get(user.getName());
@@ -92,6 +93,7 @@ public class SessionManager {
 			return qs.getSessionId();
 			
 		}
+		session.setUser(user);
 		String ssid = secureHash("TRADE"+System.nanoTime());
 		session.setSessionId(ssid);
 		sessions.put(ssid, session);
