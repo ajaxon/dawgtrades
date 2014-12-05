@@ -16,7 +16,7 @@ public class MembershipImpl extends Persistent implements Membership {
             super(-1);
             this.price = price;
             this.date = date;
-        
+
 
 	}
     public static MembershipImpl getInstance()
