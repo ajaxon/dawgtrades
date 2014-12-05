@@ -22,7 +22,7 @@ public class DefineCategory extends HttpServlet {
 
  // load template and populate
 
-
+        request.getRequestDispatcher("define_category.ftl").forward(request, response);
 
     }
 }
