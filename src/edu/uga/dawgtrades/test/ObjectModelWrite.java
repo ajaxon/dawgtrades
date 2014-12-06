@@ -68,6 +68,7 @@ public class ObjectModelWrite
 
         try {
             //create a category
+
             computers = objectModel.createCategory(null,"Computers");
             persistence.saveCategory(computers);
             laptops = objectModel.createCategory(computers,"Laptops");

@@ -44,19 +44,28 @@ public class Register extends javax.servlet.http.HttpServlet {
 
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
+        boolean text = request.getParameter("canText")== null ? false : true ;
         getConnection();
         RegisteredUser user = objectModel.createRegisteredUser();
         user.setName(request.getParameter("name"));
         user.setFirstName(request.getParameter("firstName"));
         user.setLastName(request.getParameter("lastName"));
         user.setEmail(request.getParameter("email"));
-        user.setCanText(Boolean.parseBoolean(request.getParameter("canText")));
+        user.setCanText(text);
         user.setPassword(request.getParameter("password"));
         user.setPhone(request.getParameter("phone"));
 
         try {
             objectModel.storeRegisteredUser(user);
         } catch (DTException e) {
+            e.printStackTrace();
+        }
+        try
+        {
+            request.getRequestDispatcher("/define_category").forward(request, response);
+        }
+        catch (ServletException e)
+        {
             e.printStackTrace();
         }
 
@@ -100,7 +109,7 @@ public class Register extends javax.servlet.http.HttpServlet {
 
         }
         catch (Exception seq) {
-            System.err.println( "ObjectModelDelete: Unable to obtain a database connection" );
+            System.err.println( "Register.java getConnection: Unable to obtain a database connection" );
         }
 
         // obtain a reference to the ObjectModel module
