@@ -52,8 +52,7 @@ public class AuctionImpl extends Persistent implements Auction {
 
 	@Override
 	public void setExpiration(Date expiration) {
-		Date now = new Date();
-        if(now.before(expiration))
+	
             this.expiration = expiration;
         // invalid expiration date does not get set
 	}

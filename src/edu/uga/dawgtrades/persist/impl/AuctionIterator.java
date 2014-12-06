@@ -41,7 +41,7 @@ public class AuctionIterator implements Iterator<Auction> {
     public Auction next() {
 
         long id;
-        Date expiration;
+        java.sql.Date expiration;
         float minPrice;
         long itemId;
 
@@ -63,7 +63,9 @@ public class AuctionIterator implements Iterator<Auction> {
             Auction auction = null;
             auction = objectModel.createAuction();
             auction.setId(id);
-            auction.setExpiration(expiration);
+            java.util.Date javaDate = new java.util.Date(expiration.getTime());
+            System.out.println(javaDate);
+            auction.setExpiration(javaDate);
             auction.setMinPrice(minPrice);
             auction.setItemId(itemId);
 
