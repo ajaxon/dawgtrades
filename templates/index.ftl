@@ -5,7 +5,7 @@
 <body>
 <h1>Hello ${user.firstName}, Welcome To the DawgTrades Auction System</h1>
 <br>
-<span>1.</span><a href="http://uml.cs.uga.edu:8080/team2_dawgtrades/createCategory">View Auctions</a>
+<span>1.</span><a href="http://uml.cs.uga.edu:8080/team2_dawgtrades/findItems">View Auctions</a>
 <br>
 <#if user.isAdmin==true>
 <span>2.</span><a href="http://uml.cs.uga.edu:8080/team2_dawgtrades/createCategory">Create Categories</a>
