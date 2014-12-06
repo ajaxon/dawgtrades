@@ -159,6 +159,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <servlet-name>FindItems</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.FindItems</servlet-class>
     </servlet>
+   <servlet-mapping>
+        <servlet-name>FindItems</servlet-name>
+        <url-pattern>/findItems</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>BrowseCategory</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.BrowseCategory</servlet-class>
