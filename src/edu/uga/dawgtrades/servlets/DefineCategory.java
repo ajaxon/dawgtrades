@@ -81,7 +81,7 @@ public class DefineCategory extends HttpServlet {
         getConnection();
         Iterator<Category> categoriesIter = null;
         Category category = null;
-        List categories = new LinkedList<Category>();
+        List<Category> categories = new LinkedList<Category>();
         try {
             categoriesIter = objectModel.findCategory(null);
         } catch (DTException e) {

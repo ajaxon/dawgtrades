@@ -6,8 +6,8 @@
 
 
 <form method=post name="Category" action="update_category" style="margin:0;padding:0;">
-    <input type="hidden" name="id" value="${category.id}"
-    <input type="text" name="name" value="${category.name}">
+    <input type="hidden" name="id" value="${category.id}">
+    Name:<input type="text" name="name" value="${category.name}"><br>
 
     <select name="parent_id">
 
