@@ -99,6 +99,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <servlet-name>DeleteCategory</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.DeleteCategory</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteCategory</servlet-name>
+        <url-pattern>/delete_category</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>DeleteItem</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.DeleteItem</servlet-class>
@@ -163,6 +167,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <servlet-name>BrowseCategory</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.BrowseCategory</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>BrowseCategory</servlet-name>
+        <url-pattern>/browse_category</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>SetMembershipPrice</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.SetMembershipPrice</servlet-class>

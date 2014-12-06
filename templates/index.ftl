@@ -8,7 +8,7 @@
 <span>1.</span><a href="http://uml.cs.uga.edu:8080/team2_dawgtrades/findItems">View Auctions</a>
 <br>
 <#if user.isAdmin==true>
-<span>2.</span><a href="http://uml.cs.uga.edu:8080/team2_dawgtrades/createCategory">Create Categories</a>
+<span>2.</span><a href="/define_category">Create Categories</a>
 <br>
 <span>3.</span><a href="http://uml.cs.uga.edu:8080/team2_dawgtrades/setMembershipPrice">Set Membership Price</a>
 <br>

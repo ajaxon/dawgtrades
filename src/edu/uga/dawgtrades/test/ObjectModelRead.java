@@ -248,6 +248,17 @@ public class ObjectModelRead extends TestCase
     }
 
     @Test
+    public void test_getCategoryBYID() throws DTException {
+        Category model = objectModel.createCategory();
+        model.setId(category.getId());
+        Iterator<Category> categories = persistence.restoreCategory(model);
+        Category c = null;
+        while(categories.hasNext()){
+            c = categories.next();
+        }
+        assertEquals(category.getName(),c.getName());
+    }
+    @Test
     public void testgetAllCategories() throws DTException {
         Iterator<Category> categories = objectModel.findCategory(null);
         int categoryCount = 0;
