@@ -21,8 +21,8 @@
     <br><br>
     <h3>Attribute Types</h3>
 <#-- Attribute types for category-->
-    <#list attribute_types as attrs>
-        Attribute Type<input type="text" name="attr_name1" value="${attrs.name}"><br>
+    <#list attribute_types as attr>
+        Attribute Type<input type="text" name="attr_name${attr_index+1}" value="${attr.name}"><br>
     </#list>
 
 

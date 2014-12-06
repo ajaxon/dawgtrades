@@ -17,6 +17,87 @@ import java.util.List;
 public class UpdateCategory extends javax.servlet.http.HttpServlet {
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
+
+
+        HttpSession httpSession = null;
+        String      ssid = null;
+        Session session = null;
+
+
+        httpSession = request.getSession();
+
+        if(httpSession.getAttribute("ssid")!=null){
+
+            ssid = (String) httpSession.getAttribute("ssid");
+
+        }else{
+            System.out.println("No ssid found");
+            request.getRequestDispatcher("home.html").forward(request, response);
+
+        }
+
+
+        session = SessionManager.getSessionById(ssid);
+        if(session==null){
+
+            request.getRequestDispatcher("home.html").forward(request, response);
+            System.out.println("No session found");
+        }else {
+            RegisteredUser user = session.getUser();
+            if (user.getIsAdmin() == true) {
+
+
+                try {
+                    Category category =  null;
+                    List<AttributeType> attributeTypes = new LinkedList< AttributeType>();
+                    Category categoryModel = session.getObjectModel().createCategory();
+                    categoryModel.setId(Integer.parseInt(request.getParameter("id")));
+
+                    Iterator<Category> categoryIterator = session.getObjectModel().findCategory(categoryModel);
+                    while(categoryIterator.hasNext()){
+                        category = categoryIterator.next();
+                    }
+
+                    // now have the category to be updated
+                    category.setName(request.getParameter("name"));
+                    category.setParentId(Integer.parseInt(request.getParameter("parent_id")));
+                    session.getObjectModel().storeCategory(category);
+                    ///
+
+
+
+
+                    AttributeType attributeType = null;
+                    Iterator<AttributeType> attributeTypeIterator = session.getObjectModel().getAttributeType(category);
+                    int i =1;
+                    while(attributeTypeIterator.hasNext()){
+                        attributeType = attributeTypeIterator.next();
+                        attributeType.setName(request.getParameter("attr_name"+i));
+                        session.getObjectModel().storeAttributeType(attributeType);
+                        i++;
+                    }
+
+                    while(request.getParameter("attr_name"+i) != null){
+                        AttributeType attrType = session.getObjectModel().createAttributeType(category,request.getParameter("attr_name"+i));
+                        session.getObjectModel().storeAttributeType(attrType);
+
+                    }
+
+
+                    request.getRequestDispatcher("home.html").forward(request, response);
+
+                } catch (DTException e) {
+
+                    e.printStackTrace();
+                }
+
+            }else
+                request.getRequestDispatcher("home.html").forward(request,response);
+        }
+
+
+
+
         // 1. get category from request.getparams id
         //2 set name as name
         // 3 set parent as parent id
