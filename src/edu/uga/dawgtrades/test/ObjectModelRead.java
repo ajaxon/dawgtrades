@@ -365,6 +365,8 @@ public class ObjectModelRead extends TestCase
         assertEquals("Computers",category.getName());
 
     }
+    
+    
 
     @Test
     public void test_restoreItemByAuction() throws DTException {

@@ -8,7 +8,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 
     version="2.5">
       <welcome-file-list>
-        <welcome-file>/templates/home.html</welcome-file>
+        <welcome-file>home.html</welcome-file>
     </welcome-file-list>
     <servlet>
         <servlet-name>freemarker</servlet-name>
@@ -69,6 +69,21 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <servlet-name>Register</servlet-name>
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>CreateItem</servlet-name>
+        <servlet-class>edu.uga.dawgtrades.servlets.CreateItem</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreateItem</servlet-name>
+        <url-pattern>/create_item</url-pattern>
+    </servlet-mapping>
+    
+   
+    <servlet-mapping>
+        <servlet-name>AuctionItem</servlet-name>
+        <url-pattern>/auction_item</url-pattern>
+    </servlet-mapping>
 
 
     <servlet>
@@ -80,6 +95,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
     <servlet>
+    
         <servlet-name>Logout</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.Logout</servlet-class>
     </servlet>
@@ -135,6 +151,11 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <servlet-name>AuctionItem</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.AuctionItem</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>AuctionItem</servlet-name>
+        <url-pattern>/auction_item</url-pattern>
+    </servlet-mapping>
+    
     <servlet>
         <servlet-name>ViewMyAuctions</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.ViewMyAuctions</servlet-class>
@@ -147,6 +168,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <servlet-name>BidOnItem</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.BidOnItem</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>BidOnItem</servlet-name>
+        <url-pattern>/bid_on_item</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>TrackAuction</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.TrackAuction</servlet-class>

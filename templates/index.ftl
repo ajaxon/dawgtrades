@@ -7,6 +7,10 @@
 <br>
 <span>1.</span><a href="findItems">View Auctions</a>
 <br>
+<span>5.</span><a href="create_item">Create Item for Auction</a>
+<br>
+<span>5.</span><a href="auction_item">Auction Item</a>
+<br>
 <#if user.isAdmin==true>
 <span>2.</span><a href="define_category">Create Categories</a>
 <br>
