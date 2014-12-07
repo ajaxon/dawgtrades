@@ -96,7 +96,10 @@ public class BidManager {
 				query.append("where id = " + bid.getId());
 			}else{
 				if(bid.getAuction() != null){
+					if(condition.length()>0)
 					condition.append(" and auction_id = " + bid.getAuction().getId());
+					else
+						condition.append(" auction_id= "+bid.getAuction().getId());
 				}
 				if(bid.getRegisteredUser() != null){
                     if(condition.length()>0)
