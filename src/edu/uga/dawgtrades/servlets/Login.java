@@ -110,12 +110,37 @@ public class Login extends javax.servlet.http.HttpServlet {
    	 			
    	 			request.getRequestDispatcher("home.html").forward(request, response);
 
-   	 		}else{
+   	 		}else{	
+   	 			if(request.getParameter("user_id")==null){
    	 			
+   	 			
+   	 			session = SessionManager.getSessionById(ssid);
    	 			user = session.getUser();
+   	 			System.out.println(user.getName());
    	 			request.setAttribute("user", user);
-   	 			request.getRequestDispatcher("index.ftl").forward(request, response);;
+   	 			request.getRequestDispatcher("index.ftl").forward(request, response);
+   	 			}else{
+   	 				
+   	 				int user_id = Integer.parseInt(request.getParameter("user_id"));
+   	 				RegisteredUser modelUser = session.getObjectModel().createRegisteredUser();
+   	 				modelUser.setId(user_id);
+   	 				Iterator<RegisteredUser> users;
+					try {
+						users = session.getObjectModel().findRegisteredUser(modelUser);
+						while(users.hasNext()){
+	   	 					
+							user = users.next();
+	   	 				}
+						System.out.println("user retrieved"+user.getName());
+						request.setAttribute("user", user);
+		   	 			request.getRequestDispatcher("index.ftl").forward(request, response);
+						
+					} catch (DTException e) {
+						e.printStackTrace();
+					}
    	 			
+   	 				
+   	 			}
    	 		}
    	 }else{
    		 request.getRequestDispatcher("home.html").forward(request, response);

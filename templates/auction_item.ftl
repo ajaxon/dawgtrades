@@ -11,16 +11,15 @@
 	<#if items?has_content>	
 		
 		<table>
-		<th>Item</th><th>Enter Minimum Price</th>
+		<th>Item</th>
 		
    		 <#list items as item>
 			
 			<br>
 			<tr>
-			<form method="post" action="auction_item">
+			<form method="get" action="item_to_auction">
 			<input type="hidden" name="item_id" value="${item.id}">
         	<td>${item.name}</td>
-        	<td><input type="text" name="minPrice"</td>
 			<td><input type="submit" value="Auction Now"></td>
      		</form>
      		<tr>

@@ -71,6 +71,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
     </servlet-mapping>
     
     <servlet>
+        <servlet-name>ItemToAuction</servlet-name>
+        <servlet-class>edu.uga.dawgtrades.servlets.ItemToAuction</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ItemToAuction</servlet-name>
+        <url-pattern>/item_to_auction</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
         <servlet-name>CreateItem</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.CreateItem</servlet-class>
     </servlet>

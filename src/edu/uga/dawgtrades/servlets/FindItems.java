@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import edu.uga.dawgtrades.authentication.Session;
 import edu.uga.dawgtrades.authentication.SessionManager;
 import edu.uga.dawgtrades.model.Auction;
+import edu.uga.dawgtrades.model.Bid;
 import edu.uga.dawgtrades.model.Category;
 import edu.uga.dawgtrades.model.DTException;
 import edu.uga.dawgtrades.model.Item;
@@ -65,11 +66,41 @@ public class FindItems extends javax.servlet.http.HttpServlet {
 				}
 				System.out.println(count);
 				Item item = session.getObjectModel().getItem(auction);
+				if(item.getOwnerId()==session.getUser().getId()){
+					
+					request.setAttribute("owned",true);
+					
+				}else{
+					
+					request.setAttribute("owned",false);
+
+				}
 				request.setAttribute("item", item);
 				Date expiration = auction.getExpiration();
 				String time = expiration.toString();
 				request.setAttribute("expiration", time);
 				request.setAttribute("auction", auction);
+				Bid currentBid = SessionManager.getHighestBidForAuction(session, auction);
+				
+				if(!currentBid.isPersistent()){
+				
+					request.setAttribute("highestBidder", false);
+					request.setAttribute("currentBid", auction.getMinPrice());
+					
+				}else{
+					if(currentBid.getRegisteredUser().getId()==session.getUser().getId()){
+						
+						request.setAttribute("highestBidder", true);
+					
+						}else{
+					
+							request.setAttribute("highestBidder", false);
+
+					
+						}
+					
+					request.setAttribute("currentBid", currentBid.getAmount());
+				}
 				System.out.println(auction.getExpiration());
 				request.getRequestDispatcher("viewItem.ftl").forward(request, response);
 				
@@ -163,4 +194,6 @@ public class FindItems extends javax.servlet.http.HttpServlet {
     	
     		
     }
+    
+   
 }

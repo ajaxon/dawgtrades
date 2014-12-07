@@ -10,14 +10,25 @@
 	<p>Description:</p>
 	<div>${item.description}</div>
 	<br>
-	<p>Current Bid:${auction.minPrice}</>
+	<p>Current Bid:${currentBid?string.currency}</>
 	<br>
 	<p>Expiration:${expiration}</>
-	<form method="post" action="bid_on_item">
-		<inut type="hidden" value="${auction.id}">
+	
+	<#if owned==true>
+		<p>Because you are the owner of this item, bidding is currently disabled.</p>
+	<#elseif highestBidder==true>
+		<p>You are the current highest bidder of this item</p>
+	<#else>
+	<form method="get" action="bid_on_item">
+		<input type="hidden" value="${auction.id}" name="auction_id">
 		<input type="submit" value="Bid on Item">
 	</form>
-
+	</#if>
+	<br>
+	<br>
+	<form>
+		<button formmethod="get" formaction="findItems" type="submit">Return to Auctions</button>
+	</form>
 
 </body>
 <html>
