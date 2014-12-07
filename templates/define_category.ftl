@@ -6,9 +6,9 @@
 
 
 <form method=post name="Category" action="define_category" style="margin:0;padding:0;">
-    <input type="text" name="name" value="">
+    Category Name: <input type="text" name="name" value=""><br>
 
-    <select name="parent_id">
+   Parent: <select name="parent_id">
         <option value="0" selected>None</option>
     <#list categories as category>
         <option value="${category.id}">${category.name}</option>

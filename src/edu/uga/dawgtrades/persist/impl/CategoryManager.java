@@ -98,7 +98,8 @@ public class CategoryManager {
             } else {
                 if (category.getParentId() > 0) {
                     condition.append(" parent_id = '" + category.getParentId() + "'");
-                }
+                }else if(category.getParentId()==0)
+                    condition.append(" parent_id is null");
                 if (category.getName() != null) {
                     if (condition.length() > 0) {
                         condition.append(" and");

@@ -1,8 +1,10 @@
 package edu.uga.dawgtrades.test;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
+import java.util.List;
 
 import edu.uga.dawgtrades.authentication.SessionManager;
 import edu.uga.dawgtrades.model.*;
@@ -246,7 +248,28 @@ public class ObjectModelRead extends TestCase
     {
         assertEquals("Computers",category.getName());
     }
-
+    @Test
+    public void test_getRootCategories() throws DTException {
+        Category modelCategory = objectModel.createCategory();
+        modelCategory.setParentId(0);
+        Iterator<Category> categoriesIter = objectModel.findCategory(modelCategory);
+        List<Category> categories = new ArrayList<Category>();
+        while (categoriesIter.hasNext()) {
+            categories.add(categoriesIter.next());
+        }
+        assertEquals(1,categories.size());
+    }
+    @Test
+    public void test_getCategoryBYID() throws DTException {
+        Category model = objectModel.createCategory();
+        model.setId(category.getId());
+        Iterator<Category> categories = persistence.restoreCategory(model);
+        Category c = null;
+        while(categories.hasNext()){
+            c = categories.next();
+        }
+        assertEquals(category.getName(),c.getName());
+    }
     @Test
     public void testgetAllCategories() throws DTException {
         Iterator<Category> categories = objectModel.findCategory(null);
@@ -365,6 +388,8 @@ public class ObjectModelRead extends TestCase
         assertEquals("Computers",category.getName());
 
     }
+    
+    
 
     @Test
     public void test_restoreItemByAuction() throws DTException {
