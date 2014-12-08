@@ -7,6 +7,7 @@ import edu.uga.dawgtrades.model.*;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -47,10 +48,19 @@ public class SetMembershipPrice extends javax.servlet.http.HttpServlet {
 
                     float price = Float.parseFloat(request.getParameter("price"));
 
-                    Membership membership = session.getObjectModel().createMembership();
-                    membership.setPrice(price);
+                    Membership membership = session.getObjectModel().findMembership();
+                    if(membership == null){
+                        Membership newMembership = session.getObjectModel().createMembership(price,new Date());
+                        session.getObjectModel().storeMembership(newMembership);
+                    }else {
 
-                    session.getObjectModel().storeMembership(membership);
+                        membership.setPrice(price);
+                        session.getObjectModel().storeMembership(membership);
+                    }
+                    String message = "Membership price set";
+                    request.setAttribute("message",message);
+                    request.setAttribute("user",user);
+                    request.getRequestDispatcher("index.ftl").forward(request,response);
                 }
                 catch (DTException e) {
                     e.printStackTrace();
