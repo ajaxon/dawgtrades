@@ -1,21 +1,16 @@
 package edu.uga.dawgtrades.servlets;
 import edu.uga.dawgtrades.authentication.Session;
 import edu.uga.dawgtrades.authentication.SessionManager;
+import edu.uga.dawgtrades.model.DTException;
 import edu.uga.dawgtrades.model.RegisteredUser;
-import edu.uga.dawgtrades.persist.Persistence;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.Connection;
 
 /**
  * Created by Allen on 11/27/14.
  */
 public class ViewProfile extends javax.servlet.http.HttpServlet {
-
-    static Connection conn = null;
-    static Persistence persistence = null;
-
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         HttpSession httpSession = null;
         String ssid = null;
@@ -42,11 +37,11 @@ public class ViewProfile extends javax.servlet.http.HttpServlet {
                 }else{
                     user.setCanText(true);
                 }
-//                try {
-//                    persistence.saveRegisteredUser(user);
-//                } catch (DTException e) {
-//                    e.printStackTrace();
-//                }
+                try {
+                    session.getObjectModel().storeRegisteredUser(user);
+                } catch (DTException e) {
+                    e.printStackTrace();
+                }
             }
             request.getRequestDispatcher("view_profile.ftl").forward(request,response);
         }
@@ -78,5 +73,4 @@ public class ViewProfile extends javax.servlet.http.HttpServlet {
         }
     }
 }
-
 
