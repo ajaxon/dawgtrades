@@ -152,7 +152,7 @@ public class FindItems extends javax.servlet.http.HttpServlet {
 				}
 				System.out.println(itemList.size());
 				request.setAttribute("items", itemList);
-				request.getRequestDispatcher("findItems.ftl").forward(request, response);
+				request.getRequestDispatcher("view_my_auctions.ftl").forward(request, response);
 				
 			} catch (DTException e) {
 
