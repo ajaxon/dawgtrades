@@ -177,6 +177,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <servlet-name>ViewMyAuctions</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.ViewMyAuctions</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>ViewMyAuctions</servlet-name>
+        <url-pattern>/view_my_auctions</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>ReportTransaction</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.ReportTransaction</servlet-class>
@@ -218,6 +222,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <servlet-class>edu.uga.dawgtrades.servlets.SetMembershipPrice</servlet-class>
     </servlet>
     <servlet-mapping>
+        <servlet-name>SetMembershipPrice</servlet-name>
+        <url-pattern>/set_membership_price</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>DefineCategory</servlet-name>
         <url-pattern>/define_category</url-pattern>
     </servlet-mapping>
@@ -225,5 +233,11 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <servlet-name>Logout</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
+	 <servlet-mapping>
+        <servlet-name>DeleteItem</servlet-name>
+        <url-pattern>/delete_item</url-pattern>
+    </servlet-mapping>
+
+
 
 </web-app>

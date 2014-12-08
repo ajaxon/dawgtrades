@@ -14,12 +14,13 @@
 	<br>
 	<label>Enter in description</label><br><textarea name="description" cols="30" rows="4"></textarea>
 	<br>
-	<select name="category">
-        <!-- <option value="-1" selected>Search All</option> --!>
-   		 <#list categories as category>
-        	<option value="${category.id}">${category.name}</option>
-    	</#list>
-    	</select>
+	<#if attribute_types?has_content>
+		<#list attribute_types as attribute_type >
+		<label>${attribute_type.name}</label><input type="text" name="${attribute_type.id}">
+
+		</#list>
+	</#if>
+	<input type="hidden" name="category_id" value="${category.id}">
    	<br>
 	<input type="submit" name="createItem" value="Post Item">
 </form>

@@ -55,5 +55,6 @@ public interface Bid
      */
     RegisteredUser getRegisteredUser();
 
+    void setUser(RegisteredUser user);
 	void setAuction(Auction auction); 
 }

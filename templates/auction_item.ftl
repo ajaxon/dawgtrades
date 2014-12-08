@@ -22,6 +22,10 @@
         	<td>${item.name}</td>
 			<td><input type="submit" value="Auction Now"></td>
      		</form>
+     		<form method="get" action="delete_item">
+     		<input type="hidden" name="item_id" value="${item.id}">
+     		<td><input type="submit" value="Delete Item"></td>
+     		</form>
      		<tr>
 		</#list>
 		</table>

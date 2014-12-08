@@ -86,5 +86,12 @@ public class BidImpl extends Persistent implements Bid {
 		this.auctionId=auction.getId();
 	}
 
+    public void setRegisteredUserId(long id){
+        this.registeredUserId = id;
+    }
+    public void setUser(RegisteredUser user){
+        this.user = user;
+    }
+
 
 }
