@@ -3,6 +3,7 @@ package edu.uga.dawgtrades.servlets;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import edu.uga.dawgtrades.authentication.Session;
 import edu.uga.dawgtrades.authentication.SessionManager;
+import edu.uga.dawgtrades.model.Attribute;
+import edu.uga.dawgtrades.model.AttributeType;
 import edu.uga.dawgtrades.model.Auction;
 import edu.uga.dawgtrades.model.Bid;
 import edu.uga.dawgtrades.model.Category;
@@ -43,7 +46,7 @@ public class FindItems extends javax.servlet.http.HttpServlet {
 
     	}
     		
-    	
+    	 
 		 session = SessionManager.getSessionById(ssid);
 		 if(session==null){
 			 
@@ -66,6 +69,19 @@ public class FindItems extends javax.servlet.http.HttpServlet {
 				}
 				System.out.println(count);
 				Item item = session.getObjectModel().getItem(auction);
+				//Added Attribute/Type Support
+				HashMap<String,String> attributeAndType = new HashMap<String,String>();
+				Iterator<Attribute> attributes = session.getObjectModel().getAttribute(item);
+				while(attributes.hasNext()){
+					Attribute attribute = attributes.next();
+					AttributeType type = session.getObjectModel().getAttributeType(attribute);
+					System.out.println(attribute.getValue());
+					attributeAndType.put(type.getName(), attribute.getValue());
+					System.out.println(type.getName());
+					
+				}
+				
+				
 				if(item.getOwnerId()==session.getUser().getId()){
 					
 					request.setAttribute("owned",true);
@@ -83,7 +99,7 @@ public class FindItems extends javax.servlet.http.HttpServlet {
 				
 				String time =this.secondsToString(diff);
 				
-				
+				request.setAttribute("attributeAndType", attributeAndType);
 				request.setAttribute("expiration", time);
 				request.setAttribute("auction", auction);
 				Bid currentBid = SessionManager.getHighestBidForAuction(session, auction);
