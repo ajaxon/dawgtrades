@@ -25,6 +25,7 @@
 <span>4.</span><a href="printReport">Print Report</a>
 <br>
 <span>5.</span><a href="deleteUser">Delete User</a>
+<span>6.<a href="browse_category">Browse Categories</a></span>
 <br>
 </#if>
 
