@@ -7,7 +7,7 @@
 <br>
 <#if message?has_content>${message}</#if><br>
 
-<span>1.</span><a href="findItems">View Auctions</a>
+<span>1.</span><a href="browse_category">Browse Category</a>
 <br>
 <span>5.</span><a href="create_item">Create Item for Auction</a>
 <br>

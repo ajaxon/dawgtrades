@@ -205,6 +205,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <servlet-name>FindItems</servlet-name>
         <url-pattern>/findItems</url-pattern>
     </servlet-mapping>
+      <servlet>
+        <servlet-name>CreateAndAuction</servlet-name>
+        <servlet-class>edu.uga.dawgtrades.servlets.CreateAndAuction</servlet-class>
+    </servlet>
+   <servlet-mapping>
+        <servlet-name>CreateAndAuction</servlet-name>
+        <url-pattern>/createAndAuction</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>BrowseCategory</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.BrowseCategory</servlet-class>
