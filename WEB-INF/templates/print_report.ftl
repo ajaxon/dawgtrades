@@ -6,6 +6,7 @@
 
 <form method=post name="Register" action="register" style="margin:0;padding:0;">
     <h1>Print report</h1><br />
+    Please choose a year: <input type="number" value="" name="year" /><br />
     Please choose a month:<br />
     <select name="month">
     <option value="01">January</option>

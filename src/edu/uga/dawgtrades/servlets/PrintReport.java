@@ -48,10 +48,10 @@ public class PrintReport extends javax.servlet.http.HttpServlet {
         ResultSet rs = null;
         Statement stmt = null;
         PrintWriter out = response.getWriter();
-        String date = "2014-" + request.getParameter("month");
+        String date = request.getParameter("year") + "-" + request.getParameter("month");
 
 
-        String query ="SELECT COUNT(id) AS number FROM auction WHERE CONTAINS(Column,date);
+        String query ="SELECT COUNT(id) AS number FROM auction WHERE CONTAINS(Column,date)";
         try {
             //stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
@@ -62,7 +62,7 @@ public class PrintReport extends javax.servlet.http.HttpServlet {
             e.printStackTrace();
         }
 
-        query = "select * from auction";
+        query = "select * from auction WHERE CONTAINS(Column,date)";
         try {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
@@ -82,7 +82,7 @@ public class PrintReport extends javax.servlet.http.HttpServlet {
         }
         System.out.println("");
 
-        query ="SELECT COUNT(id) AS number FROM user";
+        query ="SELECT COUNT(id) AS number FROM user WHERE CONTAINS(Column,date)";
         try {
             //stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
@@ -93,7 +93,7 @@ public class PrintReport extends javax.servlet.http.HttpServlet {
             e.printStackTrace();
         }
 
-        query = "select * from user";
+        query = "select * from user WHERE CONTAINS(Column,date)";
         try {
            // stmt = conn.createStatement();
             rs = stmt.executeQuery(query);
