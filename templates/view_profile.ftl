@@ -14,7 +14,9 @@
         <br>Last Name: <input type="text" name="lastName" value="${user.lastName}">
         <br>Email: <input type="text" name="email" value="${user.email}">
         <br>Phone: <input type="text" name="phone" value="${user.phone}">
+
         <br>Text: <input type="checkbox" name="canText" value="" <#if canText==true>checked </#if>>
+
         <br>
         <input type="submit" value="Update">
     </form>
