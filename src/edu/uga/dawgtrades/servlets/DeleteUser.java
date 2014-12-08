@@ -8,6 +8,8 @@ import edu.uga.dawgtrades.model.RegisteredUser;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Allen on 11/27/14.
@@ -37,17 +39,18 @@ public class DeleteUser extends javax.servlet.http.HttpServlet {
             request.getRequestDispatcher("home.html").forward(request, response);
             System.out.println("No session found");
         } else {
-            String user_id = request.getParameter("user_id");
-            int userId = Integer.parseInt(user_id);
-            RegisteredUser user = session.getObjectModel().createRegisteredUser();
-            user.setId(userId);
+
+
             try{
-                Iterator<RegisteredUser> users = session.getObjectModel().findRegisteredUser(user);
-                RegisteredUser deleteUser = null;
+                RegisteredUser user = null;
+                List<RegisteredUser> usersList = new LinkedList<RegisteredUser>();
+                Iterator<RegisteredUser> users = session.getObjectModel().findRegisteredUser(null);
                 while(users.hasNext()){
-                    deleteUser = users.next();
+                    user = users.next();
+                    usersList.add(user);
+
                 }
-                session.getObjectModel().deleteRegisteredUser(deleteUser);
+                request.setAttribute("users",usersList);
                 request.getRequestDispatcher("delete_user.ftl").forward(request,response);
             }catch(DTException e){
                 e.printStackTrace();
