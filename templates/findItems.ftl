@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>Search Items for Auction</title>
+<#include "head.ftl">
 </head>
 <body>
 	<h1>Search Items for Auction</h1>

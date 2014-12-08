@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>Modify Membership Price</title>
+<#include "head.ftl">
 </head>
 <body>
 

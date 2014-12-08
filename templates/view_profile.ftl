@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>View Profile</title>
+<#include "head.ftl">
 </head>
 <body>
 <#if message?has_content>${message}<br></#if>

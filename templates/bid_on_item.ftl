@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>View Item</title>
+<#include "head.ftl">
 </head>
 <body>
 	<h2>You are currently placing a bid on ${item.name}</h2>

@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>Item has been deleted</title>
+<#include "head.ftl">
 </head>
 <body>
 <h1>Thank you, your item has been deleted</h1>

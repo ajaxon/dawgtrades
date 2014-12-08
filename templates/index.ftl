@@ -1,8 +1,12 @@
 <html>
 <head>
     <title>Welcome To DawgTrades</title>
+<#include "head.ftl">
 </head>
 <body>
+
+
+
 <h1>Hello ${user.firstName}, Welcome To the DawgTrades Auction System</h1>
 <br>
 <#if message?has_content>${message}</#if><br>

@@ -84,11 +84,11 @@ public class TrackAuction extends javax.servlet.http.HttpServlet {
                 }
 
 
+                request.setAttribute("auctions",auctions);
 
 
 
-
-                request.getRequestDispatcher("findItems.ftl").forward(request, response);
+                request.getRequestDispatcher("track_auctions.ftl").forward(request, response);
 
             } catch (DTException e) {
 
