@@ -12,6 +12,9 @@
     <a href="?categoryID=${child.id}">${child.name}<br>
 </#list>
 
+<#list items as item>
+    <a href="?itemID=${item.id}">${item.name}</a>
+</#list>
 
 
 <#else>

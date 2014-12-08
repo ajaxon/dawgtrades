@@ -57,6 +57,8 @@ public class BrowseCategory extends javax.servlet.http.HttpServlet {
                             }
                             children.put(category.getName(),kids);
                         }
+
+
                         request.setAttribute("user", session.getUser());
                         request.setAttribute("categories", categories);
                         request.setAttribute("children",children);
@@ -78,9 +80,17 @@ public class BrowseCategory extends javax.servlet.http.HttpServlet {
                             children.add(childrenIter.next());
                         }
 
+                        // get items for category
+                        List<Item> items =  new LinkedList<Item>();
+                        Iterator<Item> itemIter = session.getObjectModel().getItem(category);
+                        while(itemIter.hasNext()){
+                            items.add(itemIter.next());
+                        }
+
 
                         request.setAttribute("category",category);
                         request.setAttribute("children",children);
+                        request.setAttribute("items",items);
                         request.getRequestDispatcher("browse_category.ftl").forward(request,response);
                     }
 

@@ -83,7 +83,7 @@ public class UpdateCategory extends javax.servlet.http.HttpServlet {
 
                     }
 
-
+                    request.setAttribute("message","Category " + category.getName() + " updated");
                     request.getRequestDispatcher("home.html").forward(request, response);
 
                 } catch (DTException e) {
@@ -92,6 +92,7 @@ public class UpdateCategory extends javax.servlet.http.HttpServlet {
                 }
 
             }else
+                request.setAttribute("message","Only admin can update a category");
                 request.getRequestDispatcher("home.html").forward(request,response);
         }
 
