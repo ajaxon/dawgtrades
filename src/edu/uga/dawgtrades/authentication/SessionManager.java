@@ -7,6 +7,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import edu.uga.dawgtrades.model.Auction;
+import edu.uga.dawgtrades.model.Bid;
 import edu.uga.dawgtrades.model.DTException;
 import edu.uga.dawgtrades.model.ObjectModel;
 import edu.uga.dawgtrades.model.RegisteredUser;
@@ -123,6 +126,7 @@ public class SessionManager {
 		}
 		sessions.remove(s.getSessionId());
 		loggedIn.remove(s.getUser().getName());
+		System.out.println(s.getUser().getName()+" has been removed from logged in");
 	}
 	
 	public static Session getSessionById(String ssid){
@@ -156,4 +160,50 @@ public class SessionManager {
 	        System.out.println("Outputing hash");
 	        return output.toString();
 	    }
+	  
+	  public static float getHighestBidFloatForAuction(Session session , Auction auction) throws DTException{
+	    	Bid modelBid = session.getObjectModel().createBid();
+			modelBid.setAuction(auction);
+			Iterator<Bid> bids = session.getObjectModel().findBid(modelBid);
+			Bid highestBid = session.getObjectModel().createBid();
+			highestBid.setAmount(-1);
+			while(bids.hasNext()){
+				Bid comparator = bids.next();
+				System.out.println(comparator.getId()+" --amout:"+comparator.getAmount());
+				if(comparator.getAmount()>highestBid.getAmount()){
+					highestBid = comparator;
+				}
+				
+				
+			}
+			if(highestBid.getAmount()!=-1){
+			 return highestBid.getAmount();
+			}else{
+				
+				return auction.getMinPrice();
+			}
+		 }
+	  
+	  public static Bid getHighestBidForAuction(Session session , Auction auction) throws DTException{
+	    	Bid modelBid = session.getObjectModel().createBid();
+			modelBid.setAuction(auction);
+			Iterator<Bid> bids = session.getObjectModel().findBid(modelBid);
+			Bid highestBid = session.getObjectModel().createBid();
+			highestBid.setAmount(-1);
+			while(bids.hasNext()){
+				Bid comparator = bids.next();
+				System.out.println(comparator.getId()+" --amout:"+comparator.getAmount());
+				if(comparator.getAmount()>highestBid.getAmount()){
+					highestBid = comparator;
+				}
+				
+				
+			}
+			if(highestBid.getAmount()!=-1){
+			 return highestBid;
+			}else{
+				Bid bid = session.getObjectModel().createBid();
+				return bid;
+			}
+		 }
 }

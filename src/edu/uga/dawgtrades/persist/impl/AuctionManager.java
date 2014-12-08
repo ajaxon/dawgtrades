@@ -48,8 +48,8 @@ public class AuctionManager {
 
             if (auction.getExpiration() != null) {
                 java.util.Date jDate = auction.getExpiration();
-                java.sql.Date sDate = new java.sql.Date(jDate.getTime());
-                stmt.setDate(1, sDate);
+                java.sql.Timestamp sTimestamp = new Timestamp(jDate.getTime());
+                stmt.setTimestamp(1, sTimestamp);
             } else
                 stmt.setNull(1, java.sql.Types.DATE);
 
