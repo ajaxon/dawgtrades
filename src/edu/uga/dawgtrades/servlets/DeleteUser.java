@@ -45,7 +45,7 @@ public class DeleteUser extends javax.servlet.http.HttpServlet {
             RegisteredUser user = session.getObjectModel().createRegisteredUser();
             user.setId(userId);
             try{
-                RegisteredUser user = null;
+                user = null;
                 List<RegisteredUser> usersList = new LinkedList<RegisteredUser>();
                 Iterator<RegisteredUser> users = session.getObjectModel().findRegisteredUser(null);
                 while(users.hasNext()){
