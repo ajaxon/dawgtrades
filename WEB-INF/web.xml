@@ -164,6 +164,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <servlet-name>Unregister</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.Unregister</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>Unregister</servlet-name>
+        <url-pattern>/unregister</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>AuctionItem</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.AuctionItem</servlet-class>
@@ -208,6 +212,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
    <servlet-mapping>
         <servlet-name>FindItems</servlet-name>
         <url-pattern>/findItems</url-pattern>
+    </servlet-mapping>
+      <servlet>
+        <servlet-name>CreateAndAuction</servlet-name>
+        <servlet-class>edu.uga.dawgtrades.servlets.CreateAndAuction</servlet-class>
+    </servlet>
+   <servlet-mapping>
+        <servlet-name>CreateAndAuction</servlet-name>
+        <url-pattern>/createAndAuction</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>BrowseCategory</servlet-name>
