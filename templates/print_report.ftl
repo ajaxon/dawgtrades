@@ -3,8 +3,6 @@
     <title>Report of System</title>
 </head>
 <body>
-<#if message?has_content>${message}<br></#if>
-
 
     <h4>System Information</h4>
         <br>DawgTrades users: ${users}
