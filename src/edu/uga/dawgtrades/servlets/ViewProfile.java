@@ -31,12 +31,9 @@ public class ViewProfile extends javax.servlet.http.HttpServlet {
                 user.setLastName(request.getParameter("lastName"));
                 user.setEmail(request.getParameter("email"));
                 user.setPhone(request.getParameter("phone"));
-                String text = request.getParameter("canText");
-                if(text == "false"){
-                    user.setCanText(false);
-                }else{
-                    user.setCanText(true);
-                }
+                boolean text = request.getParameter("canText")== null ? false : true ;
+                user.setCanText(text);
+
                 try {
                     session.getObjectModel().storeRegisteredUser(user);
                 } catch (DTException e) {
