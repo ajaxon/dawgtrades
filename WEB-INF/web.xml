@@ -136,6 +136,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <servlet-name>PrintReport</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.PrintReport</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>PrintReport</servlet-name>
+        <url-pattern>/print_report</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>DeleteUser</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.DeleteUser</servlet-class>
