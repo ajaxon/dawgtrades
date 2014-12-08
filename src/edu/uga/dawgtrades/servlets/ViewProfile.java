@@ -40,6 +40,10 @@ public class ViewProfile extends javax.servlet.http.HttpServlet {
                     e.printStackTrace();
                 }
             }
+            String message = "Profile has been updated";
+            request.setAttribute("canText",user.getCanText());
+            request.setAttribute("message",message);
+            request.setAttribute("user",user);
             request.getRequestDispatcher("view_profile.ftl").forward(request,response);
         }
     }
@@ -60,11 +64,8 @@ public class ViewProfile extends javax.servlet.http.HttpServlet {
             } else {
                 user = session.getUser();
                 request.setAttribute("user", user);
-                if(user.getCanText() == false){
-                    request.setAttribute("canText", false);
-                }else{
-                    request.setAttribute("canText", true);
-                }
+                boolean text = user.getCanText();
+                request.setAttribute("canText",text);
                 request.getRequestDispatcher("view_profile.ftl").forward(request,response);
             }
         }
