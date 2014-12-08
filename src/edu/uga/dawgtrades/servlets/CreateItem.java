@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSession;
 
 import edu.uga.dawgtrades.authentication.Session;
 import edu.uga.dawgtrades.authentication.SessionManager;
+import edu.uga.dawgtrades.model.Attribute;
+import edu.uga.dawgtrades.model.AttributeType;
 import edu.uga.dawgtrades.model.Category;
 import edu.uga.dawgtrades.model.DTException;
 import edu.uga.dawgtrades.model.Item;
@@ -49,16 +51,40 @@ public class CreateItem extends javax.servlet.http.HttpServlet {
 				 String name = request.getParameter("name");
 				 String identifier = request.getParameter("identifier");
 				 String description = request.getParameter("description");
-				 String category_id = request.getParameter("category");
+				 System.out.println(description);
+				 String category_id = request.getParameter("category_id");
+				 System.out.println(category_id);
 				 int categoryId = Integer.parseInt(category_id);
+				 Category modelCategory = session.getObjectModel().createCategory();
+				 modelCategory.setId(categoryId);
 				 Item itemToSave = session.getObjectModel().createItem();
 				 itemToSave.setOwnerId(user.getId());
 				 itemToSave.setName(name);
 				 itemToSave.setDescription(description);
 				 itemToSave.setIdentifier(identifier);
 				 itemToSave.setCategoryId(categoryId);
+				
+				 
 				 try {
+					
 					session.getObjectModel().storeItem(itemToSave);
+					Iterator<Item> items = session.getObjectModel().findItem(itemToSave);
+					while(items.hasNext()){
+						itemToSave = items.next();
+					}
+					Iterator<AttributeType> attributeTypes = session.getObjectModel().getAttributeType(modelCategory);
+					while(attributeTypes.hasNext()){
+						AttributeType type = attributeTypes.next();
+						String attributeString = request.getParameter(String.valueOf(type.getId()));
+						Attribute attribute = session.getObjectModel().createAttribute();
+						attribute.setAttributeType(type.getId());
+						attribute.setItemId(itemToSave.getId());
+						attribute.setValue(attributeString);
+						session.getObjectModel().storeAttribute(attribute);
+						
+					}
+					
+					
 					request.setAttribute("user", user);
 	   	 			request.getRequestDispatcher("index.ftl").forward(request, response);
 				} catch (DTException e) {
@@ -94,25 +120,44 @@ public class CreateItem extends javax.servlet.http.HttpServlet {
 				 session = SessionManager.getSessionById(ssid);
 				 if(session==null){
 					 
+					 
+					 
+					 
 			 	    	request.getRequestDispatcher("home.html").forward(request, response);
 			 	    	System.out.println("No session found");
 				 }else{
-					 try {
-						 Iterator<Category> categoryIter = session.getObjectModel().findCategory(null);
-						 
-						
-						 
-						 List<Category> categories = new ArrayList<Category>();
-						 while(categoryIter.hasNext()){
-							 categories.add(categoryIter.next());
-							 
-						 }
-						 request.setAttribute("categories",categories);
-						 request.getRequestDispatcher("create_item.ftl").forward(request, response);
-					 }catch(DTException e){
-						 e.printStackTrace();
-					 }
 					 
+					 if(request.getParameter("categoryID")!=null){
+					 
+							 try {
+								 int categoryID = Integer.parseInt(request.getParameter("categoryID"));
+								 
+								 Category modelCategory = session.getObjectModel().createCategory();
+								 modelCategory.setId(categoryID);
+								 Iterator<Category> categoryIter = session.getObjectModel().findCategory(modelCategory);
+								 
+								
+								 
+								Category category = null;
+								 while(categoryIter.hasNext()){
+
+									 category = categoryIter.next();
+									 
+								 }
+								 request.setAttribute("category",category);
+								 
+								 Iterator<AttributeType> attributeTypeIter = session.getObjectModel().getAttributeType(category);								 
+								 List<AttributeType> attributeTypes = new ArrayList<AttributeType>();
+								 while(attributeTypeIter.hasNext()){
+									 attributeTypes.add(attributeTypeIter.next());
+									 
+								 }
+								 request.setAttribute("attribute_types", attributeTypes);
+								 request.getRequestDispatcher("create_item.ftl").forward(request, response);
+							 }catch(DTException e){
+								 e.printStackTrace();
+							 }
+					 } 
 				 }
 	    }
 }

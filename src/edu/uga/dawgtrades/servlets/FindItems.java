@@ -140,59 +140,61 @@ public class FindItems extends javax.servlet.http.HttpServlet {
 	 	    	request.getRequestDispatcher("home.html").forward(request, response);
 	 	    	System.out.println("No session found");
 		 }else{
-			 try {
-				 Iterator<Category> categoryIter = session.getObjectModel().findCategory(null);
-				 
-				
-				 
-				 List<Category> categories = new ArrayList<Category>();
-				 while(categoryIter.hasNext()){
-					 categories.add(categoryIter.next());
-					 
-				 }
-				 request.setAttribute("categories",categories);
-				 
-				Iterator<Auction> auctions = null;
-				if(request.getParameter("category")==null){
-						System.out.println("Category is null");
-				       auctions = session.getObjectModel().findAuction(null);
-				 }else{
-					  int categoryId = Integer.parseInt(request.getParameter("category"));
-					  System.out.println(categoryId);
-					  if(categoryId==-1){
-						 auctions = session.getObjectModel().findAuction(null);
-					  }else{
-						  
-						  auctions = session.getObjectModel().findAuction(null);
-
-						  
-						  
-					  }
-					 
-				 }
-				List<Item> itemList = new ArrayList<Item>();
-				while(auctions.hasNext()){
-			//		System.out.println("Item found");
-			//		auctionList.add(auctions.next());
-					Auction auctionComp = auctions.next();
-						if(auctionComp.getIsClosed()==false){
-						Item item = session.getObjectModel().getItem(auctionComp);
-					
-						item.setId(auctionComp.getId());
-						itemList.add(item);
-						System.out.println("Item found");
-						}
-				}
-				System.out.println(itemList.size());
-				request.setAttribute("items", itemList);
-				request.getRequestDispatcher("findItems.ftl").forward(request, response);
-				
+			 
+			 
+			 
+						 try {
+							 Iterator<Category> categoryIter = session.getObjectModel().findCategory(null);
+							 
+							
+							 
+							 List<Category> categories = new ArrayList<Category>();
+							 while(categoryIter.hasNext()){
+								 categories.add(categoryIter.next());
+								 
+							 }
+							 request.setAttribute("categories",categories);
+							 
+							Iterator<Auction> auctions = null;
+							if(request.getParameter("category")==null){
+									System.out.println("Category is null");
+							       auctions = session.getObjectModel().findAuction(null);
+							 }else{
+								  int categoryId = Integer.parseInt(request.getParameter("category"));
+								  System.out.println(categoryId);
+								  if(categoryId==-1){
+									 auctions = session.getObjectModel().findAuction(null);
+								  }else{
+									  
+									  auctions = session.getObjectModel().findAuction(null);
+			
+									  
+									  
+								  }
+								 
+							 }
+							List<Item> itemList = new ArrayList<Item>();
+							while(auctions.hasNext()){
+						//		System.out.println("Item found");
+						//		auctionList.add(auctions.next());
+								Auction auctionComp = auctions.next();
+									if(auctionComp.getIsClosed()==false){
+									Item item = session.getObjectModel().getItem(auctionComp);
+									item.setId(auctionComp.getId());
+									itemList.add(item);
+									System.out.println("Item found");
+									}
+							}
+								System.out.println(itemList.size());
+								request.setAttribute("items", itemList);
+								request.getRequestDispatcher("findItems.ftl").forward(request, response);
+						 
 			} catch (DTException e) {
 
 				e.printStackTrace();
 			}
-			 
-		 }
+			 }
+		 
     	
     		
     }
