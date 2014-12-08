@@ -173,6 +173,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <servlet-name>ViewMyAuctions</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.ViewMyAuctions</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>ViewMyAuctions</servlet-name>
+        <url-pattern>/view_my_auctions</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>ReportTransaction</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.ReportTransaction</servlet-class>

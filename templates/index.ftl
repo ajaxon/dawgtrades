@@ -13,6 +13,8 @@
 <br>
 <span>5.</span><a href="auction_item">Auction Item</a>
 <br>
+<span>5again.</span><a href="view_my_auctions">Auction Item</a>
+<br>
 <#if user.isAdmin==true>
 
 <span>2.</span><a href="define_category">Create Categories</a>
