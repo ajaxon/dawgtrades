@@ -11,6 +11,7 @@ import java.io.IOException;
  * Created by Allen on 11/27/14.
  */
 public class ViewProfile extends javax.servlet.http.HttpServlet {
+
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
     }
@@ -23,29 +24,23 @@ public class ViewProfile extends javax.servlet.http.HttpServlet {
         RegisteredUser user = null;
 
         httpSession = request.getSession();
-
+System.out.print("I'm before if attributes ssid");
         if (httpSession.getAttribute("ssid") != null) {
             ssid = (String) httpSession.getAttribute("ssid");
             session = SessionManager.getSessionById(ssid);
+System.out.print("I'm in the if statement");
             if (session == null) {
                 request.getRequestDispatcher("home.html").forward(request, response);
                 System.out.println("No session found");
             } else {
                 user = session.getUser();
-                String name = user.getName();
-                request.setAttribute("name", name);
-                String pass = user.getPassword();
-                request.setAttribute("pass", pass);
-                String fn = user.getFirstName();
-                request.setAttribute("fn", fn);
-                String ln = user.getLastName();
-                request.setAttribute("ln", ln);
-                String email = user.getEmail();
-                request.setAttribute("email", email);
-                String phone = user.getPhone();
-                request.setAttribute("phone", phone);
-                Boolean text = user.getCanText();
-                request.setAttribute("text", text);
+                request.setAttribute("user", user);
+                if(user.getCanText() == false){
+                    request.setAttribute("text", "No");
+                }else{
+                    request.setAttribute("text", "Yes");
+                }
+                request.getRequestDispatcher("view_profile.ftl").forward(request,response);
             }
         }
     }
