@@ -9,7 +9,7 @@
 		<table>
 		<#list items as item>
 			<tr>
-			<form method="post" action="view_my_auctions">
+			<form method="post" action="findItems">
 			<td><p>${item.name}</p></td><td> <input type="submit" value="View Auction"></td>
 			</tr>
 			<input type="hidden" name="auction_id" value="${item.id}">

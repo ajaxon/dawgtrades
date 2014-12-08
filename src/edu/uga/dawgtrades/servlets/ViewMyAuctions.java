@@ -117,7 +117,7 @@ public class ViewMyAuctions extends javax.servlet.http.HttpServlet {
                     Auction auction = session.getObjectModel().getAuction(itemComp);
 
                     itemComp.setId(auction.getId());
-                    itemList.add(item);
+                    itemList.add(itemComp);
                     System.out.println("Item found");
                 }
                 System.out.println(itemList.size());
