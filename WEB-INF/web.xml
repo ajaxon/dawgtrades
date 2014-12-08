@@ -205,6 +205,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <servlet-class>edu.uga.dawgtrades.servlets.SetMembershipPrice</servlet-class>
     </servlet>
     <servlet-mapping>
+        <servlet-name>SetMembershipPrice</servlet-name>
+        <url-pattern>/set_membership_price</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>DefineCategory</servlet-name>
         <url-pattern>/define_category</url-pattern>
     </servlet-mapping>
