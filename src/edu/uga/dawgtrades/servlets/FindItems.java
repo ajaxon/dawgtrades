@@ -175,11 +175,13 @@ public class FindItems extends javax.servlet.http.HttpServlet {
 			//		System.out.println("Item found");
 			//		auctionList.add(auctions.next());
 					Auction auctionComp = auctions.next();
-					Item item = session.getObjectModel().getItem(auctionComp);
+						if(auctionComp.getIsClosed()==false){
+						Item item = session.getObjectModel().getItem(auctionComp);
 					
-					item.setId(auctionComp.getId());
-					itemList.add(item);
-					System.out.println("Item found");
+						item.setId(auctionComp.getId());
+						itemList.add(item);
+						System.out.println("Item found");
+						}
 				}
 				System.out.println(itemList.size());
 				request.setAttribute("items", itemList);
