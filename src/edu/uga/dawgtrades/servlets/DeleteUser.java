@@ -15,6 +15,7 @@ import java.util.Iterator;
 public class DeleteUser extends javax.servlet.http.HttpServlet {
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
+
     }
 
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
@@ -37,7 +38,7 @@ public class DeleteUser extends javax.servlet.http.HttpServlet {
             request.getRequestDispatcher("home.html").forward(request, response);
             System.out.println("No session found");
         } else {
-            String user_id = request.getParameter("user_id");
+            String user_id = request.getParameter("userID");
             int userId = Integer.parseInt(user_id);
             RegisteredUser user = session.getObjectModel().createRegisteredUser();
             user.setId(userId);

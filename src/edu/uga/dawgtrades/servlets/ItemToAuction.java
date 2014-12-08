@@ -51,9 +51,10 @@ public class ItemToAuction extends HttpServlet {
 	 	    	request.getRequestDispatcher("home.html").forward(request, response);
 	 	    	System.out.println("No session found");
 		 }else{
-			 
 			 if(request.getParameter("item_id")!=null){
 			 	int itemId = Integer.parseInt(request.getParameter("item_id"));
+				 System.out.println(itemId);
+
 			 	Item modelItem = session.getObjectModel().createItem();
 			 	modelItem.setId(itemId);
 			 	try{

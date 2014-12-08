@@ -7,7 +7,7 @@
 <br>
 <#if message?has_content>${message}</#if><br>
 
-<span>1.</span><a href="findItems">View Auctions</a>
+<span>1.</span><a href="browse_category">Browse Category</a>
 <br>
 <span>5.</span><a href="view_profile">View Profile</a>
 <br>
@@ -18,15 +18,14 @@
 <span>6.</span><a href="view_my_auctions">View my Auctions</a>
 <br>
 <#if user.isAdmin==true>
-
 <span>2.</span><a href="define_category">Create Categories</a>
-
 <br>
 <span>3.</span><a href="set_membership_price">Set Membership Price</a>
 <br>
 <span>4.</span><a href="printReport">Print Report</a>
 <br>
 <span>5.</span><a href="delete_user">Delete User</a>
+<span>6.<a href="browse_category">Browse Categories</a></span>
 <br>
 </#if>
 

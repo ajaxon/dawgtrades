@@ -31,18 +31,19 @@ public class ViewProfile extends javax.servlet.http.HttpServlet {
                 user.setLastName(request.getParameter("lastName"));
                 user.setEmail(request.getParameter("email"));
                 user.setPhone(request.getParameter("phone"));
-                String text = request.getParameter("canText");
-                if(text == "false"){
-                    user.setCanText(false);
-                }else{
-                    user.setCanText(true);
-                }
+                boolean text = request.getParameter("canText")== null ? false : true ;
+                user.setCanText(text);
+
                 try {
                     session.getObjectModel().storeRegisteredUser(user);
                 } catch (DTException e) {
                     e.printStackTrace();
                 }
             }
+            String message = "Profile has been updated";
+            request.setAttribute("canText",user.getCanText());
+            request.setAttribute("message",message);
+            request.setAttribute("user",user);
             request.getRequestDispatcher("view_profile.ftl").forward(request,response);
         }
     }
@@ -63,11 +64,8 @@ public class ViewProfile extends javax.servlet.http.HttpServlet {
             } else {
                 user = session.getUser();
                 request.setAttribute("user", user);
-                if(user.getCanText() == false){
-                    request.setAttribute("canText", false);
-                }else{
-                    request.setAttribute("canText", true);
-                }
+                boolean text = user.getCanText();
+                request.setAttribute("canText",text);
                 request.getRequestDispatcher("view_profile.ftl").forward(request,response);
             }
         }

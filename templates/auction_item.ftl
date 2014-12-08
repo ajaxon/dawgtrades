@@ -17,11 +17,23 @@
 			
 			<br>
 			<tr>
-			<form method="get" action="item_to_auction">
-			<input type="hidden" name="item_id" value="${item.id}">
-        	<td>${item.name}</td>
-			<td><input type="submit" value="Auction Now"></td>
-     		</form>
+					<form method="get" action="item_to_auction">
+					<input type="hidden" name="item_id" value="${item.id}">
+        			<td>${item.name}</td>
+  					<#list itemStatus?keys as status>
+						<#if itemStatus[item.name]== "no_auction" >
+							<td><input type="submit" value="Auction Now"></td>
+						<#elseif itemStatus[item.name]=="reauction" >
+							<td><input type="submit" value="Reauction"></td>
+						<#elseif itemStatus[item.name]=="sold">
+							<td>Item has sold</td>
+						<#elseif itemStatus[item.name]=="in_auction">
+							<td>Item is currently in auction</td>
+						</#if>
+					</#list>
+					
+					
+     				</form>
      		<form method="get" action="delete_item">
      		<input type="hidden" name="item_id" value="${item.id}">
      		<td><input type="submit" value="Delete Item"></td>
