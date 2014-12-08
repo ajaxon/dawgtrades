@@ -12,9 +12,19 @@
     <a href="?categoryID=${child.id}">${child.name}<br>
 </#list>
 
-<#list items as item>
-    <a href="?itemID=${item.id}">${item.name}</a>
-</#list>
+    <#if items?has_content>
+        <table>
+            <th>Listed Items</th>
+            <#list items as item>
+                <tr>
+                    <form method="post" action="findItems">
+                        <td><p>${item.name}</p></td><td> <input type="submit" value="View Auction"></td>
+                </tr>
+                <input type="hidden" name="auction_id" value="${item.id}">
+                </form>
+            </#list>
+        </table>
+    </#if>
 
 
 <#else>

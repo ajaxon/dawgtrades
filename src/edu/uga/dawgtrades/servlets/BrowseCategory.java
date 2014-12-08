@@ -2,6 +2,7 @@ package edu.uga.dawgtrades.servlets;
 
 import edu.uga.dawgtrades.authentication.Session;
 import edu.uga.dawgtrades.authentication.SessionManager;
+import edu.uga.dawgtrades.model.Auction;
 import edu.uga.dawgtrades.model.Category;
 import edu.uga.dawgtrades.model.DTException;
 import edu.uga.dawgtrades.model.Item;
@@ -81,16 +82,26 @@ public class BrowseCategory extends javax.servlet.http.HttpServlet {
                         }
 
                         // get items for category
-                        List<Item> items =  new LinkedList<Item>();
-                        Iterator<Item> itemIter = session.getObjectModel().getItem(category);
-                        while(itemIter.hasNext()){
-                            items.add(itemIter.next());
+                        Item item = null;
+                        Auction auction = null;
+                        List<Auction> auctions =  new LinkedList<Auction>();
+                        List<Item> items = new LinkedList<Item>();
+                        Iterator<Auction> auctionIterator = session.getObjectModel().findAuction(null);
+                        while(auctionIterator.hasNext()){
+                            auction = auctionIterator.next();
+                            item = session.getObjectModel().getItem(auction);
+                            if(item.getCategoryId() == category.getId()){
+                                auctions.add(auction);
+                                items.add(item);
+                            }
                         }
 
 
+
+                        request.setAttribute("items",items);
                         request.setAttribute("category",category);
                         request.setAttribute("children",children);
-                        request.setAttribute("items",items);
+                        request.setAttribute("auctions",auctions);
                         request.getRequestDispatcher("browse_category.ftl").forward(request,response);
                     }
 
