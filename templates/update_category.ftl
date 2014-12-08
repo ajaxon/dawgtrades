@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>Update Category ${category.name}</title>
+<#include "head.ftl">
 </head>
 <body>
 

@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>View Item</title>
+<#include "head.ftl">
 </head>
 <body>
 	<h1>${item.name}</h1>
