@@ -7,6 +7,8 @@
 <br>
 <span>1.</span><a href="findItems">View Auctions</a>
 <br>
+<span>5.</span><a href="view_profile">View Profile</a>
+<br>
 <span>5.</span><a href="create_item">Create Item for Auction</a>
 <br>
 <span>5.</span><a href="auction_item">Auction Item</a>
