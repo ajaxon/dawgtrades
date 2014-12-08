@@ -5,13 +5,15 @@
 <body>
 <h1>Hello ${user.firstName}, Welcome To the DawgTrades Auction System</h1>
 <br>
+<#if message?has_content>${message}</#if><br>
+
 <span>1.</span><a href="findItems">View Auctions</a>
 <br>
 <span>5.</span><a href="create_item">Create Item for Auction</a>
 <br>
 <span>5.</span><a href="auction_item">Auction Item</a>
 <br>
-<span>5again.</span><a href="view_my_auctions">Auction Item</a>
+<span>6.</span><a href="view_my_auctions">View my Auctions</a>
 <br>
 <#if user.isAdmin==true>
 

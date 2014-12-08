@@ -79,4 +79,12 @@ public class BidImpl extends Persistent implements Bid {
         return user;
 	}
 
+	@Override
+	public void setAuction(Auction auction) {
+
+		this.auction=auction;
+		this.auctionId=auction.getId();
+	}
+
+
 }

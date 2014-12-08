@@ -7,11 +7,25 @@
 <#if category?has_content>
 
 <h1>${category.name}</h1>
-<a href="list_item?categoryID=${category.id}">List item</a><br>
+<a href="create_item?categoryID=${category.id}">List item</a><br>
 <#list children as child>
     <a href="?categoryID=${child.id}">${child.name}<br>
 </#list>
 
+    <#if items?has_content>
+        <table>
+            <th>Listed Items</th>
+            <#list items as item>
+                <tr>
+
+                    <form method="post" action="findItems">
+                        <td><p>${item.name}</p></td><td> <input type="submit" value="View Auction"></td>
+                </tr>
+                <input type="hidden" name="auction_id" value="${item.id}">
+                </form>
+            </#list>
+        </table>
+    </#if>
 
 
 <#else>

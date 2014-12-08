@@ -1,12 +1,18 @@
 package edu.uga.dawgtrades.servlets;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.swing.text.DateFormatter;
 
 import edu.uga.dawgtrades.authentication.Session;
 import edu.uga.dawgtrades.authentication.SessionManager;
@@ -44,14 +50,74 @@ public class AuctionItem extends javax.servlet.http.HttpServlet {
 	 	    	request.getRequestDispatcher("home.html").forward(request, response);
 	 	    	System.out.println("No session found");
 		 }else{
-			 
+			 float minPrice = -1000;
 			
 			 int itemId = Integer.parseInt(request.getParameter("item_id"));
-			 float minPrice = Float.parseFloat(request.getParameter("minPrice"));
-			 Item item = session.getObjectModel().createItem();
-			 item.setId(itemId);
-			
 			try {
+				Item item = session.getObjectModel().createItem();
+				item.setId(itemId);
+				String month =request.getParameter("month_start");
+				String day = request.getParameter("day_start");
+				String year= request.getParameter("year_start");
+				String time =request.getParameter("time");
+				
+				String date =month+" "+day+", "+year+" "+time;
+				Date dateAuctionEnd = null;
+				
+				 DateFormat format = 
+				            DateFormat.getDateTimeInstance(
+				            DateFormat.MEDIUM, DateFormat.SHORT);
+				try {
+					 dateAuctionEnd = format.parse(date);
+					System.out.println(dateAuctionEnd.toString());
+					
+				} catch (ParseException e) {
+
+					e.printStackTrace();
+				}
+				try{
+			 
+						minPrice = Float.parseFloat(request.getParameter("minPrice"));
+			 
+			 
+					}catch(NumberFormatException e){
+				 
+						Iterator<Item> items = session.getObjectModel().findItem(item);
+						Item itemForSale = null;
+						while(items.hasNext()){
+							itemForSale = items.next();
+						}
+				 	
+				 	
+					request.setAttribute("item", itemForSale);
+				 	
+				 	request.setAttribute("message", "Invalid starting price. Please ensure you have entered in a proper numberic number");
+				 	request.getRequestDispatcher("item_for_sale.ftl").forward(request, response);
+				 	return;
+			 }
+				
+				 Calendar cal = Calendar.getInstance(); // creates calendar
+				    cal.setTime(new Date()); // sets calendar time/date
+				    cal.add(Calendar.HOUR_OF_DAY, 1); //adds one hour
+				    System.out.println(cal.getTime().toString());
+				    
+			 
+				if(dateAuctionEnd.before(cal.getTime())){
+						Iterator<Item> items = session.getObjectModel().findItem(item);
+						Item itemForSale = null;
+						while(items.hasNext()){
+							itemForSale = items.next();
+						}
+						
+			 	
+						request.setAttribute("item", itemForSale);
+			 	
+						request.setAttribute("message", "Sorry, but the input ending date occurs before now or too soon to auction item.");
+						request.getRequestDispatcher("item_for_sale.ftl").forward(request, response);
+						return;
+					
+				}
+				
 				 Iterator<Item> items = session.getObjectModel().findItem(item);
 				 int count = 0;
 				 while(items.hasNext()){
@@ -60,9 +126,11 @@ public class AuctionItem extends javax.servlet.http.HttpServlet {
 				 }
 				 System.out.println(count);
 				 Auction auctionToSave;
-				auctionToSave = session.getObjectModel().createAuction(item,minPrice,new Date());				
+				auctionToSave = session.getObjectModel().createAuction(item,minPrice,dateAuctionEnd);				
 				session.getObjectModel().storeAuction(auctionToSave);
-				request.getRequestDispatcher("login").forward(request,response);
+				RegisteredUser user =session.getUser();
+				request.setAttribute("user", user);
+   	 			request.getRequestDispatcher("itemAuctioned.ftl").forward(request, response);
 			} catch (DTException e1) {
 				e1.printStackTrace();
 			}
