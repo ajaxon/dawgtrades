@@ -197,6 +197,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <servlet-name>ReportTransaction</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.ReportTransaction</servlet-class>
     </servlet>
+     <servlet-mapping>
+        <servlet-name>ReportTransaction</servlet-name>
+        <url-pattern>/report_transaction</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>BidOnItem</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.BidOnItem</servlet-class>

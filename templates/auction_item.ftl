@@ -18,28 +18,41 @@
 			
 			<br>
 			<tr>
-					<form method="get" action="item_to_auction">
-					<input type="hidden" name="item_id" value="${item.id}">
+					
         			<td>${item.name}</td>
-  					<#list itemStatus?keys as status>
+  					
 						<#if itemStatus[item.name]== "no_auction" >
+							<form method="get" action="item_to_auction">
+							<input type="hidden" name="item_id" value="${item.id}">
 							<td><input type="submit" value="Auction Now"></td>
+							</form>
 						<#elseif itemStatus[item.name]=="reauction" >
+							<form method="get" action="item_to_auction">
+							<input type="hidden" name="item_id" value="${item.id}">
 							<td><input type="submit" value="Reauction"></td>
+							</form>
 						<#elseif itemStatus[item.name]=="sold">
 							<td>Item has sold</td>
 						<#elseif itemStatus[item.name]=="in_auction">
 							<td>Item is currently in auction</td>
 						</#if>
-					</#list>
 					
 					
+					<#if itemStatus[item.name]== "no_auction" ||  itemStatus[item.name]== "reauction">
+					<form method="get" action="delete_item">
+     							<input type="hidden" name="item_id" value="${item.id}">
+     						<td><input type="submit" value="Delete Item"></td>
      				</form>
-     		<form method="get" action="delete_item">
-     		<input type="hidden" name="item_id" value="${item.id}">
-     		<td><input type="submit" value="Delete Item"></td>
-     		</form>
-     		<tr>
+     				</#if>
+     				<#if itemStatus[item.name]== "sold">
+					<form method="get" action="report_transaction">
+     							<input type="hidden" name="item_id" value="${item.id}">
+     						<td><input type="submit" value="Leave Feedback"></td>
+     				</form>	
+     			    </#if>
+     				
+     		
+     		</tr>
 		</#list>
 		</table>
     <#else>
