@@ -56,6 +56,7 @@ public class Register extends javax.servlet.http.HttpServlet {
         user.setPhone(request.getParameter("phone"));
 
         try {
+
             objectModel.storeRegisteredUser(user);
         } catch (DTException e) {
             e.printStackTrace();
