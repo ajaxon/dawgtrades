@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -25,7 +26,9 @@ import edu.uga.dawgtrades.model.RegisteredUser;
  * Created by Allen on 11/27/14.
  */
 public class AuctionItem extends javax.servlet.http.HttpServlet {
-    protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
+   
+	
+	protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
     	HttpSession httpSession = null;
     	String      ssid = null;
     	Session session = null;
@@ -162,7 +165,11 @@ public class AuctionItem extends javax.servlet.http.HttpServlet {
 				 
 		 	    	request.getRequestDispatcher("home.html").forward(request, response);
 		 	    	System.out.println("No session found");
+		 	    	
+		 	    	
 			 }else{
+				 HashMap<String,String> itemStatus = new HashMap<String,String>();
+				 
 				 RegisteredUser user = session.getUser();
 				 try {
 					Iterator<Item> items = session.getObjectModel().getItem(user);
@@ -173,10 +180,32 @@ public class AuctionItem extends javax.servlet.http.HttpServlet {
 						Item item = items.next();
 						if(session.getObjectModel().getAuction(item)==null){
 							itemList.add(item);
+							itemStatus.put(item.getName(), "no_auction");
+						}else{
+							Auction auction = session.getObjectModel().getAuction(item);
+							if(auction.getIsClosed()){
+								
+								if(SessionManager.getHighestBidFloatForAuction(session, auction)==auction.getMinPrice()){
+									itemList.add(item);
+									itemStatus.put(item.getName(), "reauction");
+								}else{
+									itemList.add(item);
+									itemStatus.put(item.getName(), "sold");
+									
+								}
+								
+							}else{
+								itemList.add(item);
+								itemStatus.put(item.getName(), "in_auction");
+								
+							}
+							
+							
 						}
 						
 				
 					}
+					request.setAttribute("itemStatus", itemStatus);
 					request.setAttribute("items", itemList);
 					request.getRequestDispatcher("auction_item.ftl").forward(request, response);
 					
@@ -186,4 +215,7 @@ public class AuctionItem extends javax.servlet.http.HttpServlet {
 				 
 			 }
     }
+    
+    
+   
 }

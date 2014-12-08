@@ -136,14 +136,26 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <servlet-name>PrintReport</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.PrintReport</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>PrintReport</servlet-name>
+        <url-pattern>/print_report</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>DeleteUser</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.DeleteUser</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteUser</servlet-name>
+        <url-pattern>/delete_user</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>ViewProfile</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.ViewProfile</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>ViewProfile</servlet-name>
+        <url-pattern>/view_profile</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>UpdateProfile</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.UpdateProfile</servlet-class>
@@ -160,6 +172,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <servlet-name>Unregister</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.Unregister</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>Unregister</servlet-name>
+        <url-pattern>/unregister</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>AuctionItem</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.AuctionItem</servlet-class>
@@ -181,6 +197,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <servlet-name>ReportTransaction</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.ReportTransaction</servlet-class>
     </servlet>
+     <servlet-mapping>
+        <servlet-name>ReportTransaction</servlet-name>
+        <url-pattern>/report_transaction</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>BidOnItem</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.BidOnItem</servlet-class>
@@ -204,6 +224,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
    <servlet-mapping>
         <servlet-name>FindItems</servlet-name>
         <url-pattern>/findItems</url-pattern>
+    </servlet-mapping>
+      <servlet>
+        <servlet-name>CreateAndAuction</servlet-name>
+        <servlet-class>edu.uga.dawgtrades.servlets.CreateAndAuction</servlet-class>
+    </servlet>
+   <servlet-mapping>
+        <servlet-name>CreateAndAuction</servlet-name>
+        <url-pattern>/createAndAuction</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>BrowseCategory</servlet-name>

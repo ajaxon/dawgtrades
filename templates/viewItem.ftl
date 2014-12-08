@@ -14,6 +14,10 @@
 	<br>
 	<p>Expiration:${expiration}</>
 	
+	<#list attributeAndType?keys as attributeType>
+		<p>${attributeType}:</p><p>${attributeAndType[attributeType]}</p>
+	</#list>
+	
 	<#if owned==true>
 		<p>Because you are the owner of this item, bidding is currently disabled.</p>
 	<#elseif highestBidder==true>
@@ -26,9 +30,6 @@
 	</#if>
 	<br>
 	<br>
-	<form>
-		<button formmethod="get" formaction="findItems" type="submit">Return to Auctions</button>
-	</form>
-
+	
 </body>
 <html>

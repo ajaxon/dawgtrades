@@ -63,6 +63,7 @@ public class TrackAuction extends javax.servlet.http.HttpServlet {
                     Iterator<Auction> auctionsIter = session.getObjectModel().findAuction(auctionModel);
                     while(auctionsIter.hasNext()){
                         auction = auctionsIter.next();
+                        item = session.getObjectModel().getItem(auction);
                         auctions.put(auction,new HashMap<String,Object>());
                         if(auctions.get(auction).get("bid")==null){
                             auctions.get(auction).put("bid",bid);
@@ -77,7 +78,6 @@ public class TrackAuction extends javax.servlet.http.HttpServlet {
                     }
 
 
-                    // get auction
 
 
 
