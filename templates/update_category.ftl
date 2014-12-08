@@ -24,8 +24,9 @@
 <#-- Attribute types for category-->
     <#list attribute_types as attr>
         Attribute Type<input type="text" name="attr_name${attr_index+1}" value="${attr.name}"><br>
+        <#assign count = attr_index+1>
     </#list>
-
+    <div id="addAttributeType">Add another Attribute Type</div>
 
     <input type="submit" name="Add" value="submit">
 </form>
