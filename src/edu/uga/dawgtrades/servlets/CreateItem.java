@@ -59,7 +59,8 @@ public class CreateItem extends javax.servlet.http.HttpServlet {
 				 itemToSave.setCategoryId(categoryId);
 				 try {
 					session.getObjectModel().storeItem(itemToSave);
-					 request.getRequestDispatcher("login").forward(request, response);
+					request.setAttribute("user", user);
+	   	 			request.getRequestDispatcher("index.ftl").forward(request, response);
 				} catch (DTException e) {
 					
 					e.printStackTrace();

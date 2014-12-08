@@ -272,6 +272,7 @@ public class CategoryManager {
                 condition.append(" and C.id ='"+category.getId()+"'");
             }
 
+            query.append(condition);
         }
         try{
             stmt = conn.createStatement();

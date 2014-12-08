@@ -2,6 +2,7 @@ package edu.uga.dawgtrades.servlets;
 
 import edu.uga.dawgtrades.authentication.Session;
 import edu.uga.dawgtrades.authentication.SessionManager;
+import edu.uga.dawgtrades.model.Auction;
 import edu.uga.dawgtrades.model.Category;
 import edu.uga.dawgtrades.model.DTException;
 import edu.uga.dawgtrades.model.Item;
@@ -57,6 +58,8 @@ public class BrowseCategory extends javax.servlet.http.HttpServlet {
                             }
                             children.put(category.getName(),kids);
                         }
+
+
                         request.setAttribute("user", session.getUser());
                         request.setAttribute("categories", categories);
                         request.setAttribute("children",children);
@@ -78,9 +81,28 @@ public class BrowseCategory extends javax.servlet.http.HttpServlet {
                             children.add(childrenIter.next());
                         }
 
+                        // get items for category
+                        Item item = null;
+                        Auction auction = null;
+                        List<Auction> auctions =  new LinkedList<Auction>();
+                        List<Item> items = new LinkedList<Item>();
+                        Iterator<Auction> auctionIterator = session.getObjectModel().findAuction(null);
+                        while(auctionIterator.hasNext()){
+                            auction = auctionIterator.next();
+                            item = session.getObjectModel().getItem(auction);
+                            if(item.getCategoryId() == category.getId()){
+                                auctions.add(auction);
+                                item.setId(auction.getId());
+                                items.add(item);
+                            }
+                        }
 
+
+
+                        request.setAttribute("items",items);
                         request.setAttribute("category",category);
                         request.setAttribute("children",children);
+                        //request.setAttribute("auctions",auctions);
                         request.getRequestDispatcher("browse_category.ftl").forward(request,response);
                     }
 
