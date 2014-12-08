@@ -13,9 +13,25 @@ import java.io.IOException;
 public class ViewProfile extends javax.servlet.http.HttpServlet {
 
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
+        HttpSession httpSession = null;
+        String ssid = null;
+        Session session = null;
+        RegisteredUser user = null;
 
+        httpSession = request.getSession();
+        if (httpSession.getAttribute("ssid") != null) {
+            ssid = (String) httpSession.getAttribute("ssid");
+            session = SessionManager.getSessionById(ssid);
+            if (session == null) {
+                request.getRequestDispatcher("home.html").forward(request, response);
+                System.out.println("No session found");
+            } else {
+                user = session.getUser();
+
+            }
+            request.getRequestDispatcher("view_profile.ftl").forward(request,response);
+        }
     }
-
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
         HttpSession httpSession = null;
@@ -24,11 +40,9 @@ public class ViewProfile extends javax.servlet.http.HttpServlet {
         RegisteredUser user = null;
 
         httpSession = request.getSession();
-System.out.print("I'm before if attributes ssid");
         if (httpSession.getAttribute("ssid") != null) {
             ssid = (String) httpSession.getAttribute("ssid");
             session = SessionManager.getSessionById(ssid);
-System.out.print("I'm in the if statement");
             if (session == null) {
                 request.getRequestDispatcher("home.html").forward(request, response);
                 System.out.println("No session found");
