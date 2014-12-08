@@ -77,7 +77,13 @@ public class FindItems extends javax.servlet.http.HttpServlet {
 				}
 				request.setAttribute("item", item);
 				Date expiration = auction.getExpiration();
-				String time = expiration.toString();
+				
+				Date now = new Date();
+				long diff = expiration.getTime() - now.getTime();
+				
+				String time =this.secondsToString(diff);
+				
+				
 				request.setAttribute("expiration", time);
 				request.setAttribute("auction", auction);
 				Bid currentBid = SessionManager.getHighestBidForAuction(session, auction);
@@ -198,6 +204,23 @@ public class FindItems extends javax.servlet.http.HttpServlet {
     	
     		
     }
+    
+    private  String secondsToString(long diff) {
+
+    	long diffSeconds = diff / 1000 % 60;
+		long diffMinutes = diff / (60 * 1000) % 60;
+		long diffHours = diff / (60 * 60 * 1000) % 24;
+		long diffDays = diff / (24 * 60 * 60 * 1000);
+
+		System.out.print(diffDays + " days, ");
+		System.out.print(diffHours + " hours, ");
+		System.out.print(diffMinutes + " minutes, ");
+		System.out.print(diffSeconds + " seconds.");
+
+    	
+        return "The remaining time is "+diffDays+" days, "+diffHours+" hours, "+diffMinutes+
+                " minutes, and "+diffSeconds+" seconds.";
+     }
     
    
 }
