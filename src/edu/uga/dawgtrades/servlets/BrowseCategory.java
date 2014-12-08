@@ -92,6 +92,7 @@ public class BrowseCategory extends javax.servlet.http.HttpServlet {
                             item = session.getObjectModel().getItem(auction);
                             if(item.getCategoryId() == category.getId()){
                                 auctions.add(auction);
+                                item.setId(auction.getId());
                                 items.add(item);
                             }
                         }
@@ -101,7 +102,7 @@ public class BrowseCategory extends javax.servlet.http.HttpServlet {
                         request.setAttribute("items",items);
                         request.setAttribute("category",category);
                         request.setAttribute("children",children);
-                        request.setAttribute("auctions",auctions);
+                        //request.setAttribute("auctions",auctions);
                         request.getRequestDispatcher("browse_category.ftl").forward(request,response);
                     }
 
