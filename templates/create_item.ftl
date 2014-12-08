@@ -5,7 +5,7 @@
 <body>
 
 
-<form method="post" name="item" action="create_item">
+<form method="post" name="item" >
 	<h1>Create an item to be auctioned</h1>
 	<br>
 	<label>Name of Item</label><input type="text" name="name">
@@ -22,7 +22,8 @@
 	</#if>
 	<input type="hidden" name="category_id" value="${category.id}">
    	<br>
-	<input type="submit" name="createItem" value="Post Item">
+	<input formaction="create_item" type="submit" name="createItem" value="Save Item, Auction Later">
+	<input formaction="createAndAuction" type="submit" name="createAndSaveItem" value="Auction Now">
 </form>
 
 <a href="login">Back to Index</a>
