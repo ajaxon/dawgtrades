@@ -3,13 +3,15 @@
     <title>Pick a user</title>
 </head>
 <body>
-    <form method="get" name="DeleteUser" action="delete_user">
+    <form method="post" name="DeleteUser" action="delete_user">
         Users: <select name="user_id">
         <option value="0" selected>None</option>
         <#list users as user>
-            <option name="userID" value="${user.id}">${user.name}</option>
+            <option name="user_id" value="${user.id}">${user.name}</option>
         </#list>
         </select>
+        <input type="submit" value="Delete User">
+        </form>
 <br>
 <a href="login">Back to Home</a>
 </body>
