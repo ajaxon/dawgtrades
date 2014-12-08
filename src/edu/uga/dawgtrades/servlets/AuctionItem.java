@@ -26,7 +26,9 @@ import edu.uga.dawgtrades.model.RegisteredUser;
  * Created by Allen on 11/27/14.
  */
 public class AuctionItem extends javax.servlet.http.HttpServlet {
-    protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
+   
+	
+	protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
     	HttpSession httpSession = null;
     	String      ssid = null;
     	Session session = null;

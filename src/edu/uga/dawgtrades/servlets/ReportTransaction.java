@@ -3,17 +3,32 @@ package edu.uga.dawgtrades.servlets;
 import javax.security.auth.login.Configuration;
 import javax.servlet.*;
 import javax.servlet.http.*;
+
 import java.io.IOException;
 import java.io.Writer;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 
-import freemarker.template.*;
 
+
+
+
+
+
+
+import freemarker.template.*;
+import edu.uga.dawgtrades.authentication.Session;
+import edu.uga.dawgtrades.authentication.SessionManager;
+import edu.uga.dawgtrades.model.Auction;
+import edu.uga.dawgtrades.model.Bid;
 import edu.uga.dawgtrades.model.DTException;
+import edu.uga.dawgtrades.model.ExperienceReport;
+import edu.uga.dawgtrades.model.Item;
 import edu.uga.dawgtrades.model.ObjectModel;
 import edu.uga.dawgtrades.model.RegisteredUser;
 import edu.uga.dawgtrades.model.impl.ObjectModelImpl;
@@ -26,70 +41,143 @@ import edu.uga.dawgtrades.persist.impl.PersistenceImpl;
  * Created by Allen on 11/27/14.
  */
 public class ReportTransaction extends javax.servlet.http.HttpServlet {
-    static Connection conn = null;
-    static ObjectModel objectModel = null;
-    static Persistence persistence = null;
-    private freemarker.template.Configuration cfg;
-    // get a database connection
 
 
-    public void init() {
-        // Initialize the FreeMarker configuration;
-        // - Create a configuration instance
-        cfg = new freemarker.template.Configuration();
-        // - Templates are stored in the WEB-INF/templates directory of the Web app.
-        cfg.setServletContextForTemplateLoading(
-                getServletContext(), "WEB-INF/templates");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
+
+	protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
+		 HttpSession httpSession = null;
+	    	String      ssid = null;
+	    	Session session = null;
+	    	
+	    	
+	    	httpSession = request.getSession();
+	    	
+	    	if(httpSession.getAttribute("ssid")!=null){
+	    		
+	    		ssid = (String) httpSession.getAttribute("ssid");
+	    		
+	    	}else{
+	    		System.out.println("No ssid found");
+	 	    	request.getRequestDispatcher("home.html").forward(request, response);
+
+	    	}
+	    		
+	    	
+			 session = SessionManager.getSessionById(ssid);
+			 if(session==null){
+				 
+		 	    	request.getRequestDispatcher("home.html").forward(request, response);
+		 	    	System.out.println("No session found");
+		 	    	
+		 	    	
+			 }else{
+				 int reviewerId = Integer.parseInt(request.getParameter("reviewer"));
+				 int revieweeId = Integer.parseInt(request.getParameter("reviewee"));
+				 int rating = Integer.parseInt(request.getParameter("rating"));
+				 String description = request.getParameter("description");
+				 RegisteredUser modelUser = session.getObjectModel().createRegisteredUser();
+				 modelUser.setId(reviewerId);
+				 Iterator<RegisteredUser> userIter;
+				try {
+					userIter = session.getObjectModel().findRegisteredUser(modelUser);
+				
+				 RegisteredUser reviewer = null;
+				 while(userIter.hasNext()){
+					 reviewer = userIter.next();
+				 }
+				 modelUser.setId(revieweeId);
+				 userIter = session.getObjectModel().findRegisteredUser(modelUser);
+				 RegisteredUser reviewed = null;
+				 while(userIter.hasNext()){
+					 reviewed = userIter.next();
+				 }
+				 
+				 ExperienceReport experienceReport = session.getObjectModel().createExperienceReport(reviewer, reviewed, rating, description, new Date());
+				 session.getObjectModel().storeExperienceReport(experienceReport);
+				 request.getRequestDispatcher("feedBack.ftl").forward(request, response);;
+				 
+				} catch (DTException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			 }
+		
+		
     }
 
-    protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
+    		
+    	  protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
+    	    	 HttpSession httpSession = null;
+    		    	String      ssid = null;
+    		    	Session session = null;
+    		    	
+    		    	
+    		    	httpSession = request.getSession();
+    		    	
+    		    	if(httpSession.getAttribute("ssid")!=null){
+    		    		
+    		    		ssid = (String) httpSession.getAttribute("ssid");
+    		    		
+    		    	}else{
+    		    		System.out.println("No ssid found");
+    		 	    	request.getRequestDispatcher("home.html").forward(request, response);
 
-    }
+    		    	}
+    		    		
+    		    	
+    				 session = SessionManager.getSessionById(ssid);
+    				 if(session==null){
+    					 
+    			 	    	request.getRequestDispatcher("home.html").forward(request, response);
+    			 	    	System.out.println("No session found");
+    			 	    	
+    			 	    	
+    				 }else{
+    					 
+    					 int item_id = Integer.parseInt(request.getParameter("item_id"));
+    					 System.out.println(item_id);
+    					 Item modelItem = session.getObjectModel().createItem();
+    					 modelItem.setId(item_id);
+    					 try {
+    						Item ratedItem = null;
+							Iterator<Item> items = session.getObjectModel().findItem(modelItem);
+							while(items.hasNext()){
+								
+								ratedItem = items.next();
+								System.out.println(ratedItem.getName());
+							}
+							
+							Auction ratedAuction = session.getObjectModel().getAuction(ratedItem);
+							Bid highestBid = SessionManager.getHighestBidForAuction(session, ratedAuction);
+							
+							if(ratedItem.getOwnerId()==session.getUser().getId()){
+								
+								request.setAttribute("reviewer", session.getUser().getId());
+								request.setAttribute("reviewee", highestBid.getRegisteredUser().getId());
+							}else{
+								request.setAttribute("reviewer", highestBid.getRegisteredUser().getId());
+								request.setAttribute("reviewee", ratedItem.getOwnerId());
+								
+							}
+							request.setAttribute("message", "How was your transaction?");
+							request.getRequestDispatcher("report_transaction.ftl").forward(request, response);;
+					
+							
+							
+    					 } catch (DTException e) {
 
-    protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-
-        // Prepare template input
-        Map<String, Object> root = new HashMap<String, Object>();
-        root.put("message","testing this shit ");
-        // Get the templat object
-        Template template = cfg.getTemplate("report_transaction.ftl");
-
-        // Prepare the HTTP response:
-        // - Use the charset of template for the output
-        // - Use text/html MIME-type
-        response.setContentType("text/html; charset=" + template.getEncoding());
-        Writer out = response.getWriter();
-
-        // Merge the data-model and the template
-        try {
-            template.process(root, out);
-        } catch (TemplateException e) {
-            throw new ServletException(
-                    "Error while processing FreeMarker template", e);
-        }
-
-    }
-    public void getConnection()
-    {
-        try {
-            conn = DbUtils.connect();
-
-        }
-        catch (Exception seq) {
-            System.err.println( "Register.java getConnection: Unable to obtain a database connection" );
-        }
-
-        // obtain a reference to the ObjectModel module
-        objectModel = new ObjectModelImpl();
-
-        // obtain a reference to Persistence module and connect it to the ObjectModel
-        persistence = new PersistenceImpl( conn, objectModel );
-
-        // connect the ObjectModel module to the Persistence module
-        objectModel.setPersistence( persistence );
-    }
-    public void disconnect() throws SQLException {
-        conn.close();
-    }
+							e.printStackTrace();
+						}
+    					 
+    				 }
+    				 
+    	
+    	
+    
+}
 }
