@@ -160,6 +160,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <servlet-name>Unregister</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.Unregister</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>Unregister</servlet-name>
+        <url-pattern>/unregister</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>AuctionItem</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.AuctionItem</servlet-class>
