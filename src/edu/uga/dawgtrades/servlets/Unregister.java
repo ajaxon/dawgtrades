@@ -58,25 +58,30 @@ public class Unregister extends javax.servlet.http.HttpServlet {
             } else {
 
                 user = session.getUser();
-                request.setAttribute("user", user);
-                request.getRequestDispatcher("index.ftl").forward(request, response);
+
+                try {
+                    
+                    session.getObjectModel().deleteRegisteredUser(user);
+
+                } catch (DTException e) {
+                    e.printStackTrace();
+                }
+                String message = "User account deleted";
+                request.setAttribute("message",message);
+                request.getRequestDispatcher("home.html").forward(request, response);
 
 
             }
 
 
-            try {
-                objectModel.deleteRegisteredUser(user);
-            } catch (DTException e) {
-                e.printStackTrace();
-            }
+
         }
     }
 
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         // Prepare template input
         Map<String, Object> root = new HashMap<String, Object>();
-        root.put("message","testing this shit ");
+
         // Get the templat object
         Template template = cfg.getTemplate("unregister.ftl");
 
