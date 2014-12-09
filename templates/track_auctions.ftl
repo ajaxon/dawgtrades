@@ -10,10 +10,16 @@
 
 
 
-
+<#list items as item>
+    ${item.name}
+</#list>
 
 <#list auctions?keys as auction>
-<p>${auction.minBid}:</p><p></p>
+<form method="post" action="findItems">
+    <td><p></p></td>><button class="btn btn-default" type="submit">View Auction</button>
+    </tr>
+    <input type="hidden" name="auction_id" value="${auction}">
+</form>
 </#list>
 
 

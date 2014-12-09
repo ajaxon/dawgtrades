@@ -49,8 +49,10 @@ public class TrackAuction extends javax.servlet.http.HttpServlet {
                 Item item = null;
                 Bid bid = null;
                 Auction auction = null;
-
-                HashMap<Auction,Map<String,Object>> auctions= new HashMap<Auction, Map<String, Object>>();
+                Set<Item> items = new LinkedHashSet<Item>();
+                HashMap<Integer,Float> auctions = new HashMap<Integer, Float>();
+                //HashMap<Auction,Map<String,Object>> auctions= new HashMap<Auction, Map<String, Object>>();
+                //List<Auction> auctionList = new LinkedList<Auction>();
                 RegisteredUser user = session.getUser();
                 Bid modelBid = session.getObjectModel().createBid();
                 modelBid.setUser(user);
@@ -63,18 +65,21 @@ public class TrackAuction extends javax.servlet.http.HttpServlet {
                     Iterator<Auction> auctionsIter = session.getObjectModel().findAuction(auctionModel);
                     while(auctionsIter.hasNext()){
                         auction = auctionsIter.next();
-                        item = session.getObjectModel().getItem(auction);
-                        auctions.put(auction,new HashMap<String,Object>());
-                        if(auctions.get(auction).get("bid")==null){
-                            auctions.get(auction).put("bid",bid);
+
+                        if(auctions.get(auction.getId())==null){
+                            auctions.put( (int) auction.getId(),bid.getAmount());
                         }else{
-                            Bid bidTemp = (Bid) auctions.get(auction).get("bid");
-                            if(bidTemp.getAmount() < bid.getAmount()){
-                                auctions.get(auction).put("bid",bid);
+                           float value = auctions.get(auction.getId());
+                            if(value < bid.getAmount()){
+                                auctions.put((int)auction.getId(), bid.getAmount());
                             }
                         }
 
-                        auctions.get(auction).put("item",item);
+                            item = session.getObjectModel().getItem(auction);
+                            items.add(item);
+
+
+
                     }
 
 
@@ -82,8 +87,9 @@ public class TrackAuction extends javax.servlet.http.HttpServlet {
 
 
                 }
+                List<Item> list = new ArrayList<Item>(items);
 
-
+                request.setAttribute("items", list);
                 request.setAttribute("auctions",auctions);
 
 
