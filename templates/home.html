@@ -12,14 +12,14 @@
 </head>
 <body>
 <div class="container">
-		<div class="row">
+		<div class="row top-buffer">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h1>Welcome To DawgTrades</h1>
 				</div>
 				<div class="panel-body">
 				<div class="row">
-					<div class="col-lg-8">
+					<div class="col-lg-6 col-lg-offset-2">
 					<h4>Login Here</h4>
 					<form role="form" method="post" action="login">
 					        	
@@ -30,15 +30,21 @@
 					           <label for="password">Password</label><input class="form-control" id="password" type="password" name="password">
 					           </div>
 					             <button type="submit" class="btn btn-success">Login</button>
+					             <p class="help-block"><a href="reset_password">Forgot Password?</a>.</p>
 					        </form>
 					        <br>
 					</div>
 					<div class="col-lg-4">
-					
+							<div class="row">
+								<div class="panel panel-default">
+								<div class="panel-body">
 								<form role="form" method="get" action="register">
 					        	    <h4>Not a user? Create an account here.</h4>
 					            	 <button type="submit">Register</button>
 					        	</form>
+					        	</div>
+					        	</div>
+					        </div>
 					</div>
 				</div>
 			</div>

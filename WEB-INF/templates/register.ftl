@@ -12,14 +12,14 @@
 <body>
 
 <div class="container">
-	<div class="row">
+	<div class="row top-buffer">
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">Register Today</h3>
 		</div>
 		<div class="panel-body">
 		
-				<form role="form" method=post name="Register" action="register" style="margin:0;padding:0;">
+				<form role="form" method="post" name="Register" action="register" style="margin:0;padding:0;">
 					<div class="form-group">
     				<label for="name">
 				    Name: </label><input class="form-control" type="text" name="name" id="name">
@@ -47,9 +47,9 @@
 				    
 				    
 				    <div class="checkbox">
-						    <label>
-						      <input type="checkbox" name="canText"> Can Receive Text Message
-						    </label>
+						    <label>Can Receive Text Message </label>
+						      <input type="checkbox" name="canText"> 
+						   
 						  </div>
 				    
 				    
