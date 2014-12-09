@@ -201,6 +201,20 @@ public class ObjectModelRead extends TestCase
         assertEquals(1,usercount);
         assertEquals("Test_name",user.getName());
     }
+    /*
+    @Test
+    public void test_restoreUserbyEmail() throws DTException {
+        RegisteredUser modelUser = objectModel.createRegisteredUser();
+        modelUser.setEmail("bob@emailtest.com");
+        Iterator<RegisteredUser> users = objectModel.findRegisteredUser(modelUser);
+        int usercount = 0 ;
+        while(users.hasNext()){
+            user = users.next();
+            usercount++;
+        }
+        assertEquals(1,usercount);
+        assertEquals("bob",user.getName());
+    }*/
     @Test
     public void test_restoreUserbyLogin() throws DTException {
         RegisteredUser testuser = null;
