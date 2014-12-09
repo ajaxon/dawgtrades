@@ -232,10 +232,15 @@ public class FindItems extends javax.servlet.http.HttpServlet {
 		System.out.print(diffHours + " hours, ");
 		System.out.print(diffMinutes + " minutes, ");
 		System.out.print(diffSeconds + " seconds.");
-
-    	
+		
+		
+    	if(diff>0){
         return "The remaining time is "+diffDays+" days, "+diffHours+" hours, "+diffMinutes+
                 " minutes, and "+diffSeconds+" seconds.";
+    	}else{
+    		
+    		return "This auction has expired";
+    	}
      }
     
    

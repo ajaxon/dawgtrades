@@ -5,13 +5,48 @@
 </head>
 <body>
 
+<div class="container">
+		<div class="row">
+			<div class="panel panel-default">
+				
 <#if category?has_content>
+<div class="panel-heading">
+		<#if category.name?has_content>
+		<h1>${category.name}</h1>
+		<#else>
+		<h1>Browse Categories</>
+		</#if>
+</div>
 
-<h1>${category.name}</h1>
-<a href="create_item?categoryID=${category.id}">List item</a><br>
-<#list children as child>
-    <a href="?categoryID=${child.id}">${child.name}<br>
-</#list>
+
+<div class="panel-body">
+
+
+
+<nav class="navbar navbar-default" role="navigation">
+ <div class="collapse navbar-collapse" id="">
+  <ul class="nav navbar-nav navbar-left">
+        <li>Subcategories</li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">View Subcategories<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+          <#list children as child>
+		    <li><a href="?categoryID=${child.id}">${child.name}</a></li>
+		</#list>
+		 </ul>
+
+    </ul>
+ 	<ul class="nav navbar-nav navbar-right">
+    <li><a href="create_item?categoryID=${category.id}">List item</a><br></li>
+    </ul>
+	</div>
+ 
+</nav>
+
+
+
+
+
 
     <#if items?has_content>
         <table>
@@ -20,7 +55,7 @@
                 <tr>
 
                     <form method="post" action="findItems">
-                        <td><p>${item.name}</p></td><td> <input type="submit" value="View Auction"></td>
+                        <td><p>${item.name}</p></td><td> <button type="submit" class="btn-default">View Auction"</button></td>
                 </tr>
                 <input type="hidden" name="auction_id" value="${item.id}">
                 </form>
@@ -42,5 +77,13 @@
     <br>
     </#list>
 </#if>
+</div>
+				<div class="panel-footer">
+					<a href="login">Back to Home</a>
+				</div>
+			</div>
+		</div>
+</div>	
+
 </body>
 </html>

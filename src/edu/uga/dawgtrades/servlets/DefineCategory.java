@@ -70,7 +70,8 @@ public class DefineCategory extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        request.getRequestDispatcher("home.html").forward(request, response);
+
+        request.getRequestDispatcher("login").forward(request, response);
 
 
     }

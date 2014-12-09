@@ -13,6 +13,7 @@
 		<h3>Set Membership Price</h3>
 	</div>
 	<div class="panel-body">
+			<#if message?has_content><p style="color:green">${message}</p><br></#if>
 			<form method=post name="SetMembershipPrice" action="set_membership_price" style="margin:0;padding:0;">
 			    <#if membership?has_content >
 			    Membership Subscription Price:<input type="text" name="price" value="${membership.price}"><br>
@@ -21,7 +22,7 @@
 			    </#if>
 			    <br><br>
 			
-			    <input type="submit" name="Add" value="submit">
+			    <button type="submit" class="btn btn-default" name="Add"> Change Membership</button>
 			</form>
 	</div>
 		<div class="panel-footer">
