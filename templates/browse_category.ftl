@@ -65,8 +65,11 @@
 
 
 <#else>
-
+	<ul class="nav nav-pills nav-stacked">
     <#list categories as category>
+
+	
+ 							 <li role="presentation">
 
         <b><a href="?categoryID=${category.id}"> ${category.name} </a></b><br>
 
@@ -75,7 +78,9 @@
         <a href="update_category?categoryID=${category.id}">Edit</a> | <a href="delete_category?categoryID=${category.id}">Delete</a>
         </#if>
     <br>
+			</li>
     </#list>
+	</ul>
 </#if>
 </div>
 				<div class="panel-footer">
