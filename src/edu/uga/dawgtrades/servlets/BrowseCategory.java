@@ -93,9 +93,10 @@ public class BrowseCategory extends javax.servlet.http.HttpServlet {
                             if(item.getCategoryId() == category.getId()){
                                 if(!auction.getIsClosed()) {
                                     auctions.add(auction);
+                                    item.setId(auction.getId());
+                                    items.add(item);
                                 }
-                                item.setId(auction.getId());
-                                items.add(item);
+
                             }
                         }
 
