@@ -22,7 +22,7 @@
   							<li role="presentation"><a href="view_my_auctions">4.View My Auctions</a></li>
   						<#if user.isAdmin==true>
   							 <li role="presentation"><a href="define_category">5.Create Categories</a></li>
-  							 <li role="presentation"><a href="set_membership">6.Set Membership Price</a></li>
+  							 <li role="presentation"><a href="set_membership_price">6.Set Membership Price</a></li>
   							  <li role="presentation"><a href="delete_user">7.Delete A User</a></li>
   			  				<li role="presentation"><a href="print_report">8.Print Report</a></li>
   			
