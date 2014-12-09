@@ -21,11 +21,15 @@
 
     <br><br>
     <h3>Attribute Types</h3>
+    <#assign count=0>
 <#-- Attribute types for category-->
+    <div id="attributeTypes">
     <#list attribute_types as attr>
-        Attribute Type<input type="text" name="attr_name${attr_index+1}" value="${attr.name}"><br>
+        Attribute Type: <input type="text" name="attr_name${attr_index+1}" value="${attr.name}"><br>
         <#assign count = attr_index+1>
     </#list>
+    </div>
+    <div id="count">${count}</div>
     <div id="addAttributeType">Add another Attribute Type</div>
 
     <input type="submit" name="Add" value="submit">

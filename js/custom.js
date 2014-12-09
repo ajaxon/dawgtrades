@@ -1,12 +1,19 @@
 $(document).ready(function() {
 
 
-    var count = $()
+    var x = $("#count").html();
+    var count = parseInt(x);
+    if(count==0){
+        count = 1;
+    }else{
+        count+=1;
+    }
     $("#addAttributeType").click(
         function () {
-            var someText = "my dynamic text";
-            var newDiv = "<input type=\"text\" name=\"attr_name${attr_index+1}\" value=\"${attr.name}\"><br>";
-            $(this).append(newDiv);
+
+            var newDiv = "Attribute Type:"+"<input type=\"text\" " + "name=\"attr_name"+count+ "\"" + " value=\" \">";
+            $("#attributeTypes").append(newDiv);
+            count++;
         }
     )
 
