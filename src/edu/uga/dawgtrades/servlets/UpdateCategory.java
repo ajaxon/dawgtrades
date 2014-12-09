@@ -85,7 +85,8 @@ public class UpdateCategory extends javax.servlet.http.HttpServlet {
                     }
                     String message = "Category"+category.getName()+" updated";
                     request.setAttribute("message",message);
-                    request.getRequestDispatcher("home.html").forward(request, response);
+                    request.setAttribute("user",user);
+                    request.getRequestDispatcher("index.ftl").forward(request, response);
 
                 } catch (DTException e) {
 
