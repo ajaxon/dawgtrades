@@ -1,6 +1,7 @@
 <html>
 <head>
     <title><#if category?has_content> ${category.name}<#else>Categories</#if></title>
+<#include "head.ftl">
 </head>
 <body>
 

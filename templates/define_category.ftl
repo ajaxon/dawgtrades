@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>Add Category</title>
+<#include "head.ftl">
 </head>
 <body>
 

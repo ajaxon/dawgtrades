@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>View Item</title>
+<#include "head.ftl">
 </head>
 <body>
 	<h2>You are currently auctioning your ${item.name}</h2>

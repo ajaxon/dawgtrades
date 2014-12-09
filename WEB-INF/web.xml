@@ -213,6 +213,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <servlet-name>TrackAuction</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.TrackAuction</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>TrackAuction</servlet-name>
+        <url-pattern>/track_auctions</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>ReAuctionItem</servlet-name>
         <servlet-class>edu.uga.dawgtrades.servlets.ReAuctionItem</servlet-class>

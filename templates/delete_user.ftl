@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>Pick a user</title>
+<#include "head.ftl">
 </head>
 <body>
     <form method="post" name="DeleteUser" action="delete_user">
