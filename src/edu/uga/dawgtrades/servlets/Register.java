@@ -63,7 +63,7 @@ public class Register extends javax.servlet.http.HttpServlet {
         }
         try
         {
-            request.getRequestDispatcher("/define_category").forward(request, response);
+            request.getRequestDispatcher("login").forward(request, response);
         }
         catch (ServletException e)
         {

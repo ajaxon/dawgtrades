@@ -1,164 +1,107 @@
 package edu.uga.dawgtrades.servlets;
 
-import javax.security.auth.login.Configuration;
-import javax.servlet.*;
-import javax.servlet.http.*;
+
+import edu.uga.dawgtrades.authentication.Session;
+import edu.uga.dawgtrades.authentication.SessionManager;
+import edu.uga.dawgtrades.model.*;
+
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.Writer;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
-
-import freemarker.template.*;
-
-import edu.uga.dawgtrades.model.DTException;
-import edu.uga.dawgtrades.model.ObjectModel;
-import edu.uga.dawgtrades.model.RegisteredUser;
-import edu.uga.dawgtrades.model.impl.ObjectModelImpl;
-import edu.uga.dawgtrades.persist.Persistence;
-import edu.uga.dawgtrades.persist.impl.DbUtils;
-import edu.uga.dawgtrades.persist.impl.PersistenceImpl;
 /**
  * Created by Allen on 11/27/14.
  */
 public class PrintReport extends javax.servlet.http.HttpServlet {
-    static Connection conn = null;
-    static ObjectModel objectModel = null;
-    static Persistence persistence = null;
-    private freemarker.template.Configuration cfg;
-    // get a database connection
 
-
-    public void init() {
-        // Initialize the FreeMarker configuration;
-        // - Create a configuration instance
-        cfg = new freemarker.template.Configuration();
-        // - Templates are stored in the WEB-INF/templates directory of the Web app.
-        cfg.setServletContextForTemplateLoading(
-                getServletContext(), "WEB-INF/templates");
-
-    }
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-        getConnection();
-        ResultSet rs = null;
-        Statement stmt = null;
-        PrintWriter out = response.getWriter();
-        String date = request.getParameter("year") + "-" + request.getParameter("month");
+
+    }
 
 
-        String query ="SELECT COUNT(id) AS number FROM auction WHERE CONTAINS(Column,date)";
-        try {
-            //stmt = conn.createStatement();
-            rs = stmt.executeQuery(query);
-            rs.next();
-            String numberOfAuctions = "Number of auctions: " + rs.getString("number");
-            out.print(numberOfAuctions);
-        } catch (SQLException e) {
-            e.printStackTrace();
+    protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException, IOException {
+
+        HttpSession httpSession = null;
+        String      ssid = null;
+        Session session = null;
+
+
+        httpSession = request.getSession();
+
+        if(httpSession.getAttribute("ssid")!=null){
+
+            ssid = (String) httpSession.getAttribute("ssid");
+
+        }else{
+            System.out.println("No ssid found");
+            request.getRequestDispatcher("home.html").forward(request, response);
+
         }
 
-        query = "select * from auction WHERE CONTAINS(Column,date)";
-        try {
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery(query);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        int i = 0;
-        assert rs != null;
-        try {
-            while (rs.next()) {
-                    String columnValue = rs.getString(i);
-                    out.print(columnValue);
-                i++;
+        session = SessionManager.getSessionById(ssid);
+        if(session==null){
+
+            request.getRequestDispatcher("home.html").forward(request, response);
+            System.out.println("No session found");
+        }else {
+            RegisteredUser user = session.getUser();
+            if (user.getIsAdmin() == true) {
+
+                try {
+
+                    int userNumber = 0;
+                    float userRevenue = 0.0f;
+                    int completedAuctions = 0;
+                    float auctionsValue = 0.0f;
+                    int openAuctions = 0;
+                    float membershipPrice = 0.0f;
+                    int adminNumber = 0;
+
+                    Iterator<Auction> auctionIterator = session.getObjectModel().findAuction(null);
+                    Iterator<RegisteredUser> userIterator = session.getObjectModel().findRegisteredUser(null);
+                    Membership membership = session.getObjectModel().findMembership();
+
+                    if(membership != null){
+                        membershipPrice = membership.getPrice();
+                    }
+
+                    while(auctionIterator.hasNext()){
+                        Auction tmpauction = auctionIterator.next();
+                        if(tmpauction.getIsClosed()){
+                            completedAuctions++;
+                            auctionsValue = auctionsValue + tmpauction.getSellingPrice();
+                        }
+                        else openAuctions++;
+                    }
+
+                    while(userIterator.hasNext()){
+                        RegisteredUser tmpUser = userIterator.next();
+                        if(tmpUser.getIsAdmin()) adminNumber++;
+                        else {
+                            userNumber++;
+                            userRevenue = userRevenue + membershipPrice;
+                        }
+                    }
+
+                    request.setAttribute("users", userNumber);
+                    request.setAttribute("revenue", userRevenue);
+                    request.setAttribute("comauctions", completedAuctions);
+                    request.setAttribute("auctionsvalue", auctionsValue);
+                    request.setAttribute("ongauctions", openAuctions);
+                    request.setAttribute("admins", adminNumber);
+
+                    request.getRequestDispatcher("print_report.ftl").forward(request, response);
+
+
+                } catch (DTException e) {
+
+                    e.printStackTrace();
                 }
-        } catch (SQLException e1) {
-            e1.printStackTrace();
-        }
-        System.out.println("");
 
-        query ="SELECT COUNT(id) AS number FROM user WHERE CONTAINS(Column,date)";
-        try {
-            //stmt = conn.createStatement();
-            rs = stmt.executeQuery(query);
-            rs.next();
-            String numberOfUsers = "Number of users: " + rs.getString("number");
-            out.print(numberOfUsers);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        query = "select * from user WHERE CONTAINS(Column,date)";
-        try {
-           // stmt = conn.createStatement();
-            rs = stmt.executeQuery(query);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        i = 0;
-        assert rs != null;
-        try {
-            while (rs.next()) {
-                String columnValue = rs.getString(i);
-                System.out.print(columnValue);
-                i++;
             }
-        } catch (SQLException e1) {
-            e1.printStackTrace();
-        }
-        System.out.println("");
-
-    }
-
-
-    protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-
-        // Prepare template input
-        Map<String, Object> root = new HashMap<String, Object>();
-        root.put("message","testing this shit ");
-        // Get the templat object
-        Template template = cfg.getTemplate("print_report.ftl");
-
-        // Prepare the HTTP response:
-        // - Use the charset of template for the output
-        // - Use text/html MIME-type
-        response.setContentType("text/html; charset=" + template.getEncoding());
-        Writer out = response.getWriter();
-
-        // Merge the data-model and the template
-        try {
-            template.process(root, out);
-        } catch (TemplateException e) {
-            throw new ServletException(
-                    "Error while processing FreeMarker template", e);
         }
 
-    }
-    public void getConnection()
-    {
-        try {
-            conn = DbUtils.connect();
-
-        }
-        catch (Exception seq) {
-            System.err.println( "Register.java getConnection: Unable to obtain a database connection" );
-        }
-
-        // obtain a reference to the ObjectModel module
-        objectModel = new ObjectModelImpl();
-
-        // obtain a reference to Persistence module and connect it to the ObjectModel
-        persistence = new PersistenceImpl( conn, objectModel );
-
-        // connect the ObjectModel module to the Persistence module
-        objectModel.setPersistence( persistence );
-    }
-    public void disconnect() throws SQLException {
-        conn.close();
     }
 }

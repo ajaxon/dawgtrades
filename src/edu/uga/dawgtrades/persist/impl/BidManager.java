@@ -101,7 +101,7 @@ public class BidManager {
 					else
 						condition.append(" auction_id= "+bid.getAuction().getId());
 				}
-				if(bid.getRegisteredUser() != null){
+				if(bid.getRegisteredUser() != null && bid.getRegisteredUser().getId() >= 0){
                     if(condition.length()>0)
 					    condition.append(" and user_id = " + bid.getRegisteredUser().getId());
                     else

@@ -1,26 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<!-- Bootstrap -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+<script src="js/custom.js"></script>
 <title>Welcome To DawgTrades</title>
 </head>
 <body>
-
-<form method="post" action="login">
-        	<h4>Login Here</h4>
-            <br>
-            <label>Username</label><input type="text" name="username">
-            <br>
-           <label>Password</label><input type="password" name="password">
-           <br>
-             <input type="submit" value="Login">
-        </form>
-        <br>
-<form  method="get" action="register">
-        	<h4>Not a user? Create an account here.</h4>
-            <br>
-             <input type="submit" value="Register">
-        </form>
-
+<div class="container">
+		<div class="row top-buffer">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h1>Welcome To DawgTrades</h1>
+				</div>
+				<div class="panel-body">
+				<div class="row">
+					<div class="col-lg-6">
+					<h4>Login Here</h4>
+					<form role="form" method="post" action="login">
+					        	
+					           <div class="form-group">
+					            <label for="username">Username</label><input class="form-control" id="username" type="text" name="username">
+					            </div>
+					            <div class="form-group">
+					           <label for="password">Password</label><input class="form-control" id="password" type="password" name="password">
+					           </div>
+					             <button type="submit" class="btn btn-success">Login</button>
+					             <p class="help-block"><a href="reset_password">Forgot Password?</a></p>
+					        </form>
+					        <br>
+					</div>
+					<div class="col-lg-4 col-lg-offset-2">
+					
+								<div class="panel panel-default">
+								<div class="panel-body">
+								<form role="form" method="get" action="register">
+					        	    <h4>Not a user? Create an account here.</h4>
+					            	 <button class="btn btn-default" type="submit">Register</button>
+					        	</form>
+					        	</div>
+					        	</div>
+					       
+					</div>
+				</div>
+			</div>
+		</div>
+</div>
+</div>
 </body>
 </html>

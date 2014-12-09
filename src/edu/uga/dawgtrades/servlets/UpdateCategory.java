@@ -80,11 +80,13 @@ public class UpdateCategory extends javax.servlet.http.HttpServlet {
                     while(request.getParameter("attr_name"+i) != null){
                         AttributeType attrType = session.getObjectModel().createAttributeType(category,request.getParameter("attr_name"+i));
                         session.getObjectModel().storeAttributeType(attrType);
+                        i++;
 
                     }
-
-                    request.setAttribute("message","Category " + category.getName() + " updated");
-                    request.getRequestDispatcher("home.html").forward(request, response);
+                    String message = "Category"+category.getName()+" updated";
+                    request.setAttribute("message",message);
+                    request.setAttribute("user",user);
+                    request.getRequestDispatcher("index.ftl").forward(request, response);
 
                 } catch (DTException e) {
 
@@ -98,11 +100,6 @@ public class UpdateCategory extends javax.servlet.http.HttpServlet {
 
 
 
-
-        // 1. get category from request.getparams id
-        //2 set name as name
-        // 3 set parent as parent id
-        //4
 
     }
 
