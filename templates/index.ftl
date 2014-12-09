@@ -14,36 +14,27 @@
 						<br>
 						<#if message?has_content>${message}</#if><br>
 						
-						<span>1.</span><a href="browse_category">Browse Category</a>
-						<br>
-						<span>5.</span><a href="view_profile">View Profile</a>
-						<br>
-						<span>5.</span><a href="create_item">Create Item for Auction</a>
-						<br>
-						<span>5.</span><a href="auction_item">Auction Item</a>
-						<br>
-						<span>6.</span><a href="view_my_auctions">View my Auctions</a>
-						<br>
-						<#if user.isAdmin==true>
 						
-						<span>2.</span><a href="define_category">Create Categories</a>
+						<ul class="nav nav-pills nav-stacked">
+ 							 <li role="presentation"><a href="browse_category">1.Browse Auctions By Categories</a></li>
+  							<li role="presentation"><a href="view_profile"> 2.View Profile</a></li>
+  							<li role="presentation"><a href="auction_item">3.View Item Inventory</a></li>
+  							<li role="presentation"><a href="view_my_auctions">4.View My Auctions</a></li>
+  						<#if user.isAdmin==true>
+  							 <li role="presentation"><a href="define_category">5.Create Categories</a></li>
+  							 <li role="presentation"><a href="set_membership">6.Set Membership Price</a></li>
+  							  <li role="presentation"><a href="delete_user">7.Delete A User</a></li>
+  			  				<li role="presentation"><a href="print_report">8.Print Report</a></li>
+  			
+  							 
+  							 
+  							
+  						</#if>
+						</ul>
 						
-						<br>
-						<span>3.</span><a href="set_membership_price">Set Membership Price</a>
-						<br>
-						<span>4.</span><a href="printReport">Print Report</a>
-						<br>
+					
 						
-						<span>5.</span><a href="delete_user">Delete User</a>
-						<span>6.<a href="browse_category">Browse Categories</a></span>
 						
-						<br>
-						</#if>
-						
-						<br>
-						<br>
-						<br>
-				
 				
 			</div>
 			<div class="panel-footer">
