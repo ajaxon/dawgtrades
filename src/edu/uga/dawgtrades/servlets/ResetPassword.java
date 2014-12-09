@@ -31,7 +31,8 @@ public class ResetPassword extends javax.servlet.http.HttpServlet {
             if(session == null){
                 request.getRequestDispatcher("home.html").forward(request,response);
             }else{
-//                user = session.getUser();
+                user = session.getUser();
+                String oldPass = user.getPassword();
 //                actualEmail = user.getEmail();
                 email = (String)request.getParameter("email");
             //    if(email == null || actualEmail != email){
@@ -39,7 +40,7 @@ public class ResetPassword extends javax.servlet.http.HttpServlet {
 //                    request.setAttribute("message", message);
             //    }else{
                     try {
-                        sendEmail(email, "Request for password change", "Password change");
+                        sendEmail(email, "Forgotten password from your pals at Dawgtrades", "Here's your forgotten password:\n" + oldPass);
                     } catch (MessagingException e) {
                         e.printStackTrace();
                     }
