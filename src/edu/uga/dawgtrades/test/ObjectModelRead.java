@@ -201,7 +201,7 @@ public class ObjectModelRead extends TestCase
         assertEquals(1,usercount);
         assertEquals("Test_name",user.getName());
     }
-    /*
+
     @Test
     public void test_restoreUserbyEmail() throws DTException {
         RegisteredUser modelUser = objectModel.createRegisteredUser();
@@ -214,7 +214,7 @@ public class ObjectModelRead extends TestCase
         }
         assertEquals(1,usercount);
         assertEquals("bob",user.getName());
-    }*/
+    }
     @Test
     public void test_restoreUserbyLogin() throws DTException {
         RegisteredUser testuser = null;
