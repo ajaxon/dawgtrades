@@ -19,12 +19,10 @@
 						<p>The current price of the item is ${currentBid?string.currency}</p>
 						<br>
 						<form role="form" class="form-inline" method="post" action="bid_on_item">
-							<div class="form-group">
-							<label>Please enter your bid</label><input class="form-control"  type="text" name="bid">
-							</div>
-							<div class="form-group>
+							<label>Please enter your bid</label><input type="text" name="bid">
+							
 							<input type="hidden" value="${auction.id}" name="auction_id">
-							</div>
+
 							<button type="submit" class="btn btn-success">Submit Bid</button>
 						</form>
 						
