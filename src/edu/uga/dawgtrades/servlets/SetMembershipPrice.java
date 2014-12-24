@@ -57,10 +57,10 @@ public class SetMembershipPrice extends javax.servlet.http.HttpServlet {
                         membership.setPrice(price);
                         session.getObjectModel().storeMembership(membership);
                     }
-                    String message = "Membership price set";
+                    String message = "Membership price hass been changed";
                     request.setAttribute("message",message);
                     request.setAttribute("user",user);
-                    request.getRequestDispatcher("index.ftl").forward(request,response);
+                    request.getRequestDispatcher("membership.ftl").forward(request,response);
                 }
                 catch (DTException e) {
                     e.printStackTrace();
@@ -104,7 +104,6 @@ public class SetMembershipPrice extends javax.servlet.http.HttpServlet {
                     Membership membership = session.getObjectModel().findMembership();
 
                     request.setAttribute("membership", membership);
-
                     request.getRequestDispatcher("membership.ftl").forward(request, response);
 
                 } catch (DTException e) {

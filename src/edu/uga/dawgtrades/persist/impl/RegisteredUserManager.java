@@ -127,11 +127,11 @@ public class RegisteredUserManager {
 	            	if( registeredUser.getName() != null ) // userName is unique, so it is sufficient to get a registered user
 		                condition.append( " name = '" + registeredUser.getName() + "'" );
 	            
-	                if( registeredUser.getPassword() != null )
-	                	 if( condition.length() > 0 )
-		                        condition.append( " and" );
-	                    condition.append( " password = '" + registeredUser.getPassword() + "'" );
-	
+	                if( registeredUser.getPassword() != null ) {
+                        if (condition.length() > 0)
+                            condition.append(" and");
+                        condition.append(" password = '" + registeredUser.getPassword() + "'");
+                    }
 	                if( registeredUser.getEmail() != null ) {
 	                    if( condition.length() > 0 )
 	                        condition.append( " and" );
